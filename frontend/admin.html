@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>CYBER X SILENT Control Center — Back-End Panel</title>
+<link rel="icon" href="logo/logo.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050507; --card-bg:#0e0e12; --card-border:#261518;
+    --accent:#ff2a44; --accent-dim:#d90429;
+    --green:#10b981; --amber:#f59e0b; --blue:#3b82f6;
+    --txt:#e4e4e7; --mut:#8a8a8e;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; background:var(--bg); color:var(--txt);
+    font-family:'JetBrains Mono',ui-monospace,monospace; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(900px 500px at 50% -10%, rgba(255,42,68,.10), transparent 60%),
+      radial-gradient(700px 420px at 100% 110%, rgba(217,4,41,.07), transparent 60%);
+  }
+  .panel-container{max-width:1280px;margin:0 auto;padding:24px}
+  .panel-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;
+    border-bottom:1px solid var(--card-border);margin-bottom:24px;flex-wrap:wrap;gap:16px}
+  .panel-title{font-family:'Archivo Black',sans-serif;font-size:17px;font-weight:800;letter-spacing:.18em;
+    color:#fff;margin:0}
+  .panel-title span{color:var(--accent)}
+  .panel-sub{margin:4px 0 0;font-size:11px;color:var(--mut);letter-spacing:.03em}
+
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:9999px;
+    font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+  .badge-active{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3)}
+  .badge-unbound{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+  .badge-expired{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:9999px;font-size:10.5px;
+    font-weight:700;text-transform:uppercase;letter-spacing:.06em;border:1px solid rgba(255,42,68,.3);
+    background:rgba(255,42,68,.15);color:#ff5b6e}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:28px}
+  .stat-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:18px;
+    display:flex;flex-direction:column;gap:8px}
+  .stat-val{font-size:28px;font-weight:800;color:#fff;line-height:1}
+  .stat-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--mut)}
+
+  .main-grid{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+  @media(max-width:960px){.main-grid{grid-template-columns:1fr}}
+
+  .panel-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:22px;margin-bottom:24px}
+  .panel-card-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:#fff;
+    display:flex;align-items:center;gap:8px;margin-bottom:16px;border-bottom:1px solid var(--card-border);padding-bottom:12px}
+
+  .form-group{margin-bottom:14px}
+  .form-label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin-bottom:6px}
+  .form-hint{display:block;font-size:9.5px;color:var(--mut);margin-top:4px}
+  .form-control{width:100%;background:#09090b;border:1px solid var(--card-border);color:#fff;border-radius:8px;
+    padding:10px 12px;font-family:inherit;font-size:12px;outline:none;transition:border-color .2s}
+  .form-control:focus{border-color:var(--accent);box-shadow:0 0 10px rgba(255,42,68,.25)}
+  select.form-control{cursor:pointer}
+  textarea.form-control{resize:vertical}
+
+  .btn-admin{background:linear-gradient(135deg,#ff2a44 0%,#d90429 100%);color:#fff;border:1px solid rgba(255,255,255,.15);
+    font-weight:700;font-family:inherit;font-size:12px;text-transform:uppercase;letter-spacing:.1em;padding:11px 16px;
+    border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    box-shadow:0 4px 14px rgba(255,42,68,.35);transition:opacity .2s,transform .1s}
+  .btn-admin:hover{opacity:.92}
+  .btn-admin:active{transform:scale(.98)}
+  .btn-admin:disabled{opacity:.6;cursor:wait}
+  .btn-admin-subtle{background:rgba(255,255,255,.06);color:var(--txt);border:1px solid var(--card-border);box-shadow:none}
+  .btn-admin-subtle:hover{background:rgba(255,255,255,.12)}
+
+  .table-container{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:12px;text-align:left}
+  th{padding:12px 14px;border-bottom:1px solid var(--card-border);color:var(--mut);font-weight:600;
+    text-transform:uppercase;letter-spacing:.08em;font-size:10px;background:rgba(255,255,255,.02);white-space:nowrap}
+  td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);color:#d4d4d8;vertical-align:middle}
+  tr:hover td{background:rgba(255,255,255,.02)}
+  .key-code{font-weight:700;color:#fff;white-space:nowrap}
+  .dim{color:var(--mut)}
+  .cell-sub{font-size:10px;margin-top:2px;display:block}
+  .plan-tag{display:inline-flex;padding:3px 9px;border-radius:6px;font-size:10.5px;font-weight:700;
+    background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:#e4e4e7;white-space:nowrap}
+  .action-group{display:flex;gap:6px;justify-content:flex-end}
+  .btn-action{padding:5px 9px;font-size:10.5px;border-radius:6px;background:rgba(255,255,255,.05);
+    border:1px solid var(--card-border);color:#cacaca;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .btn-action:hover{background:rgba(255,255,255,.12);color:#fff}
+  .btn-action.danger{background:rgba(239,68,68,.15);color:#ef4444;border-color:rgba(239,68,68,.3)}
+  .btn-action.danger:hover{background:rgba(239,68,68,.25)}
+  .filter-tab{padding:5px 11px;font-size:10.5px;border-radius:6px;background:rgba(255,255,255,.05);
+    border:1px solid var(--card-border);color:#cacaca;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.05em}
+  .filter-tab:hover{background:rgba(255,255,255,.12);color:#fff}
+  .filter-tab.active{background:#fff;color:#000;font-weight:700}
+
+  .node-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;
+    background:#09090b;border:1px solid var(--card-border);border-radius:10px;margin-bottom:8px}
+
+  .notice{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--mut);
+    background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:8px;
+    padding:9px 11px;margin-bottom:14px;line-height:1.5}
+
+  #login-overlay{position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(6px);display:none;
+    align-items:center;justify-content:center;z-index:2000;padding:20px}
+  .login-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:32px;
+    width:min(380px,100%);text-align:center}
+  .login-title{font-size:13px;font-weight:800;letter-spacing:.2em;color:#fff;margin-bottom:6px}
+  .login-title span{color:var(--accent)}
+  .login-sub{font-size:11px;color:var(--mut);margin-bottom:20px}
+  .login-err{display:none;margin-top:12px;font-size:11px;color:#f87171}
+
+  .toast-popup{position:fixed;bottom:24px;right:24px;background:#18181b;border:1px solid #3f3f46;color:#fff;
+    padding:12px 18px;border-radius:10px;font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.5);display:none;z-index:3000;
+    max-width:80vw}
+</style>
+</head>
+<body>
+
+<div class="panel-container">
+
+  <header class="panel-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="logo/logo.png" alt="CYBER X SILENT logo" onerror="this.style.display='none'"
+             style="width:32px;height:32px;object-fit:contain;" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+             stroke="#ff2a44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m12.5 17-.5-1-.5 1h1z"></path>
+          <path d="M15 22a1 1 0 0 0 1-1v-1a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z"></path>
+          <circle cx="15" cy="12" r="1"></circle>
+          <circle cx="9" cy="12" r="1"></circle>
+        </svg>
+        <h1 class="panel-title">CYBER X SILENT <span>BACK-END PANEL</span></h1>
+      </div>
+      <p class="panel-sub">Standalone License Engine &amp; Proxy Tunnel Manager</p>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span id="storage-pill" class="pill">NO TOKEN</span>
+      <span id="header-status" class="pill"><span class="dot"></span> CHECKING SERVER</span>
+      <a href="/" target="_blank" rel="noopener" class="btn-admin btn-admin-subtle" style="text-decoration:none;">
+        Open Client Portal ↗
+      </a>
+      <button class="btn-admin btn-admin-subtle" onclick="lock()" title="Lock admin panel">Lock</button>
+    </div>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-label">Total License Keys</span>
+      <span id="stat-total-keys" class="stat-val">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Active / Valid Licenses</span>
+      <span id="stat-active-keys" class="stat-val" style="color:#34d399;">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Unbound (Ready for Sale)</span>
+      <span id="stat-unbound-keys" class="stat-val" style="color:#60a5fa;">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Expired</span>
+      <span id="stat-expired-keys" class="stat-val" style="color:#f87171;">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Maintenance Mode</span>
+      <span id="stat-maintenance-status" class="stat-val" style="font-size:20px;font-weight:700;">—</span>
+    </div>
+  </section>
+
+  <div class="main-grid">
+
+    <aside>
+      <div class="panel-card">
+        <div class="panel-card-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+          Storage
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Storage Token</label>
+          <input id="gh-token" class="form-control" type="password" placeholder="paste storage token"
+                 autocomplete="off" spellcheck="false" />
+          <span class="form-hint">Writes keys to <b>data/keys.json</b>. Needs a token with
+            Contents: Read and write on this repo.</span>
+        </div>
+
+        <div style="display:flex;gap:8px;">
+          <button class="btn-admin" style="flex:1;" onclick="saveGh()">Save Token</button>
+          <button class="btn-admin btn-admin-subtle" onclick="testGh()">Test</button>
+          <button class="btn-admin btn-admin-subtle" onclick="clearGh()">Clear</button>
+        </div>
+
+        <div id="gh-result" style="display:none;margin-top:12px;padding:10px;background:#09090b;
+             border:1px solid var(--card-border);border-radius:8px;font-size:10.5px;color:var(--mut);
+             word-break:break-all;white-space:pre-wrap;"></div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-card-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Generate Keys
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Key Prefix</label>
+          <input id="gen-prefix" class="form-control" type="text" value="CYBER" maxlength="6" />
+          <span class="form-hint">Display only — server always issues CYBER-XXXXXX</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">License Duration</label>
+          <select id="gen-duration" class="form-control">
+            <option value="1">1 Hour Trial</option>
+            <option value="24" selected>24 Hours (1 Day)</option>
+            <option value="168">7 Days</option>
+            <option value="720">30 Days (1 Month)</option>
+            <option value="2160">90 Days (3 Months)</option>
+            <option value="8760">365 Days (1 Year)</option>
+            <option value="999999">Lifetime Permanent</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Batch Quantity</label>
+          <select id="gen-count" class="form-control">
+            <option value="1">1 Key</option>
+            <option value="5">5 Keys</option>
+            <option value="10">10 Keys</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Customer / Seller Note</label>
+          <input id="gen-note" class="form-control" type="text" placeholder="e.g. VIP Customer, Seller #42" />
+          <span class="form-hint">Display only (not stored by the server)</span>
+        </div>
+
+        <button id="gen-btn" class="btn-admin" style="width:100%;" onclick="createKeys()">
+          + Generate License Key
+        </button>
+
+        <div id="gen-result" style="display:none;margin-top:14px;padding:12px;background:#09090b;
+             border:1px solid var(--card-border);border-radius:8px;">
+          <div style="font-size:10px;color:var(--mut);text-transform:uppercase;margin-bottom:6px;">Latest Created Key:</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+            <code id="gen-result-key" style="font-size:12px;font-weight:700;color:#fff;word-break:break-all;"></code>
+            <button class="btn-action" onclick="copyKey(document.getElementById('gen-result-key').textContent)">Copy</button>
+          </div>
+          <div id="gen-result-plan" style="font-size:10px;color:var(--mut);margin-top:8px;"></div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-card-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"></path></svg>
+          Maintenance Controller
+        </div>
+
+        <div class="form-group" style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;">
+          <div>
+            <div style="font-size:12px;font-weight:700;">Maintenance Mode</div>
+            <div style="font-size:10px;color:var(--mut);">Pauses service on all client portals</div>
+          </div>
+          <input type="checkbox" id="maint-toggle" style="width:18px;height:18px;cursor:pointer;" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Client Notice Message</label>
+          <textarea id="maint-msg" class="form-control" rows="3"
+            placeholder="Message shown to users when maintenance is ON...">we're doing maintenance. everything is paused until we're back.</textarea>
+        </div>
+
+        <button class="btn-admin btn-admin-subtle" style="width:100%;" onclick="updateMaintenance()">
+          Save Maintenance Settings
+        </button>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-card-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          Tunnel Server Nodes
+        </div>
+        <div id="nodes-list"></div>
+        <span class="form-hint">Static — mirrors the outbound in server.js</span>
+      </div>
+    </aside>
+
+    <main>
+      <div class="panel-card">
+        <div class="panel-card-title" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            License Database
+          </div>
+          <div style="display:flex;gap:10px;">
+            <input id="key-search" class="form-control" type="text" placeholder="Search keys..."
+                   style="width:200px;padding:6px 10px;font-size:11px;" />
+            <button class="btn-action" onclick="loadKeys()" title="Refresh Table">Refresh</button>
+          </div>
+        </div>
+
+        <div class="notice">
+          <span>⏱</span>
+          <span>Countdown starts on the buyer's <b>first connection</b>. Fresh keys show their plan until then.</span>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+          <button class="filter-tab active" data-filter="all">All Keys</button>
+          <button class="filter-tab" data-filter="active">Active</button>
+          <button class="filter-tab" data-filter="unbound">Unbound</button>
+          <button class="filter-tab" data-filter="expired">Expired</button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>License Key</th>
+                <th>Status</th>
+                <th>Plan</th>
+                <th>Created</th>
+                <th>Expires</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="keys-tbody">
+              <tr><td colspan="6" style="text-align:center;color:#6b7280;padding:24px;">Loading keys...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<div id="login-overlay">
+  <div class="login-box">
+    <img src="logo/logo.png" alt="CYBER X SILENT logo" onerror="this.style.display='none'"
+         style="width:64px;height:64px;object-fit:contain;margin:0 auto 12px;display:block;" />
+    <div class="login-title"><span>CYBER X SILENT</span> CONTROL CENTER</div>
+    <div class="login-sub">enter admin password to continue</div>
+    <input id="admin-password" type="password" class="form-control" placeholder="CYBER admin key"
+           autocomplete="current-password" style="text-align:center;" />
+    <button class="btn-admin" style="width:100%;margin-top:12px;" onclick="adminLogin()">Unlock Panel</button>
+    <p id="admin-login-error" class="login-err">wrong password</p>
+  </div>
+</div>
+
+<div id="toast" class="toast-popup"></div>
+
+<script>
+/* ============================================================
+   CONFIG
+   ============================================================ */
+const BACKEND_URL = "https://cyber-x-silent-server.onrender.com";
+const PASS_KEY    = "cyber_x_admin_pass";
+const VER_KEY     = "cyber_x_admin_ver";
+const GH_KEY      = "cyber_x_gh_cfg";
+const LIFETIME_H  = 999999;
+
+/* Static mirror of the hysteria outbound defined in backend/server.js */
+const NODES = [{ host: "wraith-bom.cyber-x-silent.onrender.com", proto: "Hysteria2", port: 443, sec: "TLS / h3" }];
+
+/* Known plans -> human label */
+const PLANS = {
+  1:"1 Hour", 24:"1 Day", 168:"7 Days", 720:"30 Days",
+  2160:"90 Days", 8760:"365 Days", 999999:"Lifetime"
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let adminPass = sessionStorage.getItem(PASS_KEY) || "";
+let allKeys   = [];
+let filter    = "all";
+let search    = "";
+let tickTimer = null;
+let pingTimer = null;
+let autoTimer = null;
+let watchTimer = null;
+
+const $ = id => document.getElementById(id);
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function toast(msg){
+  const t = $("toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  clearTimeout(t._t);
+  t._t = setTimeout(() => { t.style.display = "none"; }, 2800);
+}
+
+function copyKey(k){
+  if(!k) return;
+  navigator.clipboard.writeText(k).then(() => toast("copied " + k)).catch(() => toast(k));
+}
+
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c =>
+    ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+}
+
+/* adminPass is attached to EVERY call — this is what the save/test/clear buttons were missing */
+async function api(path, body){
+  const payload = Object.assign({}, body || {});
+  if(adminPass) payload.adminPass = adminPass;
+  const tok = ghCfg().token;
+  if(tok) payload.gh = { token: tok };
+
+  const r = await fetch(BACKEND_URL + path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  if(r.status === 401){ lock(); throw new Error("unauthorized"); }
+  return r.json();
+}
+
+/* ============================================================
+   STORAGE
+   ============================================================ */
+function ghCfg(){
+  try{ return JSON.parse(localStorage.getItem(GH_KEY) || "{}") || {}; }catch(e){ return {}; }
+}
+
+function paintStorage(){
+  const p = $("storage-pill");
+  const on = !!ghCfg().token;
+  p.textContent = on ? "STORAGE READY" : "NO TOKEN";
+  p.style.color = on ? "#34d399" : "#f59e0b";
+  p.style.borderColor = on ? "rgba(16,185,129,.3)" : "rgba(245,158,11,.3)";
+  p.style.background = on ? "rgba(16,185,129,.15)" : "rgba(245,158,11,.15)";
+}
+
+function ghOut(msg){
+  const b = $("gh-result");
+  b.textContent = msg;
+  b.style.display = "block";
+}
+
+async function saveGh(){
+  const token = $("gh-token").value.trim();
+  if(!token){ toast("paste a token first"); return; }
+  localStorage.setItem(GH_KEY, JSON.stringify({ token }));
+  paintStorage();
+  try{
+    /* server persists this and hands it to client-side requests too */
+    const d = await api("/api/admin/github-config", {});
+    if(d.success){
+      ghOut("Connected to config");
+      toast("token saved");
+      loadKeys();
+    } else {
+      ghOut(d.error || "failed to connect storage");
+      toast("storage rejected the token");
+    }
+  }catch(e){
+    if(e.message !== "unauthorized") ghOut("failed to connect storage · " + e.message);
+  }
+}
+
+function clearGh(){
+  localStorage.removeItem(GH_KEY);
+  $("gh-token").value = "";
+  paintStorage();
+  ghOut("cleared — server falls back to its own config");
+  api("/api/admin/github-reset", {}).catch(() => {});
+}
+
+async function testGh(){
+  try{
+    const d = await api("/api/admin/github-test", {});
+    if(d.success) ghOut("write test OK · " + (d.keys || 0) + " key(s) in file");
+    else ghOut("write test FAILED · " + (d.error || "unknown"));
+  }catch(e){
+    if(e.message !== "unauthorized") ghOut("write test FAILED · " + e.message);
+  }
+}
+
+/* ============================================================
+   FORMATTERS
+   ============================================================ */
+function hoursOf(k){
+  const h = parseInt(k && k.durationHours, 10);
+  return (Number.isFinite(h) && h > 0) ? h : 24;
+}
+
+function planLabel(k){
+  const h = hoursOf(k);
+  return PLANS[h] || (h + " Hours");
+}
+
+function fmtDate(v){
+  if(!v) return "—";
+  const d = new Date(v);
+  return isNaN(d) ? "—" : d.toLocaleString();
+}
+
+function humanLeft(ms){
+  const d = Math.floor(ms / 86400000);
+  const h = Math.floor((ms % 86400000) / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  if(d > 0) return d + "d " + h + "h";
+  if(h > 0) return h + "h " + m + "m";
+  return Math.max(m, 1) + "m";
+}
+
+/* ============================================================
+   AUTH
+   ============================================================ */
+function showLogin(){
+  $("login-overlay").style.display = "flex";
+  $("admin-password").value = "";
+  $("admin-login-error").style.display = "none";
+  setTimeout(() => $("admin-password").focus(), 60);
+}
+
+function lock(){
+  stopWatch();
+  sessionStorage.removeItem(PASS_KEY);
+  sessionStorage.removeItem(VER_KEY);
+  adminPass = "";
+  clearInterval(autoTimer);
+  clearInterval(tickTimer);
+  showLogin();
+}
+
+async function adminLogin(){
+  const pass = $("admin-password").value.trim();
+  const err  = $("admin-login-error");
+  err.style.display = "none";
+
+  if(!pass){ err.textContent = "enter the admin password"; err.style.display = "block"; return; }
+
+  try{
+    const r = await fetch(BACKEND_URL + "/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ adminPass: pass })
+    });
+    const d = await r.json();
+
+    if(d.success){
+      adminPass = pass;
+      sessionStorage.setItem(PASS_KEY, pass);
+      sessionStorage.setItem(VER_KEY, d.ver || "");
+      $("login-overlay").style.display = "none";
+      bootDashboard();
+      startWatch();
+    } else {
+      err.textContent = d.error || "wrong password";
+      err.style.display = "block";
+    }
+  }catch(e){
+    err.textContent = "cannot reach backend server";
+    err.style.display = "block";
+  }
+}
+
+/* ============================================================
+   REMOTE ADMIN KEY WATCH
+   ============================================================ */
+function stopWatch(){
+  if(watchTimer){ clearInterval(watchTimer); watchTimer = null; }
+}
+
+function startWatch(){
+  stopWatch();
+  watchTimer = setInterval(checkKey, 15000);
+}
+
+async function checkKey(){
+  const pass = sessionStorage.getItem(PASS_KEY);
+  if(!pass) return stopWatch();
+
+  let d;
+  try{
+    const r = await fetch(BACKEND_URL + "/api/admin/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ adminPass: pass })
+    });
+    if(r.status === 503) return;             /* key source down — stay in */
+    if(r.status === 401) return kickOut("admin key is no longer valid");
+    d = await r.json();
+  }catch(e){ return; }                       /* network blip — stay in */
+
+  const known = sessionStorage.getItem(VER_KEY);
+  if(d && d.ver && known && d.ver !== known) kickOut("admin key was changed");
+}
+
+function kickOut(msg){
+  stopWatch();
+  lock();
+  const err = $("admin-login-error");
+  err.textContent = msg;
+  err.style.display = "block";
+  toast(msg);
+}
+
+/* ============================================================
+   STATUS
+   ============================================================ */
+function statusOf(k){
+  if(!k.activatedAt || !k.expiresAt) return "unbound";
+  return new Date(k.expiresAt).getTime() <= Date.now() ? "expired" : "active";
+}
+
+/* ============================================================
+   DATA
+   ============================================================ */
+async function loadKeys(){
+  try{
+    const d = await api("/api/admin/list-keys", {});
+    if(!d.keys) return;
+    allKeys = d.keys;
+    if(d.maintenance){
+      $("maint-toggle").checked = !!d.maintenance.enabled;
+      $("maint-msg").value = d.maintenance.message || "";
+    }
+    render();
+  }catch(e){
+    if(e.message !== "unauthorized") toast("failed to load keys");
+  }
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function expiresCell(k){
+  const st = statusOf(k);
+
+  /* Not used yet -> no real expiry exists. Show the plan window. */
+  if(st === "unbound"){
+    return `<span class="dim">Not started</span>
+            <span class="cell-sub dim">${esc(planLabel(k))} from first use</span>`;
+  }
+
+  if(!k.expiresAt) return `<span class="dim">—</span>`;
+
+  const left = new Date(k.expiresAt).getTime() - Date.now();
+
+  if(left <= 0){
+    return `${esc(fmtDate(k.expiresAt))}
+            <span class="cell-sub" style="color:#f87171;">expired</span>`;
+  }
+
+  const color = left < 86400000 ? "#f59e0b" : "#34d399";
+  return `${esc(fmtDate(k.expiresAt))}
+          <span class="cell-sub" style="color:${color};">${esc(humanLeft(left))} left</span>`;
+}
+
+function render(){
+  const stats = { total: allKeys.length, active: 0, unbound: 0, expired: 0 };
+  allKeys.forEach(k => { const s = statusOf(k); if(stats[s] !== undefined) stats[s]++; });
+
+  $("stat-total-keys").textContent   = stats.total;
+  $("stat-active-keys").textContent  = stats.active;
+  $("stat-unbound-keys").textContent = stats.unbound;
+  $("stat-expired-keys").textContent = stats.expired;
+
+  let rows = allKeys;
+  if(filter !== "all") rows = rows.filter(k => statusOf(k) === filter);
+  if(search) rows = rows.filter(k => String(k.key || "").toLowerCase().includes(search));
+
+  const tb = $("keys-tbody");
+  if(!rows.length){
+    tb.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#6b7280;padding:24px;">No keys found.</td></tr>`;
+    return;
+  }
+
+  tb.innerHTML = rows.map(k => {
+    const st  = statusOf(k);
+    const key = esc(k.key);
+    return `<tr>
+      <td class="key-code">${key}</td>
+      <td><span class="badge badge-${st}">${st}</span></td>
+      <td><span class="plan-tag">${esc(planLabel(k))}</span></td>
+      <td class="dim">${esc(fmtDate(k.createdAt))}</td>
+      <td>${expiresCell(k)}</td>
+      <td>
+        <div class="action-group">
+          <button class="btn-action" onclick="copyKey('${key}')">Copy</button>
+          <button class="btn-action danger" onclick="revokeKey('${key}')">Revoke</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join("");
+}
+
+function renderNodes(){
+  $("nodes-list").innerHTML = NODES.map(n => `
+    <div class="node-row">
+      <div>
+        <div style="font-size:11.5px;font-weight:700;color:#fff;">${esc(n.host)}</div>
+        <div style="font-size:9.5px;color:var(--mut);">${esc(n.proto)} · :${n.port} · ${esc(n.sec)}</div>
+      </div>
+      <span class="badge badge-active">online</span>
+    </div>`).join("");
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+async function createKeys(){
+  const durationHours = $("gen-duration").value;
+  const qty = Math.max(1, parseInt($("gen-count").value, 10) || 1);
+  const btn = $("gen-btn");
+
+  if(!ghCfg().token){
+    toast("no storage token — keys cannot be written");
+    ghOut("paste a token above, Save, then Test before generating.");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Generating…";
+
+  const made = [];
+  try{
+    for(let i = 0; i < qty; i++){
+      const d = await api("/api/admin/create-key", { durationHours });
+      if(d.success && d.record) made.push(d.record.key);
+      else if(d.error) toast(d.error);
+    }
+    if(made.length){
+      $("gen-result").style.display = "block";
+      $("gen-result-key").textContent = made.join(", ");
+      $("gen-result-plan").textContent =
+        "Plan: " + (PLANS[parseInt(durationHours,10)] || durationHours + " Hours") +
+        " · countdown starts on the buyer's first connection";
+      toast(made.length + " key(s) created");
+      loadKeys();
+    } else {
+      toast("failed to create key");
+    }
+  }catch(e){
+    if(e.message !== "unauthorized") toast("network error while creating key");
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "+ Generate License Key";
+  }
+}
+
+async function revokeKey(key){
+  if(!confirm(`Revoke ${key}?\n\nThe user is cut off immediately.`)) return;
+  try{
+    const d = await api("/api/admin/revoke-key", { key });
+    if(d.success){ toast(key + " revoked"); loadKeys(); }
+    else toast(d.error || "failed to revoke key");
+  }catch(e){
+    if(e.message !== "unauthorized") toast("network error while revoking");
+  }
+}
+
+async function updateMaintenance(){
+  const enabled = $("maint-toggle").checked;
+  const message = $("maint-msg").value;
+  try{
+    const d = await api("/api/admin/maintenance", { enabled, message });
+    if(d.success){ toast("maintenance settings saved"); ping(); }
+    else toast(d.error || "failed to update maintenance");
+  }catch(e){
+    if(e.message !== "unauthorized") toast("network error while saving");
+  }
+}
+
+/* ============================================================
+   SERVER PING
+   ============================================================ */
+async function ping(){
+  try{
+    const r = await fetch(BACKEND_URL + "/api/maintenance-status");
+    const d = await r.json();
+    $("header-status").innerHTML = `<span class="dot"></span> SERVER ONLINE`;
+    const m = $("stat-maintenance-status");
+    m.textContent = d.enabled ? "ON" : "OFF";
+    m.style.color = d.enabled ? "#f59e0b" : "#34d399";
+  }catch(e){
+    $("header-status").innerHTML = `<span class="dot"></span> SERVER UNREACHABLE`;
+    const m = $("stat-maintenance-status");
+    m.textContent = "—";
+    m.style.color = "#fff";
+  }
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+function bootDashboard(){
+  renderNodes();
+  paintStorage();
+  $("gh-token").value = ghCfg().token || "";
+  loadKeys();
+  ping();
+
+  clearInterval(pingTimer);
+  clearInterval(autoTimer);
+  clearInterval(tickTimer);
+
+  pingTimer = setInterval(ping, 30000);
+  autoTimer = setInterval(loadKeys, 20000);   /* re-pull data — catches activations */
+  tickTimer = setInterval(render, 1000);      /* live countdown */
+}
+
+document.addEventListener("input", e => {
+  if(e.target.id === "key-search"){
+    search = e.target.value.trim().toLowerCase();
+    render();
+  }
+});
+
+document.querySelectorAll(".filter-tab").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll(".filter-tab").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    filter = b.dataset.filter;
+    render();
+  });
+});
+
+$("admin-password").addEventListener("keydown", e => {
+  if(e.key === "Enter") adminLogin();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if(!document.hidden && adminPass) loadKeys();
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  paintStorage();
+  if(adminPass){ bootDashboard(); startWatch(); }
+  else showLogin();
+});
+</script>
+</body>
+</html>
