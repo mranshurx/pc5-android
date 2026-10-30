@@ -729,9 +729,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T14:10:11.594Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-30T16:40:52.476Z",
+      "activatedAt": "2026-10-30T16:40:52.476Z",
+      "expiresAt": "2026-10-30T17:40:52.476Z"
     },
     {
       "key": "PC5-EXVS7V",
