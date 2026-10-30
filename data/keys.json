@@ -831,9 +831,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T14:11:06.928Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-30T17:12:38.768Z",
+      "activatedAt": "2026-10-30T17:12:38.768Z",
+      "expiresAt": "2026-10-30T20:12:38.768Z"
     },
     {
       "key": "PC5-TRSLP9",
