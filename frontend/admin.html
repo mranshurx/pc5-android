@@ -368,7 +368,8 @@
 /* ============================================================
    CONFIG
    ============================================================ */
-const BACKEND_URL = "https://cyber-x-silent-server.onrender.com";
+/* same service serves the panel AND the API — resolve against this origin */
+const BACKEND_URL = location.origin;
 const PASS_KEY    = "pc5_admin_pass";
 const VER_KEY     = "pc5_admin_ver";
 const GH_KEY      = "pc5_gh_cfg";
