@@ -1,1 +1,7 @@
-..
+{
+  "keys": [],
+  "maintenance": {
+    "enabled": false,
+    "message": "System under maintenance."
+  }
+}
