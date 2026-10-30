@@ -1,5 +1,14 @@
 {
-  "keys": [],
+  "keys": [
+    {
+      "key": "PC5-DVHZYM",
+      "durationHours": 24,
+      "createdAt": "2026-10-30T09:26:22.464Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
+    }
+  ],
   "maintenance": {
     "enabled": false,
     "message": "System under maintenance."
