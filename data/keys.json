@@ -929,7 +929,7 @@
     }
   ],
   "maintenance": {
-    "enabled": false,
-    "message": "System under maintenance."
+    "enabled": true,
+    "message": "our official servers are facing some issues so the service is temporarily stoped "
   }
 }
