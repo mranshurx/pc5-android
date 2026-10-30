@@ -1,5 +1,14 @@
 {
-  "keys": [],
+  "keys": [
+    {
+      "key": "PC5-WUWWWD",
+      "durationHours": 24,
+      "createdAt": "2026-10-30T09:20:04.343Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
+    }
+  ],
   "maintenance": {
     "enabled": false,
     "message": "System under maintenance."
