@@ -937,16 +937,9 @@
     {
       "key": "PC5-933CU2",
       "durationHours": 72,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D9f46f7bb012016d5",
-          "firstSeen": "2026-10-30T15:55:53.960Z",
-          "lastSeen": "2026-10-30T15:55:53.960Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
-        }
-      ],
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
       "createdAt": "2026-10-30T15:52:19.782Z",
       "startedAt": "2026-10-30T15:55:52.402Z",
       "activatedAt": "2026-10-30T15:55:52.402Z",
