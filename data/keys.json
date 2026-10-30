@@ -933,6 +933,17 @@
       "startedAt": "2026-10-30T14:21:39.212Z",
       "activatedAt": "2026-10-30T14:21:39.212Z",
       "expiresAt": "2026-10-30T17:21:39.212Z"
+    },
+    {
+      "key": "PC5-933CU2",
+      "durationHours": 72,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-10-30T15:52:19.782Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
