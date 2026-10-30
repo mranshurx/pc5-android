@@ -508,7 +508,7 @@
     }
   ],
   "maintenance": {
-    "enabled": true,
+    "enabled": false,
     "message": "System under maintenance."
   }
 }
