@@ -876,9 +876,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T14:11:16.413Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-30T14:22:26.839Z",
+      "activatedAt": "2026-10-30T14:22:26.839Z",
+      "expiresAt": "2026-10-30T17:22:26.839Z"
     },
     {
       "key": "PC5-KVF65X",
