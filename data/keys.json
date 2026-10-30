@@ -700,9 +700,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T14:10:08.234Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-30T16:04:15.756Z",
+      "activatedAt": "2026-10-30T16:04:15.756Z",
+      "expiresAt": "2026-10-30T17:04:15.756Z"
     },
     {
       "key": "PC5-V4V0UE",
