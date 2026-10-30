@@ -124,14 +124,7 @@
       "durationHours": 3,
       "maxDevices": 1,
       "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D56a21bfc0119f89e",
-          "firstSeen": "2026-10-30T14:10:16.757Z",
-          "lastSeen": "2026-10-30T14:10:16.757Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Mobile Safari/537.36"
-        }
-      ],
+      "devices": [],
       "createdAt": "2026-10-30T09:55:25.215Z",
       "startedAt": "2026-10-30T12:06:54.328Z",
       "activatedAt": "2026-10-30T12:06:54.328Z",
@@ -744,6 +737,28 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T14:10:14.945Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
+    },
+    {
+      "key": "PC5-B1NVXE",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-10-30T14:10:16.463Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
+    },
+    {
+      "key": "PC5-XSQZI0",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-10-30T14:10:18.002Z",
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
