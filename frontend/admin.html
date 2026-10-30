@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex" />
-<title>CYBER X SILENT Control Center — Back-End Panel</title>
+<title>PC5 ANDROID Control Center — Back-End Panel</title>
 <link rel="icon" href="logo/logo.png" type="image/png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -125,7 +125,7 @@
   <header class="panel-header">
     <div>
       <div style="display:flex;align-items:center;gap:10px;">
-        <img src="logo/logo.png" alt="CYBER X SILENT logo" onerror="this.style.display='none'"
+        <img src="logo/logo.png" alt="PC5 ANDROID logo" onerror="this.style.display='none'"
              style="width:32px;height:32px;object-fit:contain;" />
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
              stroke="#ff2a44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -134,7 +134,7 @@
           <circle cx="15" cy="12" r="1"></circle>
           <circle cx="9" cy="12" r="1"></circle>
         </svg>
-        <h1 class="panel-title">CYBER X SILENT <span>BACK-END PANEL</span></h1>
+        <h1 class="panel-title">PC5 ANDROID <span>BACK-END PANEL</span></h1>
       </div>
       <p class="panel-sub">Standalone License Engine &amp; Proxy Tunnel Manager</p>
     </div>
@@ -211,8 +211,8 @@
 
         <div class="form-group">
           <label class="form-label">Key Prefix</label>
-          <input id="gen-prefix" class="form-control" type="text" value="CYBER" maxlength="6" />
-          <span class="form-hint">Display only — server always issues CYBER-XXXXXX</span>
+          <input id="gen-prefix" class="form-control" type="text" value="PC5" maxlength="6" />
+          <span class="form-hint">Display only — server always issues PC5-XXXXXX</span>
         </div>
 
         <div class="form-group">
@@ -351,11 +351,11 @@
 
 <div id="login-overlay">
   <div class="login-box">
-    <img src="logo/logo.png" alt="CYBER X SILENT logo" onerror="this.style.display='none'"
+    <img src="logo/logo.png" alt="PC5 ANDROID logo" onerror="this.style.display='none'"
          style="width:64px;height:64px;object-fit:contain;margin:0 auto 12px;display:block;" />
-    <div class="login-title"><span>CYBER X SILENT</span> CONTROL CENTER</div>
+    <div class="login-title"><span>PC5 ANDROID</span> CONTROL CENTER</div>
     <div class="login-sub">enter admin password to continue</div>
-    <input id="admin-password" type="password" class="form-control" placeholder="CYBER admin key"
+    <input id="admin-password" type="password" class="form-control" placeholder="PC5 admin key"
            autocomplete="current-password" style="text-align:center;" />
     <button class="btn-admin" style="width:100%;margin-top:12px;" onclick="adminLogin()">Unlock Panel</button>
     <p id="admin-login-error" class="login-err">wrong password</p>
@@ -369,13 +369,13 @@
    CONFIG
    ============================================================ */
 const BACKEND_URL = "https://cyber-x-silent-server.onrender.com";
-const PASS_KEY    = "cyber_x_admin_pass";
-const VER_KEY     = "cyber_x_admin_ver";
-const GH_KEY      = "cyber_x_gh_cfg";
+const PASS_KEY    = "pc5_admin_pass";
+const VER_KEY     = "pc5_admin_ver";
+const GH_KEY      = "pc5_gh_cfg";
 const LIFETIME_H  = 999999;
 
 /* Static mirror of the hysteria outbound defined in backend/server.js */
-const NODES = [{ host: "wraith-bom.cyber-x-silent.onrender.com", proto: "Hysteria2", port: 443, sec: "TLS / h3" }];
+const NODES = [{ host: "wraith-bom.xreg.site", proto: "Hysteria2", port: 443, sec: "TLS / h3" }];
 
 /* Known plans -> human label */
 const PLANS = {
