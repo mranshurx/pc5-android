@@ -404,9 +404,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T09:57:59.371Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-30T12:15:40.528Z",
+      "activatedAt": "2026-10-30T12:15:40.528Z",
+      "expiresAt": "2026-11-06T12:15:40.528Z"
     },
     {
       "key": "PC5-SJDWPB",
