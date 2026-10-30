@@ -86,6 +86,7 @@
     .row .k{color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-size:.7rem}
     .row .v{color:#fff;font-weight:700;letter-spacing:.04em;text-align:right;word-break:break-all}
     .row .v.live{color:#4ade80}
+    .row .v.warn{color:#f59e0b}
     .timer-block{display:flex;flex-direction:column;gap:.5rem;
       padding-bottom:1.15rem;margin-bottom:1.15rem;border-bottom:1px solid var(--line)}
     .timer-block .k{color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-size:.7rem}
@@ -216,6 +217,7 @@
             <span class="time-left live" id="displayLeft">—</span>
           </div>
           <div class="row"><span class="k">Access Key</span><span class="v" id="displayKey">PC5-XXXXXX</span></div>
+          <div class="row"><span class="k">Device</span><span class="v" id="displayDevice">—</span></div>
           <div class="row"><span class="k">Expires At</span><span class="v" id="displayExpiry">Loading...</span></div>
         </div>
 
@@ -299,6 +301,49 @@
     let countdownTimer = null;
     let expiresAtMs = 0;
     let updatesLoaded = false;
+
+    /* ============ DEVICE FINGERPRINT (HWID) ============ */
+    /*
+      Deterministic per device: same phone always produces the same id even if
+      localStorage is wiped. Stored as a cache so it also works when the
+      fingerprint inputs change slightly (rotated UA, resized viewport, etc).
+    */
+    const DEVICE_KEY = "pc5_device_id";
+
+    function fingerprint(){
+      const parts = [
+        navigator.userAgent || "",
+        (screen.width || 0) + "x" + (screen.height || 0) + "x" + (screen.colorDepth || 0),
+        window.devicePixelRatio || 1,
+        (window.innerWidth || 0) + "x" + (window.innerHeight || 0),
+        Intl.DateTimeFormat().resolvedOptions().timeZone || "",
+        navigator.language || "",
+        (navigator.languages || []).join(","),
+        navigator.hardwareConcurrency || 0,
+        navigator.maxTouchPoints || 0,
+        navigator.platform || ""
+      ].join("~");
+
+      let a = 0x811c9dc5, b = 0x01000193;
+      for (let i = 0; i < parts.length; i++){
+        const ch = parts.charCodeAt(i);
+        a = ((a ^ ch) * 16777619) >>> 0;
+        b = ((b + ch * (i + 7)) ^ ((b + ch * (i + 7)) >>> 13)) >>> 0;
+      }
+      return "D" + a.toString(16).padStart(8, "0") + b.toString(16).padStart(8, "0");
+    }
+
+    function deviceId(){
+      let cached = "";
+      try { cached = localStorage.getItem(DEVICE_KEY) || ""; } catch(e){}
+      if (cached) return cached;
+      const id = fingerprint();
+      try { localStorage.setItem(DEVICE_KEY, id); } catch(e){}
+      return id;
+    }
+
+    const DEVICE_ID = deviceId();
+    const DEVICE_SHORT = DEVICE_ID.slice(0, 10);
 
     /* ============ TELEGRAM LOGO CLICK ============ */
     function openTelegram(){
@@ -440,10 +485,10 @@
       document.getElementById('maintenanceMsgText').innerText = msg || "System under maintenance.";
       document.getElementById('maintenanceView').classList.remove('hidden');
     }
-    function showDashboard(key, expiresAt){
+    function showDashboard(key, expiresAt, deviceLimit, deviceLocked){
       const changed = (activeKey !== key);
       activeKey = key;
-      rawSubUrl = `${BACKEND_URL}/sub?key=${encodeURIComponent(key)}`;
+      rawSubUrl = `${BACKEND_URL}/sub?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`;
 
       if (changed){ happLink = ""; loadHappLink(key); }
 
@@ -451,6 +496,16 @@
       const keyEl = document.getElementById('displayKey');
       keyEl.innerText = maskKey(key);
       keyEl.title = key;
+
+      const devEl = document.getElementById('displayDevice');
+      if (deviceLimit === 'single'){
+        devEl.innerText = deviceLocked ? `1 device · locked (${DEVICE_SHORT}…)` : `1 device (${DEVICE_SHORT}…)`;
+        devEl.className = "v warn";
+      } else {
+        devEl.innerText = "Unlimited";
+        devEl.className = "v live";
+      }
+
       document.getElementById('displayExpiry').innerText = expiresAt ? new Date(expiresAt).toLocaleString() : "—";
       document.getElementById('maintenanceView').classList.add('hidden');
       document.getElementById('unlockView').classList.add('hidden');
@@ -483,7 +538,7 @@
 
     /* ============ NETWORK ============ */
     async function checkKey(key){
-      const res = await fetch(`${BACKEND_URL}/api/check-key?key=${encodeURIComponent(key)}`);
+      const res = await fetch(`${BACKEND_URL}/api/check-key?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`);
       return res.json();
     }
     async function getMaintenance(){
@@ -492,12 +547,10 @@
     }
     async function loadHappLink(key){
       try {
-        const r = await fetch(`${BACKEND_URL}/api/happ-link?key=${encodeURIComponent(key)}`);
+        const r = await fetch(`${BACKEND_URL}/api/happ-link?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`);
         const d = await r.json();
         if (d && d.ok && d.link) {
           happLink = d.link;
-          const sec = document.getElementById('displaySec');
-          if (sec) sec.innerText = "🔒 Encrypted";
         }
       } catch(e){}
     }
@@ -526,7 +579,7 @@
         if(data.maintenance){ showMaintenance(data.message); return; }
         if(data.valid){
           saveSession(data.key, data.expiresAt);
-          showDashboard(data.key, data.expiresAt);
+          showDashboard(data.key, data.expiresAt, data.deviceLimit, data.deviceLocked);
         } else {
           errorMsg.innerText = data.message || "Invalid key.";
         }
@@ -549,7 +602,7 @@
         if(data.maintenance){ showMaintenance(data.message); return; }
         if(!data.valid){ logout(); return; }
         saveSession(data.key, data.expiresAt);
-        showDashboard(data.key, data.expiresAt);
+        showDashboard(data.key, data.expiresAt, data.deviceLimit, data.deviceLocked);
       } catch(err){}
     }
 
@@ -560,11 +613,15 @@
       try {
         const data = await checkKey(s.key);
         if(data.maintenance){ showMaintenance(data.message); return true; }
-        if(data.valid){ saveSession(data.key, data.expiresAt); showDashboard(data.key, data.expiresAt); return true; }
+        if(data.valid){
+          saveSession(data.key, data.expiresAt);
+          showDashboard(data.key, data.expiresAt, data.deviceLimit, data.deviceLocked);
+          return true;
+        }
         clearSession();
         return false;
       } catch(err){
-        showDashboard(s.key, s.expiresAt);
+        showDashboard(s.key, s.expiresAt, "unlimited", false);
         return true;
       }
     }
