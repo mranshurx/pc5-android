@@ -1,5 +1,5 @@
 {
-  "name": "cyber-sub-relay",
+  "name": "pc5-android-relay",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
