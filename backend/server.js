@@ -13,7 +13,7 @@ app.use(cors());
 /* ================= STORAGE ================= */
 const HARD = {
   owner:  'mranshurx',
-  repo:   'CYBER-X-SILENT',
+  repo:   'pc5-android',
   branch: 'main',
   file:   'data/keys.json',
   token:  ''
@@ -83,7 +83,7 @@ async function pullCfgFromRepo() {
   lastPull = Date.now();
   try {
     const raw = `https://raw.githubusercontent.com/${HARD.owner}/${HARD.repo}/${HARD.branch}/${REPO_CFG_PATH}?t=${Date.now()}`;
-    const r = await fetch(raw, { headers: { 'User-Agent': 'cyber-x-silent' } });
+    const r = await fetch(raw, { headers: { 'User-Agent': 'pc5-android' } });
     if (!r.ok) return;
     const j = await r.json();
     for (const k of ['owner', 'repo', 'branch', 'file', 'token']) {
@@ -133,7 +133,7 @@ function tokenShape(t) {
 
 /* ================= ADMIN KEY (remote — no hardcoded secret) ================= */
 const ADMIN_KEY_URL = process.env.ADMIN_KEY_URL ||
-  'https://raw.githubusercontent.com/mranshurx/CYBER-X-SILENT/refs/heads/main/adminkey.txt';
+  'https://raw.githubusercontent.com/mranshurx/pc5-android/refs/heads/main/adminkey.txt';
 const ADMIN_KEY_TTL = 30000;
 
 let adminKeyState = { value: '', ver: '', at: 0 };
@@ -156,7 +156,7 @@ async function getAdminKey(force) {
   try {
     const url = `${ADMIN_KEY_URL}${ADMIN_KEY_URL.includes('?') ? '&' : '?'}t=${Date.now()}`;
     const r = await fetch(url, {
-      headers: { 'User-Agent': 'cyber-x-silent', 'Cache-Control': 'no-cache' },
+      headers: { 'User-Agent': 'pc5-android', 'Cache-Control': 'no-cache' },
       cache: 'no-store'
     });
     if (!r.ok) throw new Error(`GET ${r.status}`);
@@ -197,7 +197,7 @@ const EMPTY_DB = () => ({ keys: [], maintenance: { ...DEFAULT_MAINT } });
 /* ================= GITHUB API ================= */
 function apiHeaders(c, json) {
   const h = {
-    'User-Agent': 'cyber-x-silent',
+    'User-Agent': 'pc5-android',
     Accept: 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28'
   };
@@ -216,7 +216,7 @@ async function ghRead(c) {
 
   if (!c.token) {
     const raw = `https://raw.githubusercontent.com/${c.owner}/${c.repo}/${encodeURIComponent(c.branch)}/${encoded}?t=${Date.now()}`;
-    const r = await fetch(raw, { headers: { 'User-Agent': 'cyber-x-silent' } });
+    const r = await fetch(raw, { headers: { 'User-Agent': 'pc5-android' } });
     if (r.status === 404) return { text: null, sha: null };
     if (!r.ok) throw new Error(`raw GET ${r.status}`);
     return { text: await r.text(), sha: null };
@@ -404,7 +404,7 @@ async function findActiveKey(key, c) {
 
 /* ================= ROUTING CONFIG ================= */
 const BASE_CONFIG = {
-  "remarks": "CYBER X SILENT [Secured]",
+  "remarks": "PC5 ANDROID [Secured]",
   "profile-update-interval": 1,
   "inbounds": [
     { "tag": "socks", "listen": "127.0.0.1", "port": 10808, "protocol": "socks", "settings": { "auth": "noauth", "udp": true }, "sniffing": { "enabled": true, "destOverride": ["http", "tls", "quic"], "routeOnly": false } },
@@ -532,7 +532,7 @@ app.get('/sub', async (req, res) => {
   res.setHeader('subscription-auto-update-open-enable', '1');
   res.setHeader('hide-settings', '1');
   if (HAPP_PROVIDER_ID) res.setHeader('providerid', HAPP_PROVIDER_ID);
-  res.setHeader('content-disposition', 'attachment; filename="cyber-x-silent"');
+  res.setHeader('content-disposition', 'attachment; filename="pc5-android"');
   res.setHeader('Content-Type', 'application/json');
 
   let targetConfig = BASE_CONFIG;
@@ -710,7 +710,7 @@ app.post('/api/admin/create-key', async (req, res) => {
   try {
     const record = await mutate(c, db => {
       let key;
-      do { key = "CYBER-" + Math.random().toString(36).substring(2, 8).toUpperCase(); }
+      do { key = "PC5-" + Math.random().toString(36).substring(2, 8).toUpperCase(); }
       while (db.keys.find(k => k.key === key));
 
       const now = Date.now();
