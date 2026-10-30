@@ -1,5 +1,17 @@
 {
-  "keys": [],
+  "keys": [
+    {
+      "key": "PC5-NV1AYO",
+      "durationHours": 1,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-10-30T09:48:01.269Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
+    }
+  ],
   "maintenance": {
     "enabled": false,
     "message": "System under maintenance."
