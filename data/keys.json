@@ -619,9 +619,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T13:45:02.422Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-30T18:44:57.303Z",
+      "activatedAt": "2026-10-30T18:44:57.303Z",
+      "expiresAt": "2026-10-30T19:44:57.303Z"
     },
     {
       "key": "PC5-YSSKQN",
