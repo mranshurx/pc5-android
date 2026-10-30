@@ -108,9 +108,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T09:55:23.789Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-30T13:25:10.065Z",
+      "activatedAt": "2026-10-30T13:25:10.065Z",
+      "expiresAt": "2026-10-30T16:25:10.065Z"
     },
     {
       "key": "PC5-TP2PAT",
