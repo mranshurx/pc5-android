@@ -351,6 +351,32 @@ function normalizeHours(h) {
   const n = Number(h);
   return (Number.isFinite(n) && n > 0) ? Math.round(n) : 24;
 }
+
+/* ================= DEVICE LIMIT ================= */
+/* 0 = unlimited devices, 1 = single device (HWID locked on first unlock) */
+function parseDeviceLimit(body) {
+  body = body || {};
+  const v = body.deviceLimit;
+  if (v === 'single' || v === 'one' || v === '1' || v === 1) return 1;
+  if (body.maxDevices != null) {
+    const n = Number(body.maxDevices);
+    if (n === 1) return 1;
+  }
+  return 0;
+}
+
+/* Normalize whatever the client sends into a compact id we can store safely. */
+function deviceOf(req) {
+  const raw = String(
+    (req.query && (req.query.did || req.query.device || req.query.hwid)) ||
+    req.headers['x-device-id'] || ''
+  ).trim();
+  return raw.replace(/[^A-Za-z0-9_.-]/g, '').slice(0, 48);
+}
+function deviceUa(req) {
+  return String((req.headers && req.headers['user-agent']) || '').slice(0, 200);
+}
+
 function migrateRecord(r) {
   if (r.durationHours == null) {
     const c = r.createdAt ? new Date(r.createdAt).getTime() : 0;
@@ -362,13 +388,46 @@ function migrateRecord(r) {
   }
   if (r.startedAt == null) r.startedAt = r.activatedAt || null;
   if (r.expiresAt && !r.activatedAt) r.activatedAt = r.createdAt || new Date().toISOString();
+
+  if (r.maxDevices == null) {
+    r.maxDevices = (r.deviceLimit === 'single' || r.deviceLimit === 1 || r.deviceLimit === 'one') ? 1 : 0;
+  }
+  r.maxDevices = (Number(r.maxDevices) === 1) ? 1 : 0;
+  r.deviceLimit = r.maxDevices === 1 ? 'single' : 'unlimited';
+  if (!Array.isArray(r.devices)) r.devices = [];
+  r.devices = r.devices
+    .filter(d => d && d.id)
+    .map(d => ({ id: String(d.id).slice(0, 48), firstSeen: d.firstSeen || null, lastSeen: d.lastSeen || null, ua: d.ua || '' }));
 }
 
 /* ================= KEY RESOLUTION ================= */
-async function findActiveKey(key, c) {
+/* Binds the device on a single-device key the first time it is seen. */
+async function bindDevice(c, key, did, ua) {
+  return mutate(c, db => {
+    const rec = db.keys.find(k => k.key === key);
+    if (!rec) return null;
+    if (!Array.isArray(rec.devices)) rec.devices = [];
+    const now = new Date().toISOString();
+    const known = rec.devices.find(d => d.id === did);
+    if (known) {
+      known.lastSeen = now;
+      if (ua) known.ua = ua;
+    } else if (rec.maxDevices === 1 && rec.devices.length === 0) {
+      rec.devices.push({ id: did, firstSeen: now, lastSeen: now, ua: ua || '' });
+      console.log(`[device] locked ${rec.key} -> ${did}`);
+    }
+    return rec;
+  });
+}
+
+/*
+  Returns { ok, reason, record }.
+  reason: invalid | expired | no-device | device-mismatch
+*/
+async function accessKey(key, c, did, ua) {
   let db = await getDb(false, c);
   let r = db.keys.find(k => k.key === key);
-  if (!r) return null;
+  if (!r) return { ok: false, reason: 'invalid' };
 
   if (!r.activatedAt) {
     const now = Date.now();
@@ -389,7 +448,7 @@ async function findActiveKey(key, c) {
         console.log(`[key] activated ${rec.key} -> ${rec.durationHours}h, expires ${rec.expiresAt}`);
         return rec;
       });
-      if (!r) return null;
+      if (!r) return { ok: false, reason: 'invalid' };
     } catch (e) {
       /* Never block the buyer on a storage hiccup — serve it in memory,
          the cache still holds the unactivated record so the next call retries. */
@@ -398,9 +457,39 @@ async function findActiveKey(key, c) {
     }
   }
 
-  if (!r.expiresAt || Date.now() > new Date(r.expiresAt).getTime()) return null;
-  return r;
+  if (!r.expiresAt || Date.now() > new Date(r.expiresAt).getTime()) {
+    return { ok: false, reason: 'expired', record: r };
+  }
+
+  if (r.maxDevices === 1) {
+    if (!did) return { ok: false, reason: 'no-device', record: r };
+
+    const bound = (r.devices || [])[0];
+    if (bound && bound.id !== did) {
+      return { ok: false, reason: 'device-mismatch', record: r };
+    }
+
+    if (!bound) {
+      try {
+        const updated = await bindDevice(c, key, did, ua);
+        if (updated) r = updated;
+        else r = { ...r, devices: [{ id: did, firstSeen: new Date().toISOString(), lastSeen: new Date().toISOString(), ua: ua || '' }] };
+      } catch (e) {
+        console.warn('[device] lock write failed, serving in-memory:', e.message);
+        r = { ...r, devices: [{ id: did, firstSeen: new Date().toISOString(), lastSeen: new Date().toISOString(), ua: ua || '' }] };
+      }
+    }
+  }
+
+  return { ok: true, record: r };
 }
+
+const REASON_TEXT = {
+  'invalid': 'Invalid key.',
+  'expired': 'Key has expired.',
+  'no-device': 'Device could not be identified. Reopen the app.',
+  'device-mismatch': 'This key is locked to another device.'
+};
 
 /* ================= ROUTING CONFIG ================= */
 const BASE_CONFIG = {
@@ -514,12 +603,15 @@ app.get('/api/happ-link', async (req, res) => {
   if (!key) return res.json({ ok: false, reason: 'no-key' });
   try {
     const c = credsFrom(req);
-    const record = await findActiveKey(key, c);
-    if (!record) return res.json({ ok: false, reason: 'invalid' });
-    const subUrl = `${baseUrl(req)}/sub?key=${encodeURIComponent(key)}`;
-    if (happLinkCache.has(key)) return res.json({ ok: true, link: happLinkCache.get(key), raw: subUrl });
+    const did = deviceOf(req);
+    const out = await accessKey(key, c, did, deviceUa(req));
+    if (!out.ok) return res.json({ ok: false, reason: out.reason, message: REASON_TEXT[out.reason] });
+
+    const subUrl = `${baseUrl(req)}/sub?key=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}`;
+    const cacheKey = `${key}|${did}`;
+    if (happLinkCache.has(cacheKey)) return res.json({ ok: true, link: happLinkCache.get(cacheKey), raw: subUrl });
     const link = await encryptHappLink(subUrl);
-    if (link) happLinkCache.set(key, link);
+    if (link) happLinkCache.set(cacheKey, link);
     return res.json({ ok: !!link, link: link || subUrl, raw: subUrl, encrypted: !!link });
   } catch (e) {
     return res.json({ ok: false, reason: 'storage-error', detail: e.message });
@@ -545,10 +637,14 @@ app.get('/sub', async (req, res) => {
       targetConfig = { ...EXPIRED_CONFIG, remarks: `⚠️ MAINTENANCE: ${m.message}` };
     } else {
       const { key } = req.query;
-      const record = key ? await findActiveKey(key, c) : null;
-      if (!record) targetConfig = EXPIRED_CONFIG;
-      else {
-        const expiresAt = new Date(record.expiresAt);
+      const did = deviceOf(req);
+      const out = key ? await accessKey(key, c, did, deviceUa(req)) : { ok: false, reason: 'invalid' };
+      if (!out.ok) {
+        res.setHeader('x-pc5-status', out.reason);
+        targetConfig = { ...EXPIRED_CONFIG, remarks: `❌ ${REASON_TEXT[out.reason] || 'SUBSCRIPTION EXPIRED OR TERMINATED'}` };
+      } else {
+        const expiresAt = new Date(out.record.expiresAt);
+        res.setHeader('x-pc5-status', 'ok');
         res.setHeader('subscription-userinfo', `upload=0; download=0; total=107374182400; expire=${Math.floor(expiresAt.getTime() / 1000)}`);
       }
     }
@@ -570,9 +666,12 @@ app.get('/api/check-key', async (req, res) => {
     if (!key) return res.json({ valid: false, message: "Please enter an access key." });
     if (!db.keys.find(k => k.key === key)) return res.json({ valid: false, message: "Invalid key." });
 
-    const record = await findActiveKey(key, c);
-    if (!record) return res.json({ valid: false, message: "Key has expired." });
+    const out = await accessKey(key, c, deviceOf(req), deviceUa(req));
+    if (!out.ok) {
+      return res.json({ valid: false, reason: out.reason, message: REASON_TEXT[out.reason] || "Invalid key." });
+    }
 
+    const record = out.record;
     return res.json({
       valid: true,
       key: record.key,
@@ -581,6 +680,9 @@ app.get('/api/check-key', async (req, res) => {
       expiresAt: record.expiresAt,
       durationHours: record.durationHours,
       remainingMs: new Date(record.expiresAt).getTime() - Date.now(),
+      deviceLimit: record.maxDevices === 1 ? 'single' : 'unlimited',
+      deviceLocked: record.maxDevices === 1 && (record.devices || []).length > 0,
+      deviceCount: (record.devices || []).length,
       message: "Access Key Validated!"
     });
   } catch (e) {
@@ -705,7 +807,8 @@ app.post('/api/admin/create-key', async (req, res) => {
   const { startNow } = req.body;
   const c = credsFrom(req);
   const durationHours = parseDuration(req.body);
-  console.log('[create-key] body =', JSON.stringify(req.body), '=> durationHours =', durationHours);
+  const maxDevices = parseDeviceLimit(req.body);
+  console.log('[create-key] body =', JSON.stringify(req.body), '=> durationHours =', durationHours, 'maxDevices =', maxDevices);
 
   try {
     const record = await mutate(c, db => {
@@ -718,6 +821,9 @@ app.post('/api/admin/create-key', async (req, res) => {
       const rec = {
         key,
         durationHours,
+        maxDevices,
+        deviceLimit: maxDevices === 1 ? 'single' : 'unlimited',
+        devices: [],
         createdAt: new Date(now).toISOString(),
         startedAt: started ? new Date(now).toISOString() : null,
         activatedAt: started ? new Date(now).toISOString() : null,
@@ -726,7 +832,7 @@ app.post('/api/admin/create-key', async (req, res) => {
       db.keys.push(rec);
       return rec;
     });
-    return res.json({ success: true, record, durationHours });
+    return res.json({ success: true, record, durationHours, maxDevices });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
   }
@@ -755,7 +861,7 @@ app.post('/api/admin/revoke-key', async (req, res) => {
       const idx = db.keys.findIndex(k => k.key === key);
       if (idx >= 0) db.keys.splice(idx, 1);
     });
-    happLinkCache.delete(key);
+    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
     return res.json({ success: true, message: `Key ${key} revoked.` });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
@@ -780,8 +886,55 @@ app.post('/api/admin/repair-key', async (req, res) => {
       return r;
     });
     if (!rec) return res.status(404).json({ error: "Key not found." });
-    happLinkCache.delete(key);
+    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
     return res.json({ success: true, record: rec, durationHours });
+  } catch (e) {
+    return res.status(500).json({ error: "Write failed: " + e.message });
+  }
+});
+
+/* Clears the bound device so a single-device key can be used elsewhere. */
+app.post('/api/admin/reset-device', async (req, res) => {
+  const state = await requireAdmin(req, res);
+  if (!state) return;
+  const { key } = req.body;
+  const c = credsFrom(req);
+
+  try {
+    const rec = await mutate(c, db => {
+      const r = db.keys.find(k => k.key === key);
+      if (!r) return null;
+      r.devices = [];
+      return r;
+    });
+    if (!rec) return res.status(404).json({ error: "Key not found." });
+    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
+    return res.json({ success: true, message: `Device lock cleared for ${key}.` });
+  } catch (e) {
+    return res.status(500).json({ error: "Write failed: " + e.message });
+  }
+});
+
+/* Flips an existing key between unlimited and single-device. */
+app.post('/api/admin/set-device-limit', async (req, res) => {
+  const state = await requireAdmin(req, res);
+  if (!state) return;
+  const { key } = req.body;
+  const c = credsFrom(req);
+  const maxDevices = parseDeviceLimit(req.body);
+
+  try {
+    const rec = await mutate(c, db => {
+      const r = db.keys.find(k => k.key === key);
+      if (!r) return null;
+      r.maxDevices = maxDevices;
+      r.deviceLimit = maxDevices === 1 ? 'single' : 'unlimited';
+      if (maxDevices === 0) r.devices = [];
+      return r;
+    });
+    if (!rec) return res.status(404).json({ error: "Key not found." });
+    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
+    return res.json({ success: true, record: rec, maxDevices });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
   }
