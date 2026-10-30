@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBER X SILENT</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#000000;--strip:#060606;--line:#171717;--line-2:#232323;
+      --txt:#f4f4f4;--dim:#6d6d6d;--dim-2:#3a3a3a;
+      --mono:'JetBrains Mono',monospace;--display:'Archivo Black',sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    [hidden]{display:none !important}
+    html,body{height:100%}
+    body{
+      background:var(--bg);color:var(--txt);font-family:var(--mono);
+      display:flex;justify-content:center;min-height:100vh;-webkit-font-smoothing:antialiased;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='230' height='230' viewBox='0 0 220 220'%3E%3Cpath fill='%230a0a0a' d='M110 40C78 40 64 66 64 100L64 158L76 146L87 158L98 146L110 158L122 146L133 158L144 146L156 158L156 100C156 66 142 40 110 40Z'/%3E%3C/svg%3E");
+      background-size:230px 230px;
+    }
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,.85) 78%)}
+
+    .strip{
+      position:relative;width:100%;max-width:460px;min-height:100vh;background:var(--strip);
+      border-left:1px solid var(--line);border-right:1px solid var(--line);
+      padding:2.2rem 1.9rem 2.2rem;display:flex;flex-direction:column;
+      justify-content:flex-start;z-index:1;
+    }
+    .lang{position:absolute;top:1.3rem;right:1.6rem;display:inline-flex;align-items:center;gap:.45rem;font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--dim);border:1px solid var(--line-2);border-radius:99px;padding:.35rem .7rem}
+    .lang svg{width:12px;height:12px;fill:var(--dim)}
+    .hidden{display:none !important}
+
+    /* ---------- TOP-MIDDLE LOGO ---------- */
+    .top-logo{display:flex;justify-content:center;align-items:center;margin-top:1.6rem;margin-bottom:1.1rem}
+    .top-logo img{height:104px;width:auto;max-width:100%;object-fit:contain;display:block;
+      filter:drop-shadow(0 0 40px rgba(255,255,255,.15))}
+    .top-logo.small{margin:0 0 1.4rem}
+    .top-logo.small img{height:46px;filter:none}
+
+    /* ---------- DASHBOARD TOP BAR + LOGOUT ---------- */
+    .dash-top{position:relative;display:flex;justify-content:center;align-items:center;margin:0 0 1.4rem}
+    .dash-top .top-logo.small{margin:0}
+    .logout-btn{
+      position:absolute;right:0;top:50%;transform:translateY(-50%);
+      background:transparent;border:1px solid var(--line-2);color:#cfcfcf;
+      font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.16em;
+      text-transform:uppercase;padding:.42rem .62rem;cursor:pointer;white-space:nowrap;
+      transition:background .18s,border-color .18s,color .18s;
+    }
+    .logout-btn:hover{background:#141414;border-color:#fff;color:#fff}
+    .logout-btn:active{transform:translateY(-50%) scale(.96)}
+
+    .brand{font-family:var(--display);font-weight:900;font-size:2.05rem;line-height:1;text-align:center;letter-spacing:.03em;color:#fff;margin-bottom:1.05rem;text-transform:uppercase}
+    .tagline{text-align:center;font-size:.68rem;font-weight:500;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:2.2rem}
+    .field-label{display:flex;align-items:center;gap:.55rem;font-size:.7rem;font-weight:700;letter-spacing:.22em;color:#dcdcdc;text-transform:uppercase;margin-bottom:.7rem}
+    .field-label::before{content:"";width:9px;height:9px;background:#fff;display:inline-block}
+    .input-shell{display:flex;align-items:stretch;background:#0b0b0b;border:1px solid var(--line-2);transition:border-color .18s}
+    .input-shell:focus-within{border-color:#4a4a4a}
+    #keyInput{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-family:var(--mono);font-size:.86rem;font-weight:500;letter-spacing:.08em;padding:1.05rem 1rem;text-transform:uppercase}
+    #keyInput::placeholder{color:var(--dim-2);text-transform:uppercase}
+    .paste-btn{background:#0f0f0f;border:none;border-left:1px solid var(--line-2);color:#cfcfcf;font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.16em;padding:0 1.15rem;cursor:pointer;text-transform:uppercase;transition:background .18s,color .18s}
+    .paste-btn:hover{background:#171717;color:#fff}
+    .unlock{width:100%;margin-top:1.1rem;padding:1.1rem;background:#ffffff;color:#000;border:none;cursor:pointer;font-family:var(--display);font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;transition:opacity .16s,transform .16s}
+    .unlock:hover{opacity:.9}
+    .unlock:active{transform:translateY(1px)}
+    .error-box{color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-align:center;margin-top:1rem;min-height:1rem;text-transform:uppercase}
+    .foot{margin-top:1.6rem;text-align:center;font-size:.7rem;letter-spacing:.08em;color:var(--dim-2);line-height:1.9}
+
+    .tabs{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin-bottom:1.8rem}
+    .tab-btn{flex:1;background:transparent;border:none;cursor:pointer;font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;padding:.85rem .2rem;position:relative;transition:color .16s}
+    .tab-btn:hover{color:#bdbdbd}
+    .tab-btn.active{color:#fff}
+    .tab-btn.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:#fff}
+    .tabs .tab-btn{font-size:.68rem;letter-spacing:.1em}
+    .status{display:inline-flex;align-items:center;gap:.55rem;font-size:.68rem;font-weight:700;letter-spacing:.2em;color:#e6e6e6;text-transform:uppercase;margin-bottom:1.3rem}
+    .dot{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.7);animation:pulse 1.8s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+    .panel-box{background:#0a0a0a;border:1px solid var(--line);padding:1.15rem;margin-bottom:.9rem}
+    .row{display:flex;justify-content:space-between;gap:1rem;font-size:.78rem;margin-bottom:.85rem}
+    .row:last-child{margin-bottom:0}
+    .row .k{color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-size:.7rem}
+    .row .v{color:#fff;font-weight:700;letter-spacing:.04em;text-align:right;word-break:break-all}
+    .row .v.live{color:#4ade80}
+    .timer-block{display:flex;flex-direction:column;gap:.5rem;
+      padding-bottom:1.15rem;margin-bottom:1.15rem;border-bottom:1px solid var(--line)}
+    .timer-block .k{color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-size:.7rem}
+    .time-left{font-family:var(--display);font-size:clamp(1.4rem,7vw,1.95rem);line-height:1.05;
+      letter-spacing:.01em;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .time-left.live{color:#4ade80}
+    .feature{display:block;text-align:center;background:transparent;border:1px solid var(--line-2);color:#eaeaea;font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;padding:.8rem;margin:.3rem 0 1.1rem}
+    .btn{width:100%;padding:1rem;border:none;cursor:pointer;font-family:var(--mono);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;transition:opacity .16s,background .16s,color .16s}
+    .btn-primary{background:#fff;color:#000;margin-bottom:.7rem}
+    .btn-primary:hover{opacity:.9}
+    .btn-ghost{background:transparent;color:#eaeaea;border:1px solid var(--line-2)}
+    .btn-ghost:hover{background:#111;color:#fff}
+    .setup-box{background:#0a0a0a;border:1px solid var(--line);padding:1.4rem}
+    .setup-box h3{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#fff;margin-bottom:1rem;font-weight:700}
+    .setup-box ol{padding-left:1.15rem;color:var(--dim);font-size:.78rem;line-height:2}
+    .setup-box ol b{color:#fff}
+
+    /* ---------- FEATURE SWITCHES ---------- */
+    .toggles-wrap{margin:.3rem 0 1.1rem}
+    .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+      background:#0a0a0a;border:1px solid var(--line);padding:.85rem 1.15rem;margin-bottom:.55rem}
+    .toggle-row:last-child{margin-bottom:0}
+    .toggle-title{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#eaeaea}
+    .toggle-note{font-size:.6rem;letter-spacing:.05em;color:var(--dim-2);margin-top:.35rem;line-height:1.6;text-transform:lowercase}
+    .switch{position:relative;flex:none;width:46px;height:25px;border-radius:99px;border:1px solid var(--line-2);
+      background:#0f0f0f;cursor:pointer;padding:0;transition:background .18s,border-color .18s;
+      -webkit-tap-highlight-color:transparent}
+    .switch::after{content:"";position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;
+      background:#5a5a5a;transition:transform .18s,background .18s}
+    .switch[aria-checked="true"]{background:#ffffff;border-color:#ffffff}
+    .switch[aria-checked="true"]::after{transform:translateX(21px);background:#000000}
+    .switch:active{transform:scale(.97)}
+
+    /* ---------- CONTACT ---------- */
+    .contact-card{background:#0a0a0a;border:1px solid var(--line);padding:1.15rem;margin-bottom:.9rem}
+    .contact-card .t{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim-2);margin-bottom:.4rem;font-weight:700}
+    .contact-card .c{font-size:.95rem;font-weight:700;color:#fff;letter-spacing:.06em}
+
+    /* the LOGO itself is the link */
+    .tg-logo-link{display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;
+      cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s,opacity .18s}
+    .tg-logo-link:hover{opacity:.85}
+    .tg-logo-link:active{transform:scale(.96)}
+    .tg-logo{width:36px;height:36px;display:block;flex:none;
+      filter:drop-shadow(0 0 14px rgba(41,169,235,.35))}
+    .tg-logo.wa{filter:drop-shadow(0 0 14px rgba(37,211,102,.35))}
+    .tg-handle{font-size:.88rem;font-weight:700;color:#fff;letter-spacing:.06em}
+
+    .dev-credit{margin-top:1.6rem;text-align:center;font-size:.72rem;font-weight:800;
+      letter-spacing:.18em;text-transform:uppercase;color:#fff;line-height:1.9}
+
+    /* ---------- UPDATES ---------- */
+    .updates-box{background:#0a0a0a;border:1px solid var(--line);padding:1.4rem}
+    .updates-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+      padding-bottom:.9rem;margin-bottom:1.1rem;border-bottom:1px solid var(--line)}
+    .updates-head .t{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim-2);font-weight:700}
+    .updates-refresh{background:transparent;border:1px solid var(--line-2);color:#cfcfcf;
+      font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+      padding:.4rem .62rem;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+    .updates-refresh:hover{background:#141414;border-color:#fff;color:#fff}
+    .updates-refresh:active{transform:scale(.97)}
+    .updates-body{font-family:var(--mono);font-size:.78rem;line-height:1.95;color:#d4d4d4;
+      letter-spacing:.02em;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+    .updates-body.muted{color:var(--dim-2)}
+
+    .maint{border:1px solid #ffffff;background:#0a0a0a;padding:2rem 1.5rem;text-align:center;margin-top:1rem}
+    .maint h3{font-family:var(--display);font-size:1.05rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem}
+    .maint p{color:var(--dim);font-size:.8rem;line-height:1.8;letter-spacing:.04em}
+    @media(max-width:480px){.strip{border:none;padding:1.8rem 1.4rem 2rem}.brand{font-size:1.7rem}.top-logo img{height:88px}}
+  </style>
+</head>
+<body>
+
+  <div class="strip">
+    <span class="lang">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 6h-2.95a15.6 15.6 0 00-1.4-3.6A8 8 0 0118.9 8zM12 4c.8 1.2 1.4 2.6 1.8 4h-3.6c.4-1.4 1-2.8 1.8-4zM4.3 14a8 8 0 010-4h3.3a17 17 0 000 4H4.3zm.8 2h2.95c.35 1.3.82 2.5 1.4 3.6A8 8 0 015.1 16zm2.95-8H5.1a8 8 0 014.35-3.6A15.6 15.6 0 008.05 8zM12 20c-.8-1.2-1.4-2.6-1.8-4h3.6c-.4 1.4-1 2.8-1.8 4zm2.2-6H9.8a15 15 0 010-4h4.4a15 15 0 010 4zm.35 5.6c.58-1.1 1.05-2.3 1.4-3.6h2.95a8 8 0 01-4.35 3.6zm1.85-5.6a17 17 0 000-4h3.3a8 8 0 010 4h-3.3z"/></svg>
+      EN
+    </span>
+
+    <div id="maintenanceView" class="hidden">
+      <div class="maint">
+        <h3>⚠ SYSTEM MAINTENANCE</h3>
+        <p id="maintenanceMsgText"></p>
+      </div>
+    </div>
+
+    <div id="unlockView">
+      <!-- YOUR LOGO — TOP MIDDLE (no status text below) -->
+      <div class="top-logo">
+        <img id="brandLogo" src="logo/logo.png" alt="CYBER X SILENT">
+      </div>
+
+      <h1 class="brand">Cyber X Silent</h1>
+      <p class="tagline">No account. No password. Just your key.</p>
+
+      <div class="field-label">Access Key</div>
+      <div class="input-shell">
+        <input type="text" id="keyInput" placeholder="CYBER-XXXXXX" autocomplete="off" spellcheck="false">
+        <button class="paste-btn" onclick="pasteKey()">Paste</button>
+      </div>
+      <button class="unlock" onclick="unlockPortal()">Unlock</button>
+      <div id="errorMsg" class="error-box"></div>
+
+      <p class="foot">no key? contact your seller.<br>your time starts when you connect.</p>
+    </div>
+
+    <div id="dashboardView" class="hidden">
+      <!-- YOUR LOGO — TOP MIDDLE + LOGOUT TOP RIGHT -->
+      <div class="dash-top">
+        <div class="top-logo small">
+          <img src="logo/logo.png" alt="CYBER X SILENT">
+        </div>
+        <button class="logout-btn" onclick="confirmLogout()" title="Log out" aria-label="Log out">Log out</button>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('proxyTab', this)">Proxy</button>
+        <button class="tab-btn" onclick="switchTab('setupTab', this)">Setup</button>
+        <button class="tab-btn" onclick="switchTab('contactTab', this)">Contact</button>
+        <button class="tab-btn" onclick="switchTab('updatesTab', this)">Updates</button>
+      </div>
+
+      <div id="proxyTab">
+        <div class="status"><span class="dot"></span> Active Subscription</div>
+        <div class="panel-box">
+          <div class="timer-block">
+            <span class="k">Time Left</span>
+            <span class="time-left live" id="displayLeft">—</span>
+          </div>
+          <div class="row"><span class="k">Access Key</span><span class="v" id="displayKey">CYBER-XXXXXX</span></div>
+          <div class="row"><span class="k">Expires At</span><span class="v" id="displayExpiry">Loading...</span></div>
+        </div>
+
+        <div class="toggles-wrap">
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-title">Aimbot</div>
+            </div>
+            <button class="switch" id="swAimbot" role="switch" aria-checked="true"
+                    aria-label="Toggle aimbot" onclick="toggleFeature('aimbot')"></button>
+          </div>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-title">Location</div>
+              <div class="toggle-note">{ use at own risk location may give ban }</div>
+            </div>
+            <button class="switch" id="swLocation" role="switch" aria-checked="false"
+                    aria-label="Toggle location" onclick="toggleFeature('location')"></button>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="openHappApp()">🚀 ADD TO HAPP</button>
+      </div>
+
+      <div id="setupTab" class="hidden">
+        <div class="setup-box">
+          <h3>How to Connect</h3>
+          <ol>
+            <li>Go back to the <b>PROXY</b> tab and tap <b>Add to Happ</b>.</li>
+            <li>Happ opens and the subscription is added automatically.</li>
+            <li>If it doesn't, open Happ, tap the add (<b>+</b>) icon and choose <b>Clipboard</b>.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div id="contactTab" class="hidden">
+        <!-- TELEGRAM — the LOGO is the link. Tap it -> t.me/cyberxsilent -->
+        <div class="contact-card">
+          <div class="t">Telegram</div>
+          <a class="tg-logo-link" href="https://t.me/cyberxsilent" onclick="return openTelegram()">
+            <svg class="tg-logo" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#29A9EB" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.933z"/>
+            </svg>
+            <span class="tg-handle">@cyberxsilent</span>
+          </a>
+        </div>
+
+        <!-- WHATSAPP — the LOGO is the link. Tap it -> channel -->
+        <div class="contact-card">
+          <div class="t">WhatsApp</div>
+          <a class="tg-logo-link" href="https://whatsapp.com/channel/0029Vb9C6unB4hdWExyDTA2h" onclick="return openWhatsApp()">
+            <svg class="tg-logo wa" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            <span class="tg-handle">CYBER X SILENT</span>
+          </a>
+        </div>
+
+        <!-- DEVELOPER CREDIT -->
+        <div class="dev-credit">DEVELOPER- CYBER ANXHU</div>
+      </div>
+
+      <div id="updatesTab" class="hidden">
+        <div class="updates-box">
+          <div class="updates-head">
+            <span class="t">Latest Updates</span>
+            <button class="updates-refresh" onclick="loadUpdates(true)">Refresh</button>
+          </div>
+          <div class="updates-body muted" id="updatesBody">Loading…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BACKEND_URL = "https://cyber-x-silent-server.onrender.com";
+    const STORAGE_KEY = "cyber_x_silent_session";
+    const TELEGRAM_URL = "https://t.me/cyberxsilent";
+    const WHATSAPP_URL = "https://whatsapp.com/channel/0029Vb9C6unB4hdWExyDTA2h";
+    const UPDATES_URL = "updates/update.txt";
+
+    let rawSubUrl = "";
+    let happLink = "";
+    let activeKey = "";
+    let expiryTimer = null;
+    let countdownTimer = null;
+    let expiresAtMs = 0;
+    let updatesLoaded = false;
+
+    /* ============ TELEGRAM LOGO CLICK ============ */
+    function openTelegram(){
+      /* works even inside in-app WebViews that ignore target="_blank" */
+      window.location.href = TELEGRAM_URL;
+      return false; /* stop the default anchor navigation double-firing */
+    }
+
+    /* ============ WHATSAPP LOGO CLICK ============ */
+    function openWhatsApp(){
+      window.location.href = WHATSAPP_URL;
+      return false;
+    }
+
+    /* ============ LOGO (no status text) ============ */
+    const LOGO_FILE = "";
+    const NAMES = [
+      "logo.png","logo.jpg","logo.jpeg","logo.webp","logo.gif","logo.svg",
+      "logo.avif","logo.ico","logo.bmp","logo.jfif","logo","LOGO.png","Logo.png","logo.PNG","logo.JPG"
+    ];
+    const DIRS = ["logo/", "../logo/", "", "../"];
+    const CANDIDATES = LOGO_FILE ? [LOGO_FILE] : DIRS.flatMap(d => NAMES.map(n => d + n));
+
+    function applyLogo(url){
+      document.querySelectorAll('.top-logo img').forEach(i => i.src = url);
+      let fav = document.querySelector("link[rel='icon']");
+      if(!fav){ fav = document.createElement('link'); fav.rel='icon'; document.head.appendChild(fav); }
+      fav.href = url;
+    }
+    function probe(url){
+      return new Promise(res => {
+        const im = new Image();
+        im.onload  = () => res(im.naturalWidth > 0 ? url : null);
+        im.onerror = () => res(null);
+        im.src = url;
+      });
+    }
+    async function findLogo(){
+      if (LOGO_FILE && await probe(LOGO_FILE)) return applyLogo(LOGO_FILE);
+      for (const url of CANDIDATES) { if (await probe(url)) return applyLogo(url); }
+    }
+
+    /* ============ SESSION ============ */
+    function saveSession(key, expiresAt){
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ key, expiresAt })); } catch(e){}
+    }
+    function readSession(){
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return null;
+        const obj = JSON.parse(raw);
+        return (obj && obj.key) ? obj : null;
+      } catch(e){ return null; }
+    }
+    function clearSession(){ try { localStorage.removeItem(STORAGE_KEY); } catch(e){} }
+
+    /* ============ FEATURE SWITCHES ============ */
+    const FEATURES_KEY = "cyber_x_features";
+    const FEATURES_DEFAULT = { aimbot: true, location: false };
+
+    function readFeatures(){
+      try{
+        const raw = localStorage.getItem(FEATURES_KEY);
+        if(!raw) return { ...FEATURES_DEFAULT };
+        const o = JSON.parse(raw) || {};
+        return {
+          aimbot:   typeof o.aimbot   === "boolean" ? o.aimbot   : FEATURES_DEFAULT.aimbot,
+          location: typeof o.location === "boolean" ? o.location : FEATURES_DEFAULT.location
+        };
+      }catch(e){ return { ...FEATURES_DEFAULT }; }
+    }
+    function saveFeatures(o){ try{ localStorage.setItem(FEATURES_KEY, JSON.stringify(o)); }catch(e){} }
+
+    function paintFeatures(){
+      const f = readFeatures();
+      const a = document.getElementById("swAimbot");
+      const l = document.getElementById("swLocation");
+      if(a) a.setAttribute("aria-checked", f.aimbot ? "true" : "false");
+      if(l) l.setAttribute("aria-checked", f.location ? "true" : "false");
+    }
+
+    function toggleFeature(name){
+      const f = readFeatures();
+      f[name] = !f[name];
+      saveFeatures(f);
+      paintFeatures();
+    }
+
+    /* ============ UPDATES ============ */
+    async function loadUpdates(force){
+      const box = document.getElementById('updatesBody');
+      if(!box) return;
+      if(updatesLoaded && !force) return;
+
+      box.classList.add('muted');
+      box.textContent = "Loading…";
+      try{
+        const r = await fetch(`${UPDATES_URL}?t=${Date.now()}`, { cache: "no-store" });
+        if(!r.ok) throw new Error(r.status);
+        const txt = (await r.text()).trim();
+        if(!txt){
+          box.classList.add('muted');
+          box.textContent = "No updates posted yet.";
+          return;
+        }
+        box.classList.remove('muted');
+        box.textContent = txt;
+        updatesLoaded = true;
+      }catch(e){
+        box.classList.add('muted');
+        box.textContent = "Could not load updates.";
+      }
+    }
+
+    /* ============ LIVE COUNTDOWN ============ */
+    function startCountdown(){
+      if(countdownTimer) clearInterval(countdownTimer);
+      updateLeft();
+      countdownTimer = setInterval(updateLeft, 1000);
+    }
+    function stopCountdown(){ if(countdownTimer) clearInterval(countdownTimer); countdownTimer = null; }
+    function updateLeft(){
+      const el = document.getElementById('displayLeft');
+      if(!el) return;
+      if(!expiresAtMs){ el.innerText = "—"; return; }
+      let ms = expiresAtMs - Date.now();
+      if(ms <= 0){ el.innerText = "EXPIRED"; return; }
+      const d = Math.floor(ms / 86400000);
+      const h = Math.floor((ms % 86400000) / 3600000);
+      const m = Math.floor((ms % 3600000) / 60000);
+      const s = Math.floor((ms % 60000) / 1000);
+      el.innerText = `${d > 0 ? d + "d " : ""}${h}h ${m}m ${s}s`;
+    }
+
+    /* ============ VIEWS ============ */
+    function showUnlock(){
+      stopCountdown();
+      document.getElementById('dashboardView').classList.add('hidden');
+      document.getElementById('maintenanceView').classList.add('hidden');
+      document.getElementById('unlockView').classList.remove('hidden');
+    }
+    function showMaintenance(msg){
+      document.getElementById('unlockView').classList.add('hidden');
+      document.getElementById('dashboardView').classList.add('hidden');
+      document.getElementById('maintenanceMsgText').innerText = msg || "System under maintenance.";
+      document.getElementById('maintenanceView').classList.remove('hidden');
+    }
+    function showDashboard(key, expiresAt){
+      const changed = (activeKey !== key);
+      activeKey = key;
+      rawSubUrl = `${BACKEND_URL}/sub?key=${encodeURIComponent(key)}`;
+
+      if (changed){ happLink = ""; loadHappLink(key); }
+
+      expiresAtMs = expiresAt ? new Date(expiresAt).getTime() : 0;
+      const keyEl = document.getElementById('displayKey');
+      keyEl.innerText = maskKey(key);
+      keyEl.title = key;
+      document.getElementById('displayExpiry').innerText = expiresAt ? new Date(expiresAt).toLocaleString() : "—";
+      document.getElementById('maintenanceView').classList.add('hidden');
+      document.getElementById('unlockView').classList.add('hidden');
+      document.getElementById('dashboardView').classList.remove('hidden');
+
+      paintFeatures();
+      startCountdown();
+      scheduleExpiry(expiresAt);
+    }
+    function scheduleExpiry(expiresAt){
+      if(expiryTimer) clearTimeout(expiryTimer);
+      if(!expiresAt) return;
+      const ms = new Date(expiresAt).getTime() - Date.now();
+      if(ms <= 0){ logout(); return; }
+      expiryTimer = setTimeout(revalidate, Math.min(ms, 3600000));
+    }
+    function logout(){
+      clearSession();
+      stopCountdown();
+      activeKey = ""; rawSubUrl = ""; happLink = ""; expiresAtMs = 0;
+      const ki = document.getElementById('keyInput');
+      if(ki) ki.value = "";
+      document.getElementById('errorMsg').innerText = "";
+      showUnlock();
+    }
+    /* Manual logout from the top bar — asks first */
+    function confirmLogout(){
+      if(confirm("Log out of this device?")) logout();
+    }
+
+    /* ============ NETWORK ============ */
+    async function checkKey(key){
+      const res = await fetch(`${BACKEND_URL}/api/check-key?key=${encodeURIComponent(key)}`);
+      return res.json();
+    }
+    async function getMaintenance(){
+      try { const r = await fetch(`${BACKEND_URL}/api/maintenance-status`); return r.json(); }
+      catch(e){ return { enabled:false }; }
+    }
+    async function loadHappLink(key){
+      try {
+        const r = await fetch(`${BACKEND_URL}/api/happ-link?key=${encodeURIComponent(key)}`);
+        const d = await r.json();
+        if (d && d.ok && d.link) {
+          happLink = d.link;
+          const sec = document.getElementById('displaySec');
+          if (sec) sec.innerText = "🔒 Encrypted";
+        }
+      } catch(e){}
+    }
+
+    function normalizeKey(v){ return (v || "").replace(/\s+/g, "").toUpperCase(); }
+    function maskKey(k){
+      if(!k) return "CYBER-XXXXXX";
+      const parts = k.split("-");
+      if(parts.length < 2) return k.slice(0,4) + "xxxx";
+      const tail = parts.slice(1).join("-");
+      return parts[0] + "-" + tail.slice(0,2) + "xxxx";
+    }
+
+    /* ============ AUTH FLOW ============ */
+    async function unlockPortal(){
+      const input = document.getElementById('keyInput');
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.innerText = "";
+
+      const key = normalizeKey(input.value);
+      input.value = key;
+      if(!key){ errorMsg.innerText = "Please enter your access key."; return; }
+
+      try {
+        const data = await checkKey(key);
+        if(data.maintenance){ showMaintenance(data.message); return; }
+        if(data.valid){
+          saveSession(data.key, data.expiresAt);
+          showDashboard(data.key, data.expiresAt);
+        } else {
+          errorMsg.innerText = data.message || "Invalid key.";
+        }
+      } catch(err){
+        errorMsg.innerText = "Connection error. Check your server status.";
+      }
+    }
+
+    async function revalidate(){
+      const s = readSession();
+      const key = s ? s.key : activeKey;
+
+      if(!key){
+        const m = await getMaintenance();
+        if(m && !m.enabled) showUnlock();
+        return;
+      }
+      try {
+        const data = await checkKey(key);
+        if(data.maintenance){ showMaintenance(data.message); return; }
+        if(!data.valid){ logout(); return; }
+        saveSession(data.key, data.expiresAt);
+        showDashboard(data.key, data.expiresAt);
+      } catch(err){}
+    }
+
+    async function restoreSession(){
+      const s = readSession();
+      if(!s) return false;
+      if(s.expiresAt && new Date(s.expiresAt).getTime() <= Date.now()){ clearSession(); return false; }
+      try {
+        const data = await checkKey(s.key);
+        if(data.maintenance){ showMaintenance(data.message); return true; }
+        if(data.valid){ saveSession(data.key, data.expiresAt); showDashboard(data.key, data.expiresAt); return true; }
+        clearSession();
+        return false;
+      } catch(err){
+        showDashboard(s.key, s.expiresAt);
+        return true;
+      }
+    }
+
+    /* ============ BOOT ============ */
+    window.addEventListener('DOMContentLoaded', async () => {
+      findLogo();
+      paintFeatures();
+
+      const m = await getMaintenance();
+      if(m && m.enabled){
+        showMaintenance(m.message);
+      } else {
+        const ok = await restoreSession();
+        if(!ok) showUnlock();
+      }
+
+      setInterval(revalidate, 60000);
+      document.addEventListener('visibilitychange', () => { if(!document.hidden) revalidate(); });
+    });
+
+    /* ============ ACTIONS ============ */
+    function pasteKey(){
+      const input = document.getElementById('keyInput');
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        navigator.clipboard.readText().then(t => { input.value = normalizeKey(t); }).catch(() => input.focus());
+      } else { input.focus(); }
+    }
+
+    function switchTab(tabId, btnElement){
+      document.getElementById('proxyTab').classList.add('hidden');
+      document.getElementById('setupTab').classList.add('hidden');
+      document.getElementById('contactTab').classList.add('hidden');
+      document.getElementById('updatesTab').classList.add('hidden');
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabId).classList.remove('hidden');
+      btnElement.classList.add('active');
+      if(tabId === 'updatesTab') loadUpdates(false);
+    }
+
+    // Opens Happ and imports (encrypted link preferred, raw deep link fallback)
+    function openHappApp(){
+      const deep = happLink ? happLink : (rawSubUrl ? `happ://add/${rawSubUrl}` : "happ://");
+      const a = document.createElement('a');
+      a.href = deep;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+</body>
+</html>
