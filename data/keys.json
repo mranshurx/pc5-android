@@ -890,6 +890,17 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
+    },
+    {
+      "key": "PC5-E2O7QM",
+      "durationHours": 3,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-10-30T14:11:19.650Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
