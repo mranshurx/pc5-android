@@ -7,14 +7,6 @@
       "startedAt": "2026-10-30T09:20:12.696Z",
       "activatedAt": "2026-10-30T09:20:12.696Z",
       "expiresAt": "2026-10-31T09:20:12.696Z"
-    },
-    {
-      "key": "PC5-FH0GAJ",
-      "durationHours": 24,
-      "createdAt": "2026-10-30T09:20:55.665Z",
-      "startedAt": "2026-10-30T09:21:09.482Z",
-      "activatedAt": "2026-10-30T09:21:09.482Z",
-      "expiresAt": "2026-10-31T09:21:09.482Z"
     }
   ],
   "maintenance": {
