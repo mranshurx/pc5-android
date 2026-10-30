@@ -1,14 +1,5 @@
 {
-  "keys": [
-    {
-      "key": "PC5-WUWWWD",
-      "durationHours": 24,
-      "createdAt": "2026-10-30T09:20:04.343Z",
-      "startedAt": "2026-10-30T09:20:12.696Z",
-      "activatedAt": "2026-10-30T09:20:12.696Z",
-      "expiresAt": "2026-10-31T09:20:12.696Z"
-    }
-  ],
+  "keys": [],
   "maintenance": {
     "enabled": false,
     "message": "System under maintenance."
