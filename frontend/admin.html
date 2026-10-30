@@ -86,12 +86,19 @@
   .cell-sub{font-size:10px;margin-top:2px;display:block}
   .plan-tag{display:inline-flex;padding:3px 9px;border-radius:6px;font-size:10.5px;font-weight:700;
     background:rgba(255,255,255,.06);border:1px solid var(--card-border);color:#e4e4e7;white-space:nowrap}
-  .action-group{display:flex;gap:6px;justify-content:flex-end}
+  .dev-tag{display:inline-flex;padding:3px 9px;border-radius:6px;font-size:10.5px;font-weight:700;
+    border:1px solid var(--card-border);background:rgba(255,255,255,.06);color:#e4e4e7;white-space:nowrap}
+  .dev-tag.multi{color:#60a5fa;border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.12)}
+  .dev-tag.locked{color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.12)}
+  .dev-hwid{font-size:10px;color:var(--mut);display:block;margin-top:2px;white-space:nowrap}
+  .action-group{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
   .btn-action{padding:5px 9px;font-size:10.5px;border-radius:6px;background:rgba(255,255,255,.05);
     border:1px solid var(--card-border);color:#cacaca;cursor:pointer;font-family:inherit;white-space:nowrap}
   .btn-action:hover{background:rgba(255,255,255,.12);color:#fff}
   .btn-action.danger{background:rgba(239,68,68,.15);color:#ef4444;border-color:rgba(239,68,68,.3)}
   .btn-action.danger:hover{background:rgba(239,68,68,.25)}
+  .btn-action.warn{background:rgba(245,158,11,.15);color:#f59e0b;border-color:rgba(245,158,11,.3)}
+  .btn-action.warn:hover{background:rgba(245,158,11,.25)}
   .filter-tab{padding:5px 11px;font-size:10.5px;border-radius:6px;background:rgba(255,255,255,.05);
     border:1px solid var(--card-border);color:#cacaca;cursor:pointer;font-family:inherit;text-transform:uppercase;letter-spacing:.05em}
   .filter-tab:hover{background:rgba(255,255,255,.12);color:#fff}
@@ -130,7 +137,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
              stroke="#ff2a44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m12.5 17-.5-1-.5 1h1z"></path>
-          <path d="M15 22a1 1 0 0 0 1-1v-1a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z"></path>
+          <path d="M15 22a1 1 0 0 0 1-1v-1a<｜begin▁of▁sentence｜># 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z"></path>
           <circle cx="15" cy="12" r="1"></circle>
           <circle cx="9" cy="12" r="1"></circle>
         </svg>
@@ -218,14 +225,27 @@
         <div class="form-group">
           <label class="form-label">License Duration</label>
           <select id="gen-duration" class="form-control">
-            <option value="1">1 Hour Trial</option>
-            <option value="24" selected>24 Hours (1 Day)</option>
+            <option value="1">1 Hour</option>
+            <option value="3">3 Hours</option>
+            <option value="6">6 Hours</option>
+            <option value="12">12 Hours</option>
+            <option value="24" selected>1 Day (24 Hours)</option>
+            <option value="72">3 Days</option>
             <option value="168">7 Days</option>
-            <option value="720">30 Days (1 Month)</option>
-            <option value="2160">90 Days (3 Months)</option>
-            <option value="8760">365 Days (1 Year)</option>
+            <option value="336">14 Days</option>
+            <option value="720">30 Days</option>
+            <option value="8760">365 Days</option>
             <option value="999999">Lifetime Permanent</option>
           </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Device Limit</label>
+          <select id="gen-devices" class="form-control">
+            <option value="unlimited" selected>Unlimited Devices</option>
+            <option value="single">1 Device Only (HWID Lock)</option>
+          </select>
+          <span class="form-hint" id="dev-hint">Key works on any device, no binding.</span>
         </div>
 
         <div class="form-group">
@@ -333,13 +353,14 @@
                 <th>License Key</th>
                 <th>Status</th>
                 <th>Plan</th>
+                <th>Devices</th>
                 <th>Created</th>
                 <th>Expires</th>
                 <th style="text-align:right;">Actions</th>
               </tr>
             </thead>
             <tbody id="keys-tbody">
-              <tr><td colspan="6" style="text-align:center;color:#6b7280;padding:24px;">Loading keys...</td></tr>
+              <tr><td colspan="7" style="text-align:center;color:#6b7280;padding:24px;">Loading keys...</td></tr>
             </tbody>
           </table>
         </div>
@@ -380,8 +401,9 @@ const NODES = [{ host: "wraith-bom.xreg.site", proto: "Hysteria2", port: 443, se
 
 /* Known plans -> human label */
 const PLANS = {
-  1:"1 Hour", 24:"1 Day", 168:"7 Days", 720:"30 Days",
-  2160:"90 Days", 8760:"365 Days", 999999:"Lifetime"
+  1:"1 Hour", 3:"3 Hours", 6:"6 Hours", 12:"12 Hours",
+  24:"1 Day", 72:"3 Days", 168:"7 Days", 336:"14 Days",
+  720:"30 Days", 8760:"365 Days", 999999:"Lifetime"
 };
 
 /* ============================================================
@@ -669,6 +691,23 @@ function expiresCell(k){
           <span class="cell-sub" style="color:${color};">${esc(humanLeft(left))} left</span>`;
 }
 
+function devicesCell(k){
+  const max = Number(k.maxDevices) === 1 ? 1 : 0;
+  const list = Array.isArray(k.devices) ? k.devices : [];
+
+  if(max === 0) return `<span class="dev-tag multi">Unlimited</span>`;
+
+  if(!list.length){
+    return `<span class="dev-tag">1 device</span>
+            <span class="dev-hwid dim">not bound yet</span>`;
+  }
+
+  const d = list[0];
+  const short = String(d.id || "").slice(0, 10);
+  return `<span class="dev-tag locked">1 device · locked</span>
+          <span class="dev-hwid" title="${esc(d.id)}">${esc(short)}…</span>`;
+}
+
 function render(){
   const stats = { total: allKeys.length, active: 0, unbound: 0, expired: 0 };
   allKeys.forEach(k => { const s = statusOf(k); if(stats[s] !== undefined) stats[s]++; });
@@ -684,22 +723,36 @@ function render(){
 
   const tb = $("keys-tbody");
   if(!rows.length){
-    tb.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#6b7280;padding:24px;">No keys found.</td></tr>`;
+    tb.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#6b7280;padding:24px;">No keys found.</td></tr>`;
     return;
   }
 
   tb.innerHTML = rows.map(k => {
     const st  = statusOf(k);
     const key = esc(k.key);
+    const single = Number(k.maxDevices) === 1;
+    const bound  = single && Array.isArray(k.devices) && k.devices.length > 0;
+
+    const toggle = single
+      ? `<button class="btn-action" onclick="setDevices('${key}', 0)" title="Make unlimited">Unlimit</button>`
+      : `<button class="btn-action" onclick="setDevices('${key}', 1)" title="Lock to one device">1 Device</button>`;
+
+    const reset = bound
+      ? `<button class="btn-action warn" onclick="resetDevice('${key}')" title="Clear the bound device">Reset HWID</button>`
+      : "";
+
     return `<tr>
       <td class="key-code">${key}</td>
       <td><span class="badge badge-${st}">${st}</span></td>
       <td><span class="plan-tag">${esc(planLabel(k))}</span></td>
+      <td>${devicesCell(k)}</td>
       <td class="dim">${esc(fmtDate(k.createdAt))}</td>
       <td>${expiresCell(k)}</td>
       <td>
         <div class="action-group">
           <button class="btn-action" onclick="copyKey('${key}')">Copy</button>
+          ${toggle}
+          ${reset}
           <button class="btn-action danger" onclick="revokeKey('${key}')">Revoke</button>
         </div>
       </td>
@@ -723,6 +776,7 @@ function renderNodes(){
    ============================================================ */
 async function createKeys(){
   const durationHours = $("gen-duration").value;
+  const deviceLimit = $("gen-devices").value;
   const qty = Math.max(1, parseInt($("gen-count").value, 10) || 1);
   const btn = $("gen-btn");
 
@@ -738,7 +792,7 @@ async function createKeys(){
   const made = [];
   try{
     for(let i = 0; i < qty; i++){
-      const d = await api("/api/admin/create-key", { durationHours });
+      const d = await api("/api/admin/create-key", { durationHours, deviceLimit });
       if(d.success && d.record) made.push(d.record.key);
       else if(d.error) toast(d.error);
     }
@@ -747,6 +801,7 @@ async function createKeys(){
       $("gen-result-key").textContent = made.join(", ");
       $("gen-result-plan").textContent =
         "Plan: " + (PLANS[parseInt(durationHours,10)] || durationHours + " Hours") +
+        " · " + (deviceLimit === "single" ? "1 device (locks on first unlock)" : "unlimited devices") +
         " · countdown starts on the buyer's first connection";
       toast(made.length + " key(s) created");
       loadKeys();
@@ -769,6 +824,29 @@ async function revokeKey(key){
     else toast(d.error || "failed to revoke key");
   }catch(e){
     if(e.message !== "unauthorized") toast("network error while revoking");
+  }
+}
+
+async function resetDevice(key){
+  if(!confirm(`Clear the device lock on ${key}?\n\nThe next device to unlock will claim it.`)) return;
+  try{
+    const d = await api("/api/admin/reset-device", { key });
+    if(d.success){ toast("device lock cleared"); loadKeys(); }
+    else toast(d.error || "failed to reset device");
+  }catch(e){
+    if(e.message !== "unauthorized") toast("network error while resetting");
+  }
+}
+
+async function setDevices(key, maxDevices){
+  const label = maxDevices === 1 ? "lock to 1 device" : "make unlimited";
+  if(!confirm(`${label} — ${key}?`)) return;
+  try{
+    const d = await api("/api/admin/set-device-limit", { key, maxDevices });
+    if(d.success){ toast("device limit updated"); loadKeys(); }
+    else toast(d.error || "failed to update");
+  }catch(e){
+    if(e.message !== "unauthorized") toast("network error while updating");
   }
 }
 
@@ -836,6 +914,12 @@ document.querySelectorAll(".filter-tab").forEach(b => {
     filter = b.dataset.filter;
     render();
   });
+});
+
+$("gen-devices").addEventListener("change", e => {
+  $("dev-hint").textContent = e.target.value === "single"
+    ? "Key locks to the first device that unlocks it. Reset HWID to move it."
+    : "Key works on any device, no binding.";
 });
 
 $("admin-password").addEventListener("keydown", e => {
