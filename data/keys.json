@@ -1133,6 +1133,17 @@
       "startedAt": "2026-10-31T09:31:21.736Z",
       "activatedAt": "2026-10-31T09:31:21.736Z",
       "expiresAt": "2026-11-30T09:31:21.736Z"
+    },
+    {
+      "key": "PC5-JH7SO7",
+      "durationHours": 72,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-10-31T09:32:27.295Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
