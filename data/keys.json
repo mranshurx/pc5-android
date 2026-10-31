@@ -162,9 +162,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T09:56:02.254Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-31T12:53:00.976Z",
+      "activatedAt": "2026-10-31T12:53:00.976Z",
+      "expiresAt": "2026-10-31T18:53:00.976Z"
     },
     {
       "key": "PC5-50WV74",
