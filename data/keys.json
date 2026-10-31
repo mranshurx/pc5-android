@@ -549,9 +549,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T09:59:00.569Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-31T12:00:27.861Z",
+      "activatedAt": "2026-10-31T12:00:27.861Z",
+      "expiresAt": "2026-11-30T12:00:27.861Z"
     },
     {
       "key": "PC5-3HBCEQ",
