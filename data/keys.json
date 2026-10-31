@@ -454,9 +454,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T09:58:02.278Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-31T09:48:28.294Z",
+      "activatedAt": "2026-10-31T09:48:28.294Z",
+      "expiresAt": "2026-11-07T09:48:28.294Z"
     },
     {
       "key": "PC5-S27AAA",
