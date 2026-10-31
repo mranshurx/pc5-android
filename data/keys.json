@@ -1117,6 +1117,17 @@
       "startedAt": "2026-10-31T09:31:21.736Z",
       "activatedAt": "2026-10-31T09:31:21.736Z",
       "expiresAt": "2026-11-30T09:31:21.736Z"
+    },
+    {
+      "key": "PC5-6YMJM2",
+      "durationHours": 168,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-10-31T12:46:28.366Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
