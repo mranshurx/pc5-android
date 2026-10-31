@@ -1008,9 +1008,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-31T08:54:22.662Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-31T08:59:01.621Z",
+      "activatedAt": "2026-10-31T08:59:01.621Z",
+      "expiresAt": "2026-10-31T11:59:01.621Z"
     },
     {
       "key": "PC5-R058XY",
