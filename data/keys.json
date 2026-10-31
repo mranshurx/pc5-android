@@ -852,7 +852,14 @@
       "durationHours": 3,
       "maxDevices": 1,
       "deviceLimit": "single",
-      "devices": [],
+      "devices": [
+        {
+          "id": "De34834880118a581",
+          "firstSeen": "2026-10-31T12:09:57.010Z",
+          "lastSeen": "2026-10-31T12:09:57.010Z",
+          "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/24B5089g Safari/604.1"
+        }
+      ],
       "createdAt": "2026-10-30T14:11:08.538Z",
       "startedAt": "2026-10-31T12:09:55.628Z",
       "activatedAt": "2026-10-31T12:09:55.628Z",
