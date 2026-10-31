@@ -1037,9 +1037,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-31T08:57:53.398Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-31T08:59:26.926Z",
+      "activatedAt": "2026-10-31T08:59:26.926Z",
+      "expiresAt": "2026-10-31T09:59:26.926Z"
     },
     {
       "key": "PC5-CG72NC",
