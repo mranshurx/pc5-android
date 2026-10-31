@@ -993,6 +993,17 @@
       "startedAt": "2026-10-30T15:55:52.402Z",
       "activatedAt": "2026-10-30T15:55:52.402Z",
       "expiresAt": "2026-11-02T15:55:52.402Z"
+    },
+    {
+      "key": "PC5-4DMPXG",
+      "durationHours": 3,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-10-31T08:54:22.662Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
