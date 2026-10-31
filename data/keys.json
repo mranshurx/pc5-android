@@ -1097,6 +1097,17 @@
       "startedAt": "2026-10-31T09:02:43.401Z",
       "activatedAt": "2026-10-31T09:02:43.401Z",
       "expiresAt": "2026-10-31T10:02:43.401Z"
+    },
+    {
+      "key": "PC5-XL9YFW",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-10-31T09:15:14.637Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
