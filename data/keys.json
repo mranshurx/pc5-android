@@ -1097,6 +1097,17 @@
       "startedAt": "2026-10-31T09:15:42.981Z",
       "activatedAt": "2026-10-31T09:15:42.981Z",
       "expiresAt": "2026-10-31T10:15:42.981Z"
+    },
+    {
+      "key": "PC5-C02EDB",
+      "durationHours": 72,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-10-31T09:19:46.365Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
