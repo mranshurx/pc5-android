@@ -1035,7 +1035,14 @@
       "durationHours": 1,
       "maxDevices": 1,
       "deviceLimit": "single",
-      "devices": [],
+      "devices": [
+        {
+          "id": "D8eb7a228012ad268",
+          "firstSeen": "2026-10-31T08:59:28.270Z",
+          "lastSeen": "2026-10-31T08:59:28.270Z",
+          "ua": "Mozilla/5.0 (Linux; Android 16; REDMI Note 15 5G Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 Mobile Safari/537.36 XiaoMi/MiuiBrowser/14.66.0-gn"
+        }
+      ],
       "createdAt": "2026-10-31T08:57:53.398Z",
       "startedAt": "2026-10-31T08:59:26.926Z",
       "activatedAt": "2026-10-31T08:59:26.926Z",
