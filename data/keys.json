@@ -1,17 +1,6 @@
 {
   "keys": [
     {
-      "key": "PC5-NV1AYO",
-      "durationHours": 1,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "createdAt": "2026-10-30T09:48:01.269Z",
-      "startedAt": "2026-10-30T09:48:59.566Z",
-      "activatedAt": "2026-10-30T09:48:59.566Z",
-      "expiresAt": "2026-10-30T10:48:59.566Z"
-    },
-    {
       "key": "PC5-2P6HYC",
       "durationHours": 1,
       "maxDevices": 1,
