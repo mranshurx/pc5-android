@@ -854,9 +854,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T14:11:08.538Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-10-31T12:09:55.628Z",
+      "activatedAt": "2026-10-31T12:09:55.628Z",
+      "expiresAt": "2026-10-31T15:09:55.628Z"
     },
     {
       "key": "PC5-GXKSBW",
