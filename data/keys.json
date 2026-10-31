@@ -1065,6 +1065,17 @@
       "startedAt": "2026-10-31T08:59:51.777Z",
       "activatedAt": "2026-10-31T08:59:51.777Z",
       "expiresAt": "2026-10-31T20:59:51.777Z"
+    },
+    {
+      "key": "PC5-QGJTRF",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-10-31T09:01:16.292Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
