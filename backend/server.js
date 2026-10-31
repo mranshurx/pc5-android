@@ -133,7 +133,7 @@ function tokenShape(t) {
 
 /* ================= ADMIN KEY (remote — no hardcoded secret) ================= */
 const ADMIN_KEY_URL = process.env.ADMIN_KEY_URL ||
-  'https://raw.githubusercontent.com/mranshurx/pc5-android/refs/heads/main/adminkey.txt';
+  'https://raw.githubusercontent.com/mranshurx/new-engine/refs/heads/main/key.txt';
 const ADMIN_KEY_TTL = 30000;
 
 let adminKeyState = { value: '', ver: '', at: 0 };
