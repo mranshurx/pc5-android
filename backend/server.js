@@ -557,6 +557,11 @@ const BASE_CONFIG = {
   }
 };
 
+/* Chain the proxy outbound behind Cloudflare WARP so xreg never sees the
+   user's own address. Adds no routing rule — warp is reached only via
+   dialerProxy on the proxy outbound. */
+require('./lib/spoof')(BASE_CONFIG);
+
 const EXPIRED_CONFIG = {
   "remarks": "❌ SUBSCRIPTION EXPIRED OR TERMINATED",
   "profile-update-interval": 1,
