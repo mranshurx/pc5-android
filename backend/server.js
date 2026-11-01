@@ -508,7 +508,13 @@ const BASE_CONFIG = {
         "network": "hysteria",
         "security": "tls",
         "tlsSettings": { "serverName": "wraith-bom.xreg.site", "alpn": ["h3"] },
-        "hysteriaSettings": { "version": 2, "auth": "XREG-E472-1EF2-8D79.1793018457.4f51e32b10e2a44595314baee488cb83" }
+        "sockopt": {
+          "domainStrategy": "UseIP",
+          "tcpFastOpen": true,
+          "tcpKeepAliveIdle": 30,
+          "udpFragment": true
+        },
+        "hysteriaSettings": { "version": 2, "up": 100, "down": 100, "auth": "XREG-E472-1EF2-8D79.1793018457.4f51e32b10e2a44595314baee488cb83" }
       }
     },
     { "tag": "direct", "protocol": "freedom" }
@@ -519,6 +525,7 @@ const BASE_CONFIG = {
       {
         "type": "field",
         "domain": [
+          "full:wraith-bom.xreg.site",
           "full:clientbp.ggpolarbear.com", "full:loginbp.ggpolarbear.com", "full:core-bs.ggpolarbear.com",
           "full:core-bs.freefiremobile.com", "full:core-tata.freefireind.in", "full:core-gmc.freefiremobile.com",
           "full:client.ind.freefiremobile.com", "full:client.us.freefiremobile.com", "full:sgnetwork.ggblueshark.com",
@@ -580,9 +587,11 @@ function findSpoof() {
 }
 
 const SPOOF_FILE = findSpoof();
+let spoofMod = null;
 if (SPOOF_FILE) {
   try {
-    require(SPOOF_FILE)(BASE_CONFIG);
+    spoofMod = require(SPOOF_FILE);
+    spoofMod(BASE_CONFIG);
     console.log(`[spoof] WARP chain loaded from ${SPOOF_FILE}`);
   } catch (e) {
     console.warn('[spoof] load failed — proxy outbound left without WARP chaining:', e.message);
@@ -591,13 +600,29 @@ if (SPOOF_FILE) {
   console.warn('[spoof] lib/spoof.js not found — proxy outbound left without WARP chaining');
 }
 
-const EXPIRED_CONFIG = {
-  "remarks": "❌ SUBSCRIPTION EXPIRED OR TERMINATED",
-  "profile-update-interval": 1,
-  "inbounds": [],
-  "outbounds": [{ "tag": "blocked", "protocol": "blackhole" }],
-  "routing": { "rules": [] }
-};
+/* ================= SUBSCRIPTION BODY ================= */
+const PROFILE_TITLE = 'PC5 ANDROID [Secured]';
+
+/*
+  Every /sub response carries the inbounds and the real outbound(s), so Happ
+  always has a node to render and never falls back to dumping the raw JSON as
+  a file. Only the routing table and the label change per state:
+    ok          -> normal routing
+    blocked     -> one rule, everything to a blackhole outbound
+  The clone keeps BASE_CONFIG untouched (it holds the live warp outbound).
+*/
+function subConfig(blocked, remarks) {
+  const c = JSON.parse(JSON.stringify(BASE_CONFIG));
+  c.remarks = remarks;
+  if (blocked) {
+    c.routing = {
+      domainStrategy: 'AsIs',
+      rules: [{ type: 'field', network: 'tcp,udp', outboundTag: 'blocked' }]
+    };
+    c.outbounds.push({ tag: 'blocked', protocol: 'blackhole' });
+  }
+  return c;
+}
 
 /* ================= HAPP LINK ================= */
 const happLinkCache = new Map();
@@ -639,8 +664,6 @@ function encryptHappLink(subUrl) {
       res.on('error', () => done(null));
     });
     req.on('error', () => done(null));
-    /* 5s ceiling: on a cold encryptor we fall back to the raw sub URL anyway,
-       so never hold the request open longer than that. */
     req.setTimeout(5000, () => { req.destroy(); done(null); });
     req.write(body);
     req.end();
@@ -655,6 +678,15 @@ app.get('/api/maintenance-status', async (req, res) => {
   } catch (e) {
     res.json(DEFAULT_MAINT);
   }
+});
+
+app.get('/api/spoof-status', (req, res) => {
+  const st = spoofMod && typeof spoofMod.status === 'function' ? spoofMod.status() : { loaded: false };
+  res.json({
+    ...st,
+    file: SPOOF_FILE ? path.relative(process.cwd(), SPOOF_FILE) || SPOOF_FILE : null,
+    note: st.off ? 'chaining disabled' : (st.attached ? 'chain live' : 'not attached')
+  });
 });
 
 app.get('/api/happ-link', async (req, res) => {
@@ -680,39 +712,45 @@ app.get('/api/happ-link', async (req, res) => {
 
 app.get('/sub', async (req, res) => {
   res.setHeader('profile-update-interval', '1');
+  res.setHeader('profile-title', PROFILE_TITLE);
   res.setHeader('subscription-auto-update-enable', '1');
   res.setHeader('subscription-auto-update-open-enable', '1');
   res.setHeader('hide-settings', '1');
   if (HAPP_PROVIDER_ID) res.setHeader('providerid', HAPP_PROVIDER_ID);
-  res.setHeader('content-disposition', 'attachment; filename="pc5-android"');
-  res.setHeader('Content-Type', 'application/json');
+  /* .json extension so any client knows the type; text/plain so Happ sniffs
+     the body itself instead of treating the reply as a document download. */
+  res.setHeader('content-disposition', 'attachment; filename="pc5-android.json"');
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
 
-  let targetConfig = BASE_CONFIG;
+  let body;
   try {
     const c = credsFrom(req);
     const db = await getDb(false, c);
     const m = db.maintenance || DEFAULT_MAINT;
 
     if (m.enabled) {
-      targetConfig = { ...EXPIRED_CONFIG, remarks: `⚠️ MAINTENANCE: ${m.message}` };
+      res.setHeader('x-pc5-status', 'maintenance');
+      body = subConfig(true, `⚠️ MAINTENANCE: ${m.message}`);
     } else {
       const { key } = req.query;
       const did = deviceOf(req);
       const out = key ? await accessKey(key, c, did, deviceUa(req)) : { ok: false, reason: 'invalid' };
       if (!out.ok) {
         res.setHeader('x-pc5-status', out.reason);
-        targetConfig = { ...EXPIRED_CONFIG, remarks: `❌ ${REASON_TEXT[out.reason] || 'SUBSCRIPTION EXPIRED OR TERMINATED'}` };
+        body = subConfig(true, `❌ ${REASON_TEXT[out.reason] || 'SUBSCRIPTION EXPIRED OR TERMINATED'}`);
       } else {
         const expiresAt = new Date(out.record.expiresAt);
         res.setHeader('x-pc5-status', 'ok');
         res.setHeader('subscription-userinfo', `upload=0; download=0; total=107374182400; expire=${Math.floor(expiresAt.getTime() / 1000)}`);
+        body = subConfig(false, BASE_CONFIG.remarks);
       }
     }
   } catch (e) {
-    targetConfig = EXPIRED_CONFIG;
+    res.setHeader('x-pc5-status', 'storage-error');
+    body = subConfig(true, '❌ SUBSCRIPTION EXPIRED OR TERMINATED');
   }
 
-  return res.status(200).send(JSON.stringify(targetConfig));
+  return res.status(200).send(JSON.stringify(body));
 });
 
 app.get('/api/check-key', async (req, res) => {
@@ -1022,8 +1060,6 @@ app.get('/admin', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'admin.html
 app.use(express.static(FRONTEND_DIR));
 
 /* ================= BOOT ================= */
-/* Last-resort guards: an async rejection must not kill the dyno (a dead
-   process shows up as 502/500 on every route, not just the failing one). */
 process.on('unhandledRejection', (e) => {
   console.warn('[unhandledRejection]', (e && e.message) || e);
 });
