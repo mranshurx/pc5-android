@@ -127,17 +127,6 @@
       "expiresAt": "2026-10-31T13:28:31.409Z"
     },
     {
-      "key": "PC5-9LWZVR",
-      "durationHours": 6,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-30T09:55:59.316Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-QLJZTF",
       "durationHours": 6,
       "maxDevices": 1,
