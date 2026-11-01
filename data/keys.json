@@ -303,9 +303,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T09:58:05.016Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-01T07:31:13.031Z",
+      "activatedAt": "2026-11-01T07:31:13.031Z",
+      "expiresAt": "2026-11-08T07:31:13.031Z"
     },
     {
       "key": "PC5-06LD5L",
