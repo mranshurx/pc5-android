@@ -232,17 +232,6 @@
       "expiresAt": "2026-11-01T12:53:52.009Z"
     },
     {
-      "key": "PC5-96Y97J",
-      "durationHours": 72,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-30T09:57:31.843Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-B3UM26",
       "durationHours": 72,
       "maxDevices": 1,
