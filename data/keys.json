@@ -1070,6 +1070,17 @@
       "startedAt": "2026-11-01T07:40:45.342Z",
       "activatedAt": "2026-11-01T07:40:45.342Z",
       "expiresAt": "2026-11-01T08:40:45.342Z"
+    },
+    {
+      "key": "PC5-1GQI8X",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-01T18:23:13.733Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
