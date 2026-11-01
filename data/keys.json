@@ -1070,17 +1070,6 @@
       "startedAt": "2026-11-01T07:40:45.342Z",
       "activatedAt": "2026-11-01T07:40:45.342Z",
       "expiresAt": "2026-11-01T08:40:45.342Z"
-    },
-    {
-      "key": "PC5-6AMKTQ",
-      "durationHours": 24,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "createdAt": "2026-11-01T17:41:22.339Z",
-      "startedAt": "2026-11-01T17:42:01.667Z",
-      "activatedAt": "2026-11-01T17:42:01.667Z",
-      "expiresAt": "2026-11-02T17:42:01.667Z"
     }
   ],
   "maintenance": {
