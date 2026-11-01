@@ -192,17 +192,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-0G37AY",
-      "durationHours": 12,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-30T09:56:41.958Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-HT97CA",
       "durationHours": 24,
       "maxDevices": 1,
