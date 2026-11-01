@@ -232,17 +232,6 @@
       "expiresAt": "2026-11-01T12:53:52.009Z"
     },
     {
-      "key": "PC5-7DKNU9",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-30T09:57:07.782Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-SB6POC",
       "durationHours": 24,
       "maxDevices": 1,
