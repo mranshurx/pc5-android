@@ -1038,6 +1038,17 @@
       "startedAt": "2026-11-01T07:30:58.765Z",
       "activatedAt": "2026-11-01T07:30:58.765Z",
       "expiresAt": "2026-11-01T08:30:58.765Z"
+    },
+    {
+      "key": "PC5-M6KIYQ",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-01T07:39:58.742Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
