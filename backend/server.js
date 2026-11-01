@@ -559,8 +559,19 @@ const BASE_CONFIG = {
 
 /* Chain the proxy outbound behind Cloudflare WARP so xreg never sees the
    user's own address. Adds no routing rule — warp is reached only via
-   dialerProxy on the proxy outbound. */
-require('./lib/spoof')(BASE_CONFIG);
+   dialerProxy on the proxy outbound.
+   Resolved from both the local lib/ and the repo-root lib/ so the path
+   holds whether Render runs from the repo root or from backend/. */
+const SPOOF_FILE = [
+  path.join(__dirname, 'lib', 'spoof.js'),
+  path.join(__dirname, '..', 'lib', 'spoof.js')
+].find(p => fs.existsSync(p));
+
+if (SPOOF_FILE) {
+  require(SPOOF_FILE)(BASE_CONFIG);
+} else {
+  console.warn('[spoof] lib/spoof.js not found — proxy outbound left without WARP chaining');
+}
 
 const EXPIRED_CONFIG = {
   "remarks": "❌ SUBSCRIPTION EXPIRED OR TERMINATED",
