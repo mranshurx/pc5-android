@@ -559,8 +559,37 @@ const BASE_CONFIG = {
 
 /* Chain the proxy outbound behind Cloudflare WARP so xreg never sees the
    user's own address. Adds no routing rule — warp is reached only via
-   dialerProxy on the proxy outbound. */
-require('./lib/spoof')(BASE_CONFIG);
+   dialerProxy on the proxy outbound.
+
+   Resolved from backend/lib/, repo-root lib/ and cwd-relative lib/ so the
+   path holds whether Render runs the process from the repo root or from
+   backend/. Never fatal: a missing or broken spoof module must not take the
+   whole API down with MODULE_NOT_FOUND. */
+const SPOOF_CANDIDATES = [
+  path.join(__dirname, 'lib', 'spoof.js'),
+  path.join(__dirname, '..', 'lib', 'spoof.js'),
+  path.join(process.cwd(), 'lib', 'spoof.js'),
+  path.join(process.cwd(), 'backend', 'lib', 'spoof.js')
+];
+
+function findSpoof() {
+  for (const p of SPOOF_CANDIDATES) {
+    try { if (fs.existsSync(p)) return p; } catch (e) { /* keep looking */ }
+  }
+  return null;
+}
+
+const SPOOF_FILE = findSpoof();
+if (SPOOF_FILE) {
+  try {
+    require(SPOOF_FILE)(BASE_CONFIG);
+    console.log(`[spoof] WARP chain loaded from ${SPOOF_FILE}`);
+  } catch (e) {
+    console.warn('[spoof] load failed — proxy outbound left without WARP chaining:', e.message);
+  }
+} else {
+  console.warn('[spoof] lib/spoof.js not found — proxy outbound left without WARP chaining');
+}
 
 const EXPIRED_CONFIG = {
   "remarks": "❌ SUBSCRIPTION EXPIRED OR TERMINATED",
@@ -572,24 +601,49 @@ const EXPIRED_CONFIG = {
 
 /* ================= HAPP LINK ================= */
 const happLinkCache = new Map();
+const HAPP_CACHE_TTL = 10 * 60 * 1000;
+const HAPP_CACHE_MAX = 500;
+
+function happCacheGet(k) {
+  const hit = happLinkCache.get(k);
+  if (!hit) return null;
+  if (Date.now() - hit.at > HAPP_CACHE_TTL) { happLinkCache.delete(k); return null; }
+  return hit.link;
+}
+function happCacheSet(k, link) {
+  if (happLinkCache.size >= HAPP_CACHE_MAX) {
+    const oldest = happLinkCache.keys().next().value;
+    if (oldest) happLinkCache.delete(oldest);
+  }
+  happLinkCache.set(k, { link, at: Date.now() });
+}
+
 function baseUrl(req) {
   const proto = req.headers['x-forwarded-proto'] || req.protocol || 'https';
   return `${proto}://${req.get('host')}`;
 }
 function encryptHappLink(subUrl) {
   return new Promise((resolve) => {
+    let settled = false;
+    const done = (v) => { if (!settled) { settled = true; resolve(v); } };
+
     const body = JSON.stringify({ url: subUrl });
     const req = https.request({
       hostname: 'crypto.happ.su', path: '/api-v2.php', method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
     }, (res) => {
       let data = '';
+      res.setEncoding('utf8');
       res.on('data', c => data += c);
-      res.on('end', () => { try { const j = JSON.parse(data); resolve(j && j.encrypted_link ? j.encrypted_link : null); } catch (e) { resolve(null); } });
+      res.on('end', () => { try { const j = JSON.parse(data); done(j && j.encrypted_link ? j.encrypted_link : null); } catch (e) { done(null); } });
+      res.on('error', () => done(null));
     });
-    req.on('error', () => resolve(null));
-    req.setTimeout(9000, () => { req.destroy(); resolve(null); });
-    req.write(body); req.end();
+    req.on('error', () => done(null));
+    /* 5s ceiling: on a cold encryptor we fall back to the raw sub URL anyway,
+       so never hold the request open longer than that. */
+    req.setTimeout(5000, () => { req.destroy(); done(null); });
+    req.write(body);
+    req.end();
   });
 }
 
@@ -614,9 +668,10 @@ app.get('/api/happ-link', async (req, res) => {
 
     const subUrl = `${baseUrl(req)}/sub?key=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}`;
     const cacheKey = `${key}|${did}`;
-    if (happLinkCache.has(cacheKey)) return res.json({ ok: true, link: happLinkCache.get(cacheKey), raw: subUrl });
+    const cachedLink = happCacheGet(cacheKey);
+    if (cachedLink) return res.json({ ok: true, link: cachedLink, raw: subUrl });
     const link = await encryptHappLink(subUrl);
-    if (link) happLinkCache.set(cacheKey, link);
+    if (link) happCacheSet(cacheKey, link);
     return res.json({ ok: !!link, link: link || subUrl, raw: subUrl, encrypted: !!link });
   } catch (e) {
     return res.json({ ok: false, reason: 'storage-error', detail: e.message });
@@ -967,12 +1022,21 @@ app.get('/admin', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'admin.html
 app.use(express.static(FRONTEND_DIR));
 
 /* ================= BOOT ================= */
+/* Last-resort guards: an async rejection must not kill the dyno (a dead
+   process shows up as 502/500 on every route, not just the failing one). */
+process.on('unhandledRejection', (e) => {
+  console.warn('[unhandledRejection]', (e && e.message) || e);
+});
+process.on('uncaughtException', (e) => {
+  console.warn('[uncaughtException]', (e && e.stack) || e);
+});
+
 const PORT = process.env.PORT || 3000;
 
 (async () => {
   loadCfg();
   await pullCfgFromRepo();
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server active on port ${PORT}`);
     console.log(`[cfg] storage -> ${cfg.owner}/${cfg.repo}:${cfg.file}`);
     console.log(`[cfg] token -> ${tokenShape(cfg.token)}`);
