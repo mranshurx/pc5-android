@@ -1240,10 +1240,17 @@
       "expiresAt": null,
       "deviceLimit": "single",
       "devices": []
+    },
+    {
+      "key": "PC5-MPZMK4",
+      "plan": "1h",
+      "createdAt": "2026-11-02T20:37:18.000Z",
+      "revoked": false,
+      "deviceId": null
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
+    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
   }
 }
