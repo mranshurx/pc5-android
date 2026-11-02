@@ -1010,4 +1010,45 @@ app.post('/api/admin/set-device-limit', async (req, res) => {
   }
 });
 
-app.post('/api/admin/maintenance', async (req, res)
+app.post('/api/admin/maintenance', async (req, res) => {
+  const state = await requireAdmin(req, res);
+  if (!state) return;
+  const { enabled, message } = req.body;
+  const c = credsFrom(req);
+
+  try {
+    const m = await mutate(c, db => {
+      db.maintenance = { enabled: !!enabled, message: message || "System under maintenance." };
+      return db.maintenance;
+    });
+    return res.json({ success: true, maintenance: m });
+  } catch (e) {
+    return res.status(500).json({ error: "Write failed: " + e.message });
+  }
+});
+
+/* ================= FRONTEND ================= */
+app.get('/admin', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'admin.html')));
+app.use(express.static(FRONTEND_DIR));
+
+/* ================= BOOT ================= */
+process.on('unhandledRejection', (e) => {
+  console.warn('[unhandledRejection]', (e && e.message) || e);
+});
+process.on('uncaughtException', (e) => {
+  console.warn('[uncaughtException]', (e && e.stack) || e);
+});
+
+const PORT = process.env.PORT || 3000;
+
+(async () => {
+  loadCfg();
+  await pullCfgFromRepo();
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server active on port ${PORT}`);
+    console.log(`[cfg] storage -> ${cfg.owner}/${cfg.repo}:${cfg.file}`);
+    console.log(`[cfg] token -> ${tokenShape(cfg.token)}`);
+    console.log(`[admin] key source -> ${ADMIN_KEY_URL}`);
+    getAdminKey(true);
+  });
+})();
