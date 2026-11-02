@@ -496,7 +496,7 @@ const REASON_TEXT = {
    Tester endpoints and game traffic go through the proxy so Happ can measure a
    real latency; CDN and event hosts stay direct; catch-all is the proxy. */
 const BASE_CONFIG = {
-  "remarks": "dripwire",
+  "remarks": "PC5 ANDROID",
   "profile-update-interval": 1,
   "inbounds": [
     {
