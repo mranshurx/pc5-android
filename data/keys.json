@@ -1210,19 +1210,6 @@
       "startedAt": "2026-11-02T11:15:21.486Z",
       "activatedAt": "2026-11-02T11:15:21.486Z",
       "expiresAt": "2026-12-02T11:15:21.486Z"
-    },
-    {
-      "key": "PC5-CBHWHC",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-02T15:24:29.258Z",
-      "startedAt": "2026-11-02T15:24:29.258Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-02T16:24:29.258Z"
     }
   ],
   "maintenance": {
