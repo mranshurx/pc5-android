@@ -1134,6 +1134,17 @@
       "startedAt": "2026-11-02T07:58:42.762Z",
       "activatedAt": "2026-11-02T07:58:42.762Z",
       "expiresAt": "2026-11-03T07:58:42.762Z"
+    },
+    {
+      "key": "PC5-UTVDWP",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-02T09:16:38.625Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
