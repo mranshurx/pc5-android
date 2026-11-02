@@ -1125,17 +1125,6 @@
       "expiresAt": "2026-12-02T02:38:03.074Z"
     },
     {
-      "key": "PC5-VDHX1V",
-      "durationHours": 24,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "createdAt": "2026-11-02T07:57:45.002Z",
-      "startedAt": "2026-11-02T07:58:42.762Z",
-      "activatedAt": "2026-11-02T07:58:42.762Z",
-      "expiresAt": "2026-11-03T07:58:42.762Z"
-    },
-    {
       "key": "PC5-WXIW8K",
       "durationHours": 24,
       "maxDevices": 1,
