@@ -1225,19 +1225,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-3Y349Z",
-      "plan": "12h",
-      "durationHours": 12,
-      "maxDevices": 1,
-      "cost": 5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-02T16:01:04.727Z",
-      "startedAt": "2026-11-02T16:01:04.727Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-03T04:01:04.727Z"
-    },
-    {
       "key": "PC5-8J9NN2",
       "plan": "1h",
       "durationHours": 1,
