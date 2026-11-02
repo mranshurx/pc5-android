@@ -1223,19 +1223,6 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
-    },
-    {
-      "key": "PC5-WFWBCT",
-      "plan": "12h",
-      "durationHours": 12,
-      "maxDevices": 1,
-      "cost": 5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-02T15:59:31.503Z",
-      "startedAt": "2026-11-02T15:59:31.503Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-03T03:59:31.503Z"
     }
   ],
   "maintenance": {
