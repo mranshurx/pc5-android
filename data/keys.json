@@ -1260,11 +1260,18 @@
       "plan": "1h",
       "createdAt": "2026-11-02T20:39:14.000Z",
       "revoked": false,
-      "deviceId": null
+      "deviceId": null,
+      "durationHours": 24,
+      "startedAt": "2026-11-02T20:39:24.268Z",
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "activatedAt": "2026-11-02T20:39:24.268Z",
+      "expiresAt": "2026-11-03T20:39:24.268Z"
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
+    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
   }
 }
