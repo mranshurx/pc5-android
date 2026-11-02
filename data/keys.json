@@ -1271,6 +1271,19 @@
       "startedAt": "2026-11-02T16:16:21.072Z",
       "activatedAt": null,
       "expiresAt": "2026-11-02T19:16:21.072Z"
+    },
+    {
+      "key": "PC5-QBVNPJ",
+      "plan": "1h",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "cost": 0.5,
+      "resellerId": "180d2b61-e358-4002-b584-0b595e5e478c",
+      "reseller": "within",
+      "createdAt": "2026-11-02T16:18:42.040Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
