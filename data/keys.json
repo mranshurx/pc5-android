@@ -1223,19 +1223,6 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
-    },
-    {
-      "key": "PC5-8J9NN2",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-02T16:01:20.747Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
     }
   ],
   "maintenance": {
