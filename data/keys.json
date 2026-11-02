@@ -655,9 +655,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-10-30T14:10:14.945Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-02T02:28:28.979Z",
+      "activatedAt": "2026-11-02T02:28:28.979Z",
+      "expiresAt": "2026-11-02T03:28:28.979Z"
     },
     {
       "key": "PC5-B1NVXE",
