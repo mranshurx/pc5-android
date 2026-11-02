@@ -1210,19 +1210,6 @@
       "startedAt": "2026-11-02T11:15:21.486Z",
       "activatedAt": "2026-11-02T11:15:21.486Z",
       "expiresAt": "2026-12-02T11:15:21.486Z"
-    },
-    {
-      "key": "PC5-4T6MHB",
-      "plan": "6h",
-      "durationHours": 6,
-      "maxDevices": 1,
-      "cost": 3,
-      "resellerId": "eacf220a-4d5f-461d-aa9b-592b2409395a",
-      "reseller": "mrdesibhai",
-      "createdAt": "2026-11-02T14:16:37.005Z",
-      "startedAt": "2026-11-02T14:16:37.005Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-02T20:16:37.005Z"
     }
   ],
   "maintenance": {
