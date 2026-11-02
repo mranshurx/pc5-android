@@ -1159,6 +1159,17 @@
       "startedAt": "2026-11-02T10:20:22.245Z",
       "activatedAt": "2026-11-02T10:20:22.245Z",
       "expiresAt": "2026-11-02T11:20:22.245Z"
+    },
+    {
+      "key": "PC5-V1XTOH",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-02T10:24:34.039Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
