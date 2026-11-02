@@ -1210,6 +1210,19 @@
       "startedAt": "2026-11-02T11:15:21.486Z",
       "activatedAt": "2026-11-02T11:15:21.486Z",
       "expiresAt": "2026-12-02T11:15:21.486Z"
+    },
+    {
+      "key": "PC5-EUAY97",
+      "plan": "1h",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "cost": 0.5,
+      "resellerId": "ed788af3-10dd-42e0-9032-890bc63b109a",
+      "reseller": "mikey56",
+      "createdAt": "2026-11-02T15:58:28.141Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
