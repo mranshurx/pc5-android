@@ -585,22 +585,30 @@ const BASE_CONFIG = {
 /* ================= SUBSCRIPTION BODY ================= */
 const PROFILE_TITLE = 'dripwire';
 
+/* Auth handed to the node while the key is dead. The server rejects it, so the
+   QUIC handshake dies and the client reports a genuine failure. */
+const DEAD_AUTH = 'PC5-BLOCKED';
+
 /*
-  Every /sub response carries the inbounds and the real outbound(s), so Happ
-  always has a node to render and never falls back to dumping the raw JSON as
-  a file. Only the routing table and the label change per state:
-    ok          -> normal routing
-    blocked     -> one rule, everything to a blackhole outbound
+  Every /sub response carries the inbounds and a real outbound, so Happ always
+  has a node to render and never falls back to dumping the raw JSON as a file.
+
+  A blackhole outbound is NOT used for the blocked state: it accepts the local
+  TCP connection and only then discards the payload, so the handshake never
+  leaves the device and Happ prints a fake ~0ms ping on a dead key. Instead the
+  proxy keeps its tag/name but gets a rejected auth, and routing is collapsed
+  onto it. Ping then fails for real (N/A) whether the client measures through
+  the routing table or straight at the outbound.
 */
 function subConfig(blocked, remarks) {
   const c = JSON.parse(JSON.stringify(BASE_CONFIG));
   c.remarks = remarks;
   if (blocked) {
+    c.outbounds[0].streamSettings.hysteriaSettings.auth = DEAD_AUTH;
     c.routing = {
       domainStrategy: 'AsIs',
-      rules: [{ type: 'field', network: 'tcp,udp', outboundTag: 'blocked' }]
+      rules: [{ type: 'field', network: 'tcp,udp', outboundTag: 'proxy' }]
     };
-    c.outbounds.push({ tag: 'blocked', protocol: 'blackhole' });
   }
   return c;
 }
