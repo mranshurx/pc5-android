@@ -1221,8 +1221,17 @@
       "reseller": "mrdesibhai",
       "createdAt": "2026-11-02T14:14:16.807Z",
       "startedAt": "2026-11-02T14:14:16.807Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-02T15:14:16.807Z"
+      "activatedAt": "2026-11-02T14:14:16.807Z",
+      "expiresAt": "2026-11-02T15:14:16.807Z",
+      "deviceLimit": "single",
+      "devices": [
+        {
+          "id": "Dc3a6641c0119870a",
+          "firstSeen": "2026-11-02T14:15:07.017Z",
+          "lastSeen": "2026-11-02T14:15:07.017Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     }
   ],
   "maintenance": {
