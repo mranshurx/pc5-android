@@ -1258,6 +1258,19 @@
       "startedAt": "2026-11-02T16:16:18.623Z",
       "activatedAt": null,
       "expiresAt": "2026-11-02T17:16:18.623Z"
+    },
+    {
+      "key": "PC5-6ZG35W",
+      "plan": "3h",
+      "durationHours": 3,
+      "maxDevices": 1,
+      "cost": 2,
+      "resellerId": "180d2b61-e358-4002-b584-0b595e5e478c",
+      "reseller": "within",
+      "createdAt": "2026-11-02T16:16:21.072Z",
+      "startedAt": "2026-11-02T16:16:21.072Z",
+      "activatedAt": null,
+      "expiresAt": "2026-11-02T19:16:21.072Z"
     }
   ],
   "maintenance": {
