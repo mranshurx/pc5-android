@@ -583,7 +583,7 @@ const BASE_CONFIG = {
 };
 
 /* ================= SUBSCRIPTION BODY ================= */
-const PROFILE_TITLE = 'dripwire';
+const PROFILE_TITLE = 'PC5 ANDROID';
 
 /* Auth handed to the node while the key is dead. The server rejects it, so the
    QUIC handshake dies and the client reports a genuine failure. */
