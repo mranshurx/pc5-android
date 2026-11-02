@@ -1262,19 +1262,6 @@
       "expiresAt": null,
       "deviceLimit": "single",
       "devices": []
-    },
-    {
-      "key": "PC5-WZC9K2",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-02T17:04:28.315Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
     }
   ],
   "maintenance": {
