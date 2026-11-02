@@ -1148,7 +1148,7 @@
     }
   ],
   "maintenance": {
-    "enabled": false,
+    "enabled": true,
     "message": "we are adding update files in the server please keep patience 🙏🙏💔"
   }
 }
