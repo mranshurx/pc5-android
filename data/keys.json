@@ -1177,6 +1177,17 @@
       "startedAt": "2026-11-02T10:24:52.396Z",
       "activatedAt": "2026-11-02T10:24:52.396Z",
       "expiresAt": "2026-11-02T11:24:52.396Z"
+    },
+    {
+      "key": "PC5-UL94Z1",
+      "durationHours": 72,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-02T10:31:28.406Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
