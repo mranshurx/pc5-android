@@ -1141,6 +1141,17 @@
       "startedAt": "2026-11-02T10:13:01.207Z",
       "activatedAt": "2026-11-02T10:13:01.207Z",
       "expiresAt": "2026-11-03T10:13:01.207Z"
+    },
+    {
+      "key": "PC5-M62A5J",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-02T10:19:55.487Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
