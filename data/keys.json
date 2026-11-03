@@ -2409,18 +2409,6 @@
       "expiresAt": null,
       "deviceLimit": "single",
       "devices": []
-    },
-    {
-      "key": "PC5-UI7DBF",
-      "plan": "30d",
-      "durationHours": 24,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
     }
   ],
   "maintenance": {
