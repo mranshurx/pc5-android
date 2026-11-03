@@ -1309,10 +1309,21 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
+    },
+    {
+      "key": "PC5-ZP0X2D",
+      "plan": "30d",
+      "createdAt": "2026-11-03T00:00:00.000Z",
+      "revoked": false,
+      "deviceId": null,
+      "durationHours": 720,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": []
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
+    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
   }
 }
