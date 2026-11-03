@@ -1404,18 +1404,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-FJK1EL",
-      "plan": "30d",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-1JVW1Q",
       "plan": "30d",
       "durationHours": 3,
