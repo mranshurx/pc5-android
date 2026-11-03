@@ -469,17 +469,6 @@
       "expiresAt": "2026-10-31T10:03:58.680Z"
     },
     {
-      "key": "PC5-988OSP",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-30T14:10:20.251Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-TSTK24",
       "durationHours": 3,
       "maxDevices": 1,
