@@ -379,17 +379,6 @@
       "expiresAt": "2026-11-30T12:00:27.861Z"
     },
     {
-      "key": "PC5-WI6L3N",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-30T13:45:09.074Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-BIWKXR",
       "durationHours": 1,
       "maxDevices": 1,
