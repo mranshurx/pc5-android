@@ -2407,9 +2407,9 @@
         }
       ],
       "createdAt": "2026-11-03T13:16:44.858Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-03T13:18:05.689Z",
+      "activatedAt": "2026-11-03T13:18:05.689Z",
+      "expiresAt": "2026-12-03T13:18:05.689Z"
     }
   ],
   "maintenance": {
