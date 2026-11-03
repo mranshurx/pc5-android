@@ -1330,11 +1330,14 @@
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": "2026-11-03T09:30:47.074Z",
+      "activatedAt": "2026-11-03T09:30:47.074Z",
+      "expiresAt": "2026-12-03T09:30:47.074Z"
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
+    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
   }
 }
