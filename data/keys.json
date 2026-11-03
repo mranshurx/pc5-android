@@ -1282,10 +1282,17 @@
       "devices": [],
       "activatedAt": "2026-11-03T02:14:22.162Z",
       "expiresAt": "2026-11-04T02:14:22.162Z"
+    },
+    {
+      "key": "PC5-Y4REU3",
+      "plan": "1h",
+      "createdAt": "2026-11-03T06:01:30.000Z",
+      "revoked": false,
+      "deviceId": null
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
+    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
   }
 }
