@@ -1220,9 +1220,9 @@
       "resellerId": "ed788af3-10dd-42e0-9032-890bc63b109a",
       "reseller": "mikey56",
       "createdAt": "2026-11-02T16:13:37.981Z",
-      "startedAt": null,
+      "startedAt": "2026-11-03T08:33:33.369Z",
       "activatedAt": null,
-      "expiresAt": null,
+      "expiresAt": "2026-11-03T09:33:33.369Z",
       "deviceLimit": "single",
       "devices": []
     },
@@ -1324,6 +1324,6 @@
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
+    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
   }
 }
