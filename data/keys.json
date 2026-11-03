@@ -1283,19 +1283,6 @@
       "deviceId": null
     },
     {
-      "key": "PC5-EN39Y8",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "ed788af3-10dd-42e0-9032-890bc63b109a",
-      "reseller": "mikey56",
-      "createdAt": "2026-11-03T06:03:44.886Z",
-      "startedAt": "2026-11-03T08:33:43.149Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-03T09:33:43.149Z"
-    },
-    {
       "key": "PC5-ZP0X2D",
       "plan": "30d",
       "createdAt": "2026-11-03T00:00:00.000Z",
