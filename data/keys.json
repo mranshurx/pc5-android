@@ -1296,10 +1296,23 @@
       "createdAt": "2026-11-03T06:01:44.000Z",
       "revoked": false,
       "deviceId": null
+    },
+    {
+      "key": "PC5-EN39Y8",
+      "plan": "1h",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "cost": 0.5,
+      "resellerId": "ed788af3-10dd-42e0-9032-890bc63b109a",
+      "reseller": "mikey56",
+      "createdAt": "2026-11-03T06:03:44.886Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
+    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
   }
 }
