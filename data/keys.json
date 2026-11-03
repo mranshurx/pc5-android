@@ -1212,21 +1212,6 @@
       "expiresAt": "2026-12-02T11:15:21.486Z"
     },
     {
-      "key": "PC5-QE5WMN",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "ed788af3-10dd-42e0-9032-890bc63b109a",
-      "reseller": "mikey56",
-      "createdAt": "2026-11-02T16:13:37.981Z",
-      "startedAt": "2026-11-03T08:33:33.369Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-03T09:33:33.369Z",
-      "deviceLimit": "single",
-      "devices": []
-    },
-    {
       "key": "PC5-QBVNPJ",
       "plan": "1h",
       "durationHours": 1,
