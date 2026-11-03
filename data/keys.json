@@ -2539,6 +2539,19 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
+    },
+    {
+      "key": "PC5-9KE5GG",
+      "plan": "1h",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "cost": 0.5,
+      "resellerId": "ed788af3-10dd-42e0-9032-890bc63b109a",
+      "reseller": "mikey56",
+      "createdAt": "2026-11-03T14:26:29.308Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
