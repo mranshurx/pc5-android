@@ -289,17 +289,6 @@
       "expiresAt": "2026-11-14T09:13:54.255Z"
     },
     {
-      "key": "PC5-CWIX7V",
-      "durationHours": 336,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-30T09:58:19.655Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-QWWPNS",
       "durationHours": 336,
       "maxDevices": 1,
