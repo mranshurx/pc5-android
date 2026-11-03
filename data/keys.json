@@ -1478,9 +1478,11 @@
       "resellerId": "180d2b61-e358-4002-b584-0b595e5e478c",
       "reseller": "within",
       "createdAt": "2026-11-03T19:43:04.385Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-03T20:10:29.992Z",
+      "activatedAt": "2026-11-03T20:10:29.992Z",
+      "expiresAt": "2026-12-03T20:10:29.992Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
