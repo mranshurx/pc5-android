@@ -2148,18 +2148,6 @@
       "expiresAt": "2026-11-03T14:22:37.804Z"
     },
     {
-      "key": "PC5-4X5YWJ",
-      "plan": "30d",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-M87HAZ",
       "plan": "1h",
       "durationHours": 1,
