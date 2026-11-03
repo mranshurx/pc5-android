@@ -1643,7 +1643,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-03T15:41:36.736Z",
+      "activatedAt": "2026-11-03T15:41:36.736Z",
+      "expiresAt": "2026-11-03T18:41:36.736Z"
     },
     {
       "key": "PC5-L4KE0A",
@@ -2525,7 +2527,9 @@
       "createdAt": "2026-11-03T14:26:14.733Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-JQNU3G",
@@ -2538,7 +2542,9 @@
       "createdAt": "2026-11-03T14:26:21.418Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-9KE5GG",
@@ -2551,7 +2557,9 @@
       "createdAt": "2026-11-03T14:26:29.308Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
