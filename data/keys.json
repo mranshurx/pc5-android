@@ -2424,8 +2424,17 @@
       "reseller": "irfan737",
       "createdAt": "2026-11-03T13:34:22.441Z",
       "startedAt": "2026-11-03T13:34:33.448Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-03T14:34:33.448Z"
+      "activatedAt": "2026-11-03T13:34:22.441Z",
+      "expiresAt": "2026-11-03T14:34:33.448Z",
+      "deviceLimit": "single",
+      "devices": [
+        {
+          "id": "D1451544c01181f6b",
+          "firstSeen": "2026-11-03T13:35:13.034Z",
+          "lastSeen": "2026-11-03T13:35:13.034Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     }
   ],
   "maintenance": {
