@@ -1300,20 +1300,6 @@
       "expiresAt": "2026-11-03T10:43:47.786Z"
     },
     {
-      "key": "PC5-AVEZZC",
-      "plan": "30d",
-      "durationHours": 12,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": "2026-11-03T09:45:02.834Z",
-      "activatedAt": "2026-11-03T09:45:02.834Z",
-      "expiresAt": "2026-11-03T21:45:02.834Z"
-    },
-    {
       "key": "PC5-LR89LZ",
       "plan": "30d",
       "durationHours": 1,
