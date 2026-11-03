@@ -1468,6 +1468,19 @@
       "startedAt": "2026-11-03T18:47:06.470Z",
       "activatedAt": "2026-11-03T18:47:06.470Z",
       "expiresAt": "2026-11-04T18:47:06.470Z"
+    },
+    {
+      "key": "PC5-KPGD3M",
+      "plan": "30d",
+      "durationHours": 720,
+      "maxDevices": 1,
+      "cost": 80,
+      "resellerId": "180d2b61-e358-4002-b584-0b595e5e478c",
+      "reseller": "within",
+      "createdAt": "2026-11-03T19:43:04.385Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
