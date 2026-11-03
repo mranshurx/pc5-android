@@ -2395,6 +2395,19 @@
       "revoked": false,
       "deviceId": null,
       "devices": []
+    },
+    {
+      "key": "PC5-GMT9NE",
+      "plan": "1h",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "cost": 0.5,
+      "resellerId": "f59f0676-3496-4d61-a363-0fc68ec7f59c",
+      "reseller": "prime",
+      "createdAt": "2026-11-03T11:51:21.186Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
