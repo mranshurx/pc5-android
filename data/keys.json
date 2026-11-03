@@ -1387,10 +1387,23 @@
       "revoked": false,
       "deviceId": null,
       "devices": []
+    },
+    {
+      "key": "PC5-NNHXGD",
+      "plan": "30d",
+      "durationHours": 720,
+      "maxDevices": 1,
+      "cost": 80,
+      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
+      "reseller": "namanraj",
+      "createdAt": "2026-11-03T10:01:03.015Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
+    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
   }
 }
