@@ -1289,6 +1289,13 @@
       "createdAt": "2026-11-03T06:01:30.000Z",
       "revoked": false,
       "deviceId": null
+    },
+    {
+      "key": "PC5-5OBEWF",
+      "plan": "1h",
+      "createdAt": "2026-11-03T06:01:44.000Z",
+      "revoked": false,
+      "deviceId": null
     }
   ],
   "maintenance": {
