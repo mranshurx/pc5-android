@@ -1320,18 +1320,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-RHNUDV",
-      "plan": "30d",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-55MG21",
       "plan": "30d",
       "durationHours": 3,
