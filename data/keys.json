@@ -390,17 +390,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-5C5GXO",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-30T13:45:00.823Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-YSSKQN",
       "durationHours": 1,
       "maxDevices": 1,
