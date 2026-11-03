@@ -1436,28 +1436,6 @@
       "devices": []
     },
     {
-      "key": "PC5-9LQ9B7",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "f59f0676-3496-4d61-a363-0fc68ec7f59c",
-      "reseller": "prime",
-      "createdAt": "2026-11-03T10:20:13.159Z",
-      "startedAt": "2026-11-03T10:20:36.067Z",
-      "activatedAt": "2026-11-03T10:20:13.159Z",
-      "expiresAt": "2026-11-03T11:20:36.067Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D4be2c3cc01199efd",
-          "firstSeen": "2026-11-03T10:21:04.332Z",
-          "lastSeen": "2026-11-03T10:21:04.332Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36"
-        }
-      ]
-    },
-    {
       "key": "PC5-J9J4FX",
       "plan": "30d",
       "durationHours": 1,
