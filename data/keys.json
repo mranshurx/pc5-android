@@ -1512,18 +1512,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-RK1DBE",
-      "plan": "30d",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-G8WP5Z",
       "plan": "30d",
       "durationHours": 3,
