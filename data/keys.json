@@ -1382,11 +1382,12 @@
       "plan": "30d",
       "durationHours": 1,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-NNHXGD",
@@ -1397,9 +1398,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-03T10:01:03.015Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-03T10:05:06.864Z",
+      "activatedAt": "2026-11-03T10:05:06.864Z",
+      "expiresAt": "2026-12-03T10:05:06.864Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
