@@ -1388,6 +1388,19 @@
       "deviceId": null,
       "devices": [],
       "startedAt": null
+    },
+    {
+      "key": "PC5-7YTPMA",
+      "plan": "30d",
+      "durationHours": 720,
+      "maxDevices": 1,
+      "cost": 80,
+      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
+      "reseller": "namanraj",
+      "createdAt": "2026-11-03T10:07:16.781Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
