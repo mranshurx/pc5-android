@@ -1330,11 +1330,14 @@
       "durationHours": 720,
       "maxDevices": 0,
       "deviceLimit": "unlimited",
-      "devices": []
+      "devices": [],
+      "startedAt": "2026-11-03T09:15:07.367Z",
+      "activatedAt": "2026-11-03T09:15:07.367Z",
+      "expiresAt": "2026-12-03T09:15:07.367Z"
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
+    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
   }
 }
