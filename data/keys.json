@@ -1352,10 +1352,21 @@
       "devices": [],
       "activatedAt": "2026-11-03T09:35:23.130Z",
       "expiresAt": "2026-11-03T10:35:23.130Z"
+    },
+    {
+      "key": "PC5-RGE2OU",
+      "plan": "30d",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "locked",
+      "createdAt": "2026-11-03T00:00:00Z",
+      "revoked": false,
+      "deviceId": null,
+      "devices": []
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
+    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
   }
 }
