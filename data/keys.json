@@ -2395,6 +2395,17 @@
       "startedAt": "2026-11-03T13:18:05.689Z",
       "activatedAt": "2026-11-03T13:18:05.689Z",
       "expiresAt": "2026-12-03T13:18:05.689Z"
+    },
+    {
+      "key": "PC5-AZSRM6",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-03T13:19:43.233Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
