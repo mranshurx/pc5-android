@@ -2008,18 +2008,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-6WXWFL",
-      "plan": "30d",
-      "durationHours": 12,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-G0VZFB",
       "plan": "30d",
       "durationHours": 12,
