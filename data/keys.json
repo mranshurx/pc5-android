@@ -2379,21 +2379,6 @@
       ]
     },
     {
-      "key": "PC5-VZK73K",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "e9a617a3-ee19-457f-a649-1e0e9a65f0c3",
-      "reseller": "irfan737",
-      "createdAt": "2026-11-03T12:59:04.408Z",
-      "startedAt": "2026-11-03T13:17:43.571Z",
-      "activatedAt": "2026-11-03T12:59:04.408Z",
-      "expiresAt": "2026-11-03T14:17:43.571Z",
-      "deviceLimit": "single",
-      "devices": []
-    },
-    {
       "key": "PC5-08UIJI",
       "durationHours": 720,
       "maxDevices": 1,
