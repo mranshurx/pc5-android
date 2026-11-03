@@ -2389,6 +2389,19 @@
       "createdAt": "2026-11-03T12:59:04.408Z",
       "startedAt": null,
       "activatedAt": null,
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
+    },
+    {
+      "key": "PC5-08UIJI",
+      "durationHours": 720,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-03T13:16:44.858Z",
+      "startedAt": null,
+      "activatedAt": null,
       "expiresAt": null
     }
   ],
