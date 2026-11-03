@@ -1380,18 +1380,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-N802SR",
-      "plan": "30d",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-OE7JV1",
       "plan": "30d",
       "durationHours": 3,
