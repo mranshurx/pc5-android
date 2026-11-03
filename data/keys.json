@@ -1292,6 +1292,19 @@
       "maxDevices": 0,
       "deviceLimit": "unlimited",
       "devices": []
+    },
+    {
+      "key": "PC5-X4YHPX",
+      "plan": "1h",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "cost": 0.5,
+      "resellerId": "ed788af3-10dd-42e0-9032-890bc63b109a",
+      "reseller": "mikey56",
+      "createdAt": "2026-11-03T08:33:50.975Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
