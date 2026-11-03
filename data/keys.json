@@ -664,17 +664,6 @@
       "expiresAt": "2026-10-31T11:59:01.621Z"
     },
     {
-      "key": "PC5-R058XY",
-      "durationHours": 72,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-31T08:56:40.449Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-2A8IXU",
       "durationHours": 1,
       "maxDevices": 1,
