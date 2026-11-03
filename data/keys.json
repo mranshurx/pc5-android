@@ -2387,9 +2387,9 @@
       "resellerId": "e9a617a3-ee19-457f-a649-1e0e9a65f0c3",
       "reseller": "irfan737",
       "createdAt": "2026-11-03T12:59:04.408Z",
-      "startedAt": null,
+      "startedAt": "2026-11-03T13:17:43.571Z",
       "activatedAt": null,
-      "expiresAt": null,
+      "expiresAt": "2026-11-03T14:17:43.571Z",
       "deviceLimit": "single",
       "devices": []
     },
