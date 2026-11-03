@@ -1626,18 +1626,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-CMM8LV",
-      "plan": "30d",
-      "durationHours": 6,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-GMT9NE",
       "plan": "1h",
       "durationHours": 1,
