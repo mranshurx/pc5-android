@@ -2160,18 +2160,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-BP4QZ5",
-      "plan": "30d",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-2WRUFI",
       "plan": "30d",
       "durationHours": 3,
