@@ -1274,11 +1274,18 @@
       "plan": "1h",
       "createdAt": "2026-11-03T02:13:51.000Z",
       "revoked": false,
-      "deviceId": null
+      "deviceId": null,
+      "durationHours": 24,
+      "startedAt": "2026-11-03T02:14:22.162Z",
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "activatedAt": "2026-11-03T02:14:22.162Z",
+      "expiresAt": "2026-11-04T02:14:22.162Z"
     }
   ],
   "maintenance": {
     "enabled": false,
-    "message": "we are adding update files in the server please keep patience \ud83d\ude4f\ud83d\ude4f\ud83d\udc94"
+    "message": "we are adding update files in the server please keep patience 🙏🙏💔"
   }
 }
