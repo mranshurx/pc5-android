@@ -1273,14 +1273,24 @@
       "plan": "1h",
       "createdAt": "2026-11-03T06:01:30.000Z",
       "revoked": false,
-      "deviceId": null
+      "deviceId": null,
+      "durationHours": 24,
+      "startedAt": null,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": []
     },
     {
       "key": "PC5-5OBEWF",
       "plan": "1h",
       "createdAt": "2026-11-03T06:01:44.000Z",
       "revoked": false,
-      "deviceId": null
+      "deviceId": null,
+      "durationHours": 24,
+      "startedAt": null,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": []
     },
     {
       "key": "PC5-ZP0X2D",
@@ -1291,7 +1301,10 @@
       "durationHours": 720,
       "maxDevices": 0,
       "deviceLimit": "unlimited",
-      "devices": []
+      "devices": [],
+      "startedAt": "2026-11-03T08:59:49.491Z",
+      "activatedAt": "2026-11-03T08:59:49.491Z",
+      "expiresAt": "2026-12-03T08:59:49.491Z"
     },
     {
       "key": "PC5-X4YHPX",
@@ -1304,7 +1317,9 @@
       "createdAt": "2026-11-03T08:33:50.975Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
