@@ -1255,20 +1255,6 @@
       "expiresAt": "2026-11-03T20:39:24.268Z"
     },
     {
-      "key": "PC5-KIMZS4",
-      "plan": "1h",
-      "createdAt": "2026-11-03T02:13:51.000Z",
-      "revoked": false,
-      "deviceId": null,
-      "durationHours": 24,
-      "startedAt": "2026-11-03T02:14:22.162Z",
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "activatedAt": "2026-11-03T02:14:22.162Z",
-      "expiresAt": "2026-11-04T02:14:22.162Z"
-    },
-    {
       "key": "PC5-Y4REU3",
       "plan": "1h",
       "createdAt": "2026-11-03T06:01:30.000Z",
