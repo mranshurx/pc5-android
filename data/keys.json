@@ -1650,18 +1650,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-SOLKHY",
-      "plan": "30d",
-      "durationHours": 6,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-NQE9BE",
       "plan": "30d",
       "durationHours": 6,
