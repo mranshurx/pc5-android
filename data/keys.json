@@ -913,17 +913,6 @@
       "expiresAt": "2026-11-05T10:36:49.602Z"
     },
     {
-      "key": "PC5-L7WWMT",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-02T10:43:49.929Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-AXFGTL",
       "durationHours": 720,
       "maxDevices": 0,
