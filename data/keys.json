@@ -1972,18 +1972,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-3O9T76",
-      "plan": "30d",
-      "durationHours": 12,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-CQOKRU",
       "plan": "30d",
       "durationHours": 12,
