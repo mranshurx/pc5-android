@@ -2388,7 +2388,7 @@
       "reseller": "irfan737",
       "createdAt": "2026-11-03T12:59:04.408Z",
       "startedAt": "2026-11-03T13:17:43.571Z",
-      "activatedAt": null,
+      "activatedAt": "2026-11-03T12:59:04.408Z",
       "expiresAt": "2026-11-03T14:17:43.571Z",
       "deviceLimit": "single",
       "devices": []
@@ -2398,7 +2398,14 @@
       "durationHours": 720,
       "maxDevices": 1,
       "deviceLimit": "single",
-      "devices": [],
+      "devices": [
+        {
+          "id": "D9f46f7bb012016d5",
+          "firstSeen": "2026-11-03T13:17:53.574Z",
+          "lastSeen": "2026-11-03T13:17:53.574Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
+        }
+      ],
       "createdAt": "2026-11-03T13:16:44.858Z",
       "startedAt": null,
       "activatedAt": null,
