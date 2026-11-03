@@ -1255,18 +1255,6 @@
       "expiresAt": "2026-11-03T20:39:24.268Z"
     },
     {
-      "key": "PC5-5OBEWF",
-      "plan": "1h",
-      "createdAt": "2026-11-03T06:01:44.000Z",
-      "revoked": false,
-      "deviceId": null,
-      "durationHours": 24,
-      "startedAt": null,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": []
-    },
-    {
       "key": "PC5-RGE2OU",
       "plan": "30d",
       "durationHours": 1,
