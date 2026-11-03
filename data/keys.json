@@ -1364,7 +1364,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-03T14:22:59.899Z",
+      "activatedAt": "2026-11-03T14:22:59.899Z",
+      "expiresAt": "2026-11-03T15:22:59.899Z"
     },
     {
       "key": "PC5-P3QRP5",
