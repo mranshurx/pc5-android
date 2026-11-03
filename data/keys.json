@@ -1433,9 +1433,9 @@
       "resellerId": "f59f0676-3496-4d61-a363-0fc68ec7f59c",
       "reseller": "prime",
       "createdAt": "2026-11-03T10:20:13.159Z",
-      "startedAt": null,
+      "startedAt": "2026-11-03T10:20:36.067Z",
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": "2026-11-03T11:20:36.067Z"
     }
   ],
   "maintenance": {
