@@ -343,17 +343,6 @@
       "expiresAt": "2026-12-01T07:30:54.859Z"
     },
     {
-      "key": "PC5-NTZM0S",
-      "durationHours": 720,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-10-30T09:58:56.204Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-97YYGQ",
       "durationHours": 720,
       "maxDevices": 1,
