@@ -1293,20 +1293,6 @@
       "devices": []
     },
     {
-      "key": "PC5-1R19SE",
-      "plan": "30d",
-      "createdAt": "2026-11-03T00:00:00.000Z",
-      "revoked": false,
-      "deviceId": null,
-      "durationHours": 720,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "startedAt": "2026-11-03T09:15:07.367Z",
-      "activatedAt": "2026-11-03T09:15:07.367Z",
-      "expiresAt": "2026-12-03T09:15:07.367Z"
-    },
-    {
       "key": "PC5-RGE2OU",
       "plan": "30d",
       "durationHours": 1,
