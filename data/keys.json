@@ -1961,440 +1961,480 @@
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-5A4XSY",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-BHGD5C",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-DIKANT",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-PFS39P",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-CMM8LV",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-07RHLF",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-8E1DJH",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-SOLKHY",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-SBUG32",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-NQE9BE",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-6CZ87G",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-B6YTPY",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-XMYV6M",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-TURC40",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-SV7ROQ",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-LU3ZTY",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-V18TSQ",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-ZNNI2K",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-HSLMSG",
       "plan": "30d",
       "durationHours": 6,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-RFX2F8",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-6ZO86L",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-37YKLT",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-YSF3FL",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-DZULZR",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-95NHJX",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-LHDK29",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-P7HORT",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-1USY2H",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-PBZAGH",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-5CVDWC",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-41UE3V",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-3O9T76",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-CQOKRU",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-2LKYPN",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-6WXWFL",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-G0VZFB",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-WI4BDA",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-IYDITK",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-5NV11E",
       "plan": "30d",
       "durationHours": 12,
       "maxDevices": 1,
-      "deviceLimit": "locked",
+      "deviceLimit": "single",
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": []
+      "devices": [],
+      "startedAt": null
     },
     {
       "key": "PC5-GMT9NE",
@@ -2405,9 +2445,11 @@
       "resellerId": "f59f0676-3496-4d61-a363-0fc68ec7f59c",
       "reseller": "prime",
       "createdAt": "2026-11-03T11:51:21.186Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-03T11:53:28.419Z",
+      "activatedAt": "2026-11-03T11:53:28.419Z",
+      "expiresAt": "2026-11-03T12:53:28.419Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
