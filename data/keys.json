@@ -1393,21 +1393,6 @@
       "expiresAt": "2026-11-03T14:22:37.804Z"
     },
     {
-      "key": "PC5-M87HAZ",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "ed788af3-10dd-42e0-9032-890bc63b109a",
-      "reseller": "mikey56",
-      "createdAt": "2026-11-03T14:26:14.733Z",
-      "startedAt": "2026-11-04T02:36:15.995Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-04T03:36:15.995Z",
-      "deviceLimit": "single",
-      "devices": []
-    },
-    {
       "key": "PC5-Y20L98",
       "plan": "1h",
       "durationHours": 1,
