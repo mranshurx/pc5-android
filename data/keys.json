@@ -1046,20 +1046,6 @@
       "expiresAt": "2026-11-03T19:38:11.056Z"
     },
     {
-      "key": "PC5-XJ67KM",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": "2026-11-03T18:47:06.470Z",
-      "activatedAt": "2026-11-03T18:47:06.470Z",
-      "expiresAt": "2026-11-04T18:47:06.470Z"
-    },
-    {
       "key": "PC5-KPGD3M",
       "plan": "30d",
       "durationHours": 720,
