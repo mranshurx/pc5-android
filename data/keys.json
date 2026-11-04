@@ -1484,6 +1484,19 @@
       "revoked": false,
       "deviceId": null,
       "devices": []
+    },
+    {
+      "key": "PC5-PPQFGQ",
+      "plan": "1h",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "cost": 0.5,
+      "resellerId": "ed788af3-10dd-42e0-9032-890bc63b109a",
+      "reseller": "mikey56",
+      "createdAt": "2026-11-04T02:36:21.642Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
