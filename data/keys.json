@@ -1104,18 +1104,6 @@
       "expiresAt": "2026-11-03T11:38:18.342Z"
     },
     {
-      "key": "PC5-88TOEQ",
-      "plan": "30d",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": null
-    },
-    {
       "key": "PC5-6QU7PR",
       "plan": "30d",
       "durationHours": 1,
