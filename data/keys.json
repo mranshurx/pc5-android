@@ -707,17 +707,6 @@
       "expiresAt": "2026-11-05T10:36:49.602Z"
     },
     {
-      "key": "PC5-AXFGTL",
-      "durationHours": 720,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "createdAt": "2026-11-02T11:12:33.261Z",
-      "startedAt": "2026-11-02T11:15:21.486Z",
-      "activatedAt": "2026-11-02T11:15:21.486Z",
-      "expiresAt": "2026-12-02T11:15:21.486Z"
-    },
-    {
       "key": "PC5-MPZMK4",
       "plan": "1h",
       "createdAt": "2026-11-02T20:37:18.000Z",
