@@ -19,24 +19,6 @@
       "expiresAt": "2026-10-30T15:06:54.328Z"
     },
     {
-      "key": "PC5-6ISYPE",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "Dae8848340117f4ff",
-          "firstSeen": "2026-10-30T11:40:31.491Z",
-          "lastSeen": "2026-10-30T11:40:31.491Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
-        }
-      ],
-      "createdAt": "2026-10-30T09:55:28.049Z",
-      "startedAt": "2026-10-30T11:40:28.725Z",
-      "activatedAt": "2026-10-30T11:40:28.725Z",
-      "expiresAt": "2026-10-30T14:40:28.725Z"
-    },
-    {
       "key": "PC5-50WV74",
       "durationHours": 6,
       "maxDevices": 1,
