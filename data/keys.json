@@ -1475,6 +1475,19 @@
           "ua": "Mozilla/5.0 (Linux; Android 16; REDMI Note 15 5G Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 Mobile Safari/537.36 XiaoMi/MiuiBrowser/14.66.0-gn"
         }
       ]
+    },
+    {
+      "key": "PC5-6VJAEK",
+      "plan": "1h",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "cost": 0.5,
+      "resellerId": "505e236f-1909-480c-87c3-867c12525caa",
+      "reseller": "aimdevil",
+      "createdAt": "2026-11-04T01:56:15.838Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
