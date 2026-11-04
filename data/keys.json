@@ -1137,20 +1137,6 @@
       ]
     },
     {
-      "key": "PC5-YQ6O93",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": "2026-11-04T08:13:35.170Z",
-      "activatedAt": "2026-11-04T08:13:35.170Z",
-      "expiresAt": "2026-11-05T08:13:35.170Z"
-    },
-    {
       "key": "PC5-68OB9T",
       "durationHours": 1,
       "maxDevices": 1,
