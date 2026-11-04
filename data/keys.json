@@ -1117,6 +1117,17 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
+    },
+    {
+      "key": "PC5-3VW53I",
+      "durationHours": 3,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-04T07:49:02.545Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
