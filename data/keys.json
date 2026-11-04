@@ -972,21 +972,6 @@
       ]
     },
     {
-      "key": "PC5-LT8SAA",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "505e236f-1909-480c-87c3-867c12525caa",
-      "reseller": "aimdevil",
-      "createdAt": "2026-11-03T10:18:02.909Z",
-      "startedAt": "2026-11-04T01:40:16.094Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-04T02:40:16.094Z",
-      "deviceLimit": "single",
-      "devices": []
-    },
-    {
       "key": "PC5-J9J4FX",
       "plan": "30d",
       "durationHours": 1,
