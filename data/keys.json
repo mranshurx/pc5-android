@@ -1082,20 +1082,6 @@
       ]
     },
     {
-      "key": "PC5-8MKOJK",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "createdAt": "2026-11-03T00:00:00Z",
-      "revoked": false,
-      "deviceId": null,
-      "devices": [],
-      "startedAt": "2026-11-04T04:15:29.977Z",
-      "activatedAt": "2026-11-04T04:15:29.977Z",
-      "expiresAt": "2026-11-05T04:15:29.977Z"
-    },
-    {
       "key": "PC5-AHMXVB",
       "plan": "3h",
       "durationHours": 3,
