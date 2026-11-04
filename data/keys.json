@@ -1196,6 +1196,17 @@
       "startedAt": "2026-11-04T09:25:46.420Z",
       "activatedAt": "2026-11-04T09:25:46.420Z",
       "expiresAt": "2026-11-11T09:25:46.420Z"
+    },
+    {
+      "key": "PC5-LINM9Y",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-04T09:36:47.634Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
