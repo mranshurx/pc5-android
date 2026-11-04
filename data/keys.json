@@ -19,24 +19,6 @@
       "expiresAt": "2026-10-30T15:06:54.328Z"
     },
     {
-      "key": "PC5-50WV74",
-      "durationHours": 6,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "Db53e219c01155783",
-          "firstSeen": "2026-10-30T18:06:59.358Z",
-          "lastSeen": "2026-10-30T18:06:59.358Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36"
-        }
-      ],
-      "createdAt": "2026-10-30T09:56:03.605Z",
-      "startedAt": "2026-10-30T18:06:57.848Z",
-      "activatedAt": "2026-10-30T18:06:57.848Z",
-      "expiresAt": "2026-10-31T00:06:57.848Z"
-    },
-    {
       "key": "PC5-VLS5HM",
       "durationHours": 12,
       "maxDevices": 1,
