@@ -1106,6 +1106,17 @@
       "startedAt": "2026-11-04T07:43:30.839Z",
       "activatedAt": "2026-11-04T07:43:30.839Z",
       "expiresAt": "2026-11-04T08:43:30.839Z"
+    },
+    {
+      "key": "PC5-UVONXS",
+      "durationHours": 24,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-04T07:47:06.905Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
