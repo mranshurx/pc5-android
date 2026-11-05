@@ -1196,7 +1196,14 @@
       "activatedAt": "2026-11-05T06:45:41.417Z",
       "expiresAt": "2026-11-05T07:45:41.417Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D96d0d0370118487c",
+          "firstSeen": "2026-11-05T06:45:42.773Z",
+          "lastSeen": "2026-11-05T06:45:42.773Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-WJNKSR",
