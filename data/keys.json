@@ -1194,6 +1194,19 @@
       "createdAt": "2026-11-04T22:25:08.246Z",
       "startedAt": null,
       "activatedAt": null,
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
+    },
+    {
+      "key": "PC5-WJNKSR",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-05T01:33:27.159Z",
+      "startedAt": null,
+      "activatedAt": null,
       "expiresAt": null
     }
   ],
