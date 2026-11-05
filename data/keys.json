@@ -1251,8 +1251,8 @@
     }
   ],
   "maintenance": {
-    "enabled": false,
+    "enabled": true,
     "message": "Garena patch update wait some time.",
-    "since": null
+    "since": "2026-11-05T15:13:30.257Z"
   }
 }
