@@ -191,7 +191,7 @@ const FRONTEND_DIR = fs.existsSync(path.join(__dirname, '..', 'frontend'))
   ? path.join(__dirname, '..', 'frontend')
   : path.join(__dirname, 'frontend');
 
-const DEFAULT_MAINT = { enabled: false, message: 'System under maintenance.' };
+const DEFAULT_MAINT = { enabled: false, message: 'System under maintenance.', since: null };
 const EMPTY_DB = () => ({ keys: [], maintenance: { ...DEFAULT_MAINT } });
 
 /* ================= GITHUB API ================= */
@@ -294,6 +294,7 @@ async function getDb(force, c) {
   if (!db || typeof db !== 'object') db = EMPTY_DB();
   if (!Array.isArray(db.keys)) db.keys = [];
   if (!db.maintenance) db.maintenance = { ...DEFAULT_MAINT };
+  if (!('since' in db.maintenance)) db.maintenance.since = null;
   db.keys.forEach(migrateRecord);
 
   cache = { data: db, sha: f ? f.sha : null, at: Date.now(), sig };
@@ -420,6 +421,56 @@ async function bindDevice(c, key, did, ua) {
   });
 }
 
+/* ================= MAINTENANCE CLOCK ================= */
+/*
+  Wall time spent in maintenance is never charged to the buyer. Two halves:
+
+  - live  : effectiveExpiry() adds the *running* maintenance window on the fly,
+            so no key reads as expired while the pause is in progress.
+  - settle: when maintenance is switched off the window is written into every
+            key's expiresAt, so the credit survives restarts and later reads.
+
+  Only the overlap between the pause and the key's own active span is credited,
+  so a key that was already dead before maintenance started gets nothing, and a
+  key sold *during* maintenance only gets credited from its activation.
+*/
+
+function maintStart(db) {
+  const m = (db && db.maintenance) || {};
+  if (!m.enabled || !m.since) return null;
+  const t = new Date(m.since).getTime();
+  return Number.isFinite(t) ? t : null;
+}
+
+function effectiveExpiry(rec, since) {
+  if (!rec || !rec.expiresAt) return null;
+  const exp = new Date(rec.expiresAt).getTime();
+  if (!Number.isFinite(exp)) return null;
+  if (!since) return exp;
+  const act = rec.activatedAt ? new Date(rec.activatedAt).getTime() : since;
+  const from = Math.max(since, Number.isFinite(act) ? act : since);
+  if (from >= exp) return exp;
+  return exp + (Date.now() - from);
+}
+
+function settleMaintenance(db, startMs, endMs) {
+  let credited = 0;
+  for (const rec of db.keys) {
+    if (!rec.expiresAt) continue;
+    const exp = new Date(rec.expiresAt).getTime();
+    if (!Number.isFinite(exp)) continue;
+    const act = rec.activatedAt ? new Date(rec.activatedAt).getTime() : startMs;
+    const from = Math.max(startMs, Number.isFinite(act) ? act : startMs);
+    const to = Math.min(endMs, exp);
+    const credit = to - from;
+    if (credit <= 0) continue;
+    rec.expiresAt = new Date(exp + credit).toISOString();
+    rec.maintenancePausedMs = (Number(rec.maintenancePausedMs) || 0) + credit;
+    credited++;
+  }
+  return credited;
+}
+
 /*
   Returns { ok, reason, record }.
   reason: invalid | expired | no-device | device-mismatch
@@ -457,7 +508,10 @@ async function accessKey(key, c, did, ua) {
     }
   }
 
-  if (!r.expiresAt || Date.now() > new Date(r.expiresAt).getTime()) {
+  /* Test against the paused clock, not the raw stamp, so a key cannot die
+     while the service is down. */
+  const expMs = effectiveExpiry(r, maintStart(db));
+  if (expMs == null || Date.now() > expMs) {
     return { ok: false, reason: 'expired', record: r };
   }
 
@@ -663,7 +717,10 @@ function encryptHappLink(subUrl) {
 app.get('/api/maintenance-status', async (req, res) => {
   try {
     const db = await getDb(false, credsFrom(req));
-    res.json(db.maintenance || DEFAULT_MAINT);
+    const m = { ...DEFAULT_MAINT, ...(db.maintenance || {}) };
+    const since = maintStart(db);
+    if (since) m.pausedMs = Math.max(0, Date.now() - since);
+    res.json(m);
   } catch (e) {
     res.json(DEFAULT_MAINT);
   }
@@ -719,9 +776,11 @@ app.get('/sub', async (req, res) => {
         res.setHeader('x-pc5-status', out.reason);
         body = subConfig(true, `❌ ${REASON_TEXT[out.reason] || 'SUBSCRIPTION EXPIRED OR TERMINATED'}`);
       } else {
-        const expiresAt = new Date(out.record.expiresAt);
+        /* Advertised expiry uses the paused clock so the date does not creep
+           forward in the client while the service is down. */
+        const liveExpiry = effectiveExpiry(out.record, maintStart(db));
         res.setHeader('x-pc5-status', 'ok');
-        res.setHeader('subscription-userinfo', `upload=0; download=0; total=107374182400; expire=${Math.floor(expiresAt.getTime() / 1000)}`);
+        res.setHeader('subscription-userinfo', `upload=0; download=0; total=107374182400; expire=${Math.floor(liveExpiry / 1000)}`);
         body = subConfig(false, BASE_CONFIG.remarks);
       }
     }
@@ -738,31 +797,62 @@ app.get('/api/check-key', async (req, res) => {
     const c = credsFrom(req);
     const db = await getDb(false, c);
     const m = db.maintenance || DEFAULT_MAINT;
-    if (m.enabled) return res.json({ valid: false, maintenance: true, message: m.message });
-
+    const since = maintStart(db);
     const { key } = req.query;
-    if (!key) return res.json({ valid: false, message: "Please enter an access key." });
-    if (!db.keys.find(k => k.key === key)) return res.json({ valid: false, message: "Invalid key." });
 
-    const out = await accessKey(key, c, deviceOf(req), deviceUa(req));
-    if (!out.ok) {
-      return res.json({ valid: false, reason: out.reason, message: REASON_TEXT[out.reason] || "Invalid key." });
+    if (!key) {
+      return res.json({
+        valid: false,
+        maintenance: !!m.enabled,
+        message: m.enabled ? m.message : "Please enter an access key."
+      });
     }
 
-    const record = out.record;
-    return res.json({
-      valid: true,
+    const known = db.keys.find(k => k.key === key);
+    if (!known) {
+      return res.json({ valid: false, maintenance: !!m.enabled, message: m.enabled ? m.message : "Invalid key." });
+    }
+
+    const out = await accessKey(key, c, deviceOf(req), deviceUa(req));
+    const record = out.record || known;
+    const expMs = effectiveExpiry(record, since);
+    const remainingMs = expMs == null ? null : Math.max(0, expMs - Date.now());
+
+    const payload = {
       key: record.key,
       startedAt: record.startedAt || record.activatedAt,
       activatedAt: record.activatedAt,
       expiresAt: record.expiresAt,
       durationHours: record.durationHours,
-      remainingMs: new Date(record.expiresAt).getTime() - Date.now(),
+      remainingMs,
       deviceLimit: record.maxDevices === 1 ? 'single' : 'unlimited',
       deviceLocked: record.maxDevices === 1 && (record.devices || []).length > 0,
-      deviceCount: (record.devices || []).length,
-      message: "Access Key Validated!"
-    });
+      deviceCount: (record.devices || []).length
+    };
+
+    /* Maintenance still reports the key as good and hands over a frozen
+       remainingMs, so the countdown holds instead of draining to zero. */
+    if (m.enabled) {
+      return res.json({
+        ...payload,
+        valid: out.ok,
+        maintenance: true,
+        paused: true,
+        pausedMs: since ? Math.max(0, Date.now() - since) : 0,
+        message: m.message
+      });
+    }
+
+    if (!out.ok) {
+      return res.json({
+        ...payload,
+        valid: false,
+        reason: out.reason,
+        message: REASON_TEXT[out.reason] || "Invalid key."
+      });
+    }
+
+    return res.json({ ...payload, valid: true, message: "Access Key Validated!" });
   } catch (e) {
     return res.json({ valid: false, message: "Storage error: " + e.message });
   }
@@ -961,6 +1051,7 @@ app.post('/api/admin/repair-key', async (req, res) => {
       r.activatedAt = null;
       r.startedAt = null;
       r.expiresAt = null;
+      r.maintenancePausedMs = 0;
       return r;
     });
     if (!rec) return res.status(404).json({ error: "Key not found." });
@@ -1026,9 +1117,44 @@ app.post('/api/admin/maintenance', async (req, res) => {
 
   try {
     const m = await mutate(c, db => {
-      db.maintenance = { enabled: !!enabled, message: message || "System under maintenance." };
+      const prev = db.maintenance || DEFAULT_MAINT;
+      const nowMs = Date.now();
+      const wantOn = !!enabled;
+      const msg = message || prev.message || 'System under maintenance.';
+
+      if (wantOn) {
+        /* `since` is stamped once and kept — repeated saves while already on
+           must not restart the window or the earlier minutes get refunded twice. */
+        db.maintenance = {
+          enabled: true,
+          message: msg,
+          since: prev.enabled ? (prev.since || new Date(nowMs).toISOString()) : new Date(nowMs).toISOString()
+        };
+        return db.maintenance;
+      }
+
+      if (prev.enabled) {
+        const raw = prev.since ? new Date(prev.since).getTime() : nowMs;
+        const start = Number.isFinite(raw) ? Math.min(raw, nowMs) : nowMs;
+        const credited = settleMaintenance(db, start, nowMs);
+        db.maintenance = {
+          enabled: false,
+          message: msg,
+          since: null,
+          lastPausedMs: Math.max(0, nowMs - start),
+          lastPausedKeys: credited,
+          lastEndedAt: new Date(nowMs).toISOString()
+        };
+        console.log(`[maint] resumed — credited ${credited} key(s) for ${Math.round((nowMs - start) / 1000)}s`);
+        return db.maintenance;
+      }
+
+      db.maintenance = { enabled: false, message: msg, since: null };
       return db.maintenance;
     });
+
+    /* Cached Happ links embed the dead auth, so drop them on every toggle. */
+    happLinkCache.clear();
     return res.json({ success: true, maintenance: m });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
