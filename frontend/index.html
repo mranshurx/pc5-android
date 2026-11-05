@@ -1,677 +1,580 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PC5 ANDROID</title>
-  <link rel="icon" href="data:,">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#000000;--strip:#060606;--line:#171717;--line-2:#232323;
-      --txt:#f4f4f4;--dim:#6d6d6d;--dim-2:#3a3a3a;
-      --mono:'JetBrains Mono',monospace;--display:'Archivo Black',sans-serif;
-    }
-    *{margin:0;padding:0;box-sizing:border-box}
-    [hidden]{display:none !important}
-    html,body{height:100%}
-    body{
-      background:var(--bg);color:var(--txt);font-family:var(--mono);
-      display:flex;justify-content:center;min-height:100vh;-webkit-font-smoothing:antialiased;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='230' height='230' viewBox='0 0 220 220'%3E%3Cpath fill='%230a0a0a' d='M110 40C78 40 64 66 64 100L64 158L76 146L87 158L98 146L110 158L122 146L133 158L144 146L156 158L156 100C156 66 142 40 110 40Z'/%3E%3C/svg%3E");
-      background-size:230px 230px;
-    }
-    body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 0%, rgba(0,0,0,0) 0%, rgba(0,0,0,.85) 78%)}
-
-    .strip{
-      position:relative;width:100%;max-width:460px;min-height:100vh;background:var(--strip);
-      border-left:1px solid var(--line);border-right:1px solid var(--line);
-      padding:2.2rem 1.9rem 2.2rem;display:flex;flex-direction:column;
-      justify-content:flex-start;z-index:1;
-    }
-    .lang{position:absolute;top:1.3rem;right:1.6rem;display:inline-flex;align-items:center;gap:.45rem;font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--dim);border:1px solid var(--line-2);border-radius:99px;padding:.35rem .7rem}
-    .lang svg{width:12px;height:12px;fill:var(--dim)}
-    .hidden{display:none !important}
-
-    /* ---------- TOP-MIDDLE LOGO ---------- */
-    .top-logo{display:flex;justify-content:center;align-items:center;margin-top:1.6rem;margin-bottom:1.1rem}
-    .top-logo img{height:104px;width:auto;max-width:100%;object-fit:contain;display:block;
-      filter:drop-shadow(0 0 40px rgba(255,255,255,.15))}
-    .top-logo.small{margin:0 0 1.4rem}
-    .top-logo.small img{height:46px;filter:none}
-
-    /* ---------- DASHBOARD TOP BAR + LOGOUT ---------- */
-    .dash-top{position:relative;display:flex;justify-content:center;align-items:center;margin:0 0 1.4rem}
-    .dash-top .top-logo.small{margin:0}
-    .logout-btn{
-      position:absolute;right:0;top:50%;transform:translateY(-50%);
-      background:transparent;border:1px solid var(--line-2);color:#cfcfcf;
-      font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.16em;
-      text-transform:uppercase;padding:.42rem .62rem;cursor:pointer;white-space:nowrap;
-      transition:background .18s,border-color .18s,color .18s;
-    }
-    .logout-btn:hover{background:#141414;border-color:#fff;color:#fff}
-    .logout-btn:active{transform:translateY(-50%) scale(.96)}
-
-    .brand{font-family:var(--display);font-weight:900;font-size:2.05rem;line-height:1;text-align:center;letter-spacing:.03em;color:#fff;margin-bottom:1.05rem;text-transform:uppercase}
-    .tagline{text-align:center;font-size:.68rem;font-weight:500;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:2.2rem}
-    .field-label{display:flex;align-items:center;gap:.55rem;font-size:.7rem;font-weight:700;letter-spacing:.22em;color:#dcdcdc;text-transform:uppercase;margin-bottom:.7rem}
-    .field-label::before{content:"";width:9px;height:9px;background:#fff;display:inline-block}
-    .input-shell{display:flex;align-items:stretch;background:#0b0b0b;border:1px solid var(--line-2);transition:border-color .18s}
-    .input-shell:focus-within{border-color:#4a4a4a}
-    #keyInput{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-family:var(--mono);font-size:.86rem;font-weight:500;letter-spacing:.08em;padding:1.05rem 1rem;text-transform:uppercase}
-    #keyInput::placeholder{color:var(--dim-2);text-transform:uppercase}
-    .paste-btn{background:#0f0f0f;border:none;border-left:1px solid var(--line-2);color:#cfcfcf;font-family:var(--mono);font-size:.7rem;font-weight:700;letter-spacing:.16em;padding:0 1.15rem;cursor:pointer;text-transform:uppercase;transition:background .18s,color .18s}
-    .paste-btn:hover{background:#171717;color:#fff}
-    .unlock{width:100%;margin-top:1.1rem;padding:1.1rem;background:#ffffff;color:#000;border:none;cursor:pointer;font-family:var(--display);font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;transition:opacity .16s,transform .16s}
-    .unlock:hover{opacity:.9}
-    .unlock:active{transform:translateY(1px)}
-    .error-box{color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-align:center;margin-top:1rem;min-height:1rem;text-transform:uppercase}
-    .foot{margin-top:1.6rem;text-align:center;font-size:.7rem;letter-spacing:.08em;color:var(--dim-2);line-height:1.9}
-
-    .tabs{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin-bottom:1.8rem}
-    .tab-btn{flex:1;background:transparent;border:none;cursor:pointer;font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;padding:.85rem .2rem;position:relative;transition:color .16s}
-    .tab-btn:hover{color:#bdbdbd}
-    .tab-btn.active{color:#fff}
-    .tab-btn.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:#fff}
-    .tabs .tab-btn{font-size:.68rem;letter-spacing:.1em}
-    .status{display:inline-flex;align-items:center;gap:.55rem;font-size:.68rem;font-weight:700;letter-spacing:.2em;color:#e6e6e6;text-transform:uppercase;margin-bottom:1.3rem}
-    .dot{width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.7);animation:pulse 1.8s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-    .panel-box{background:#0a0a0a;border:1px solid var(--line);padding:1.15rem;margin-bottom:.9rem}
-    .row{display:flex;justify-content:space-between;gap:1rem;font-size:.78rem;margin-bottom:.85rem}
-    .row:last-child{margin-bottom:0}
-    .row .k{color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-size:.7rem}
-    .row .v{color:#fff;font-weight:700;letter-spacing:.04em;text-align:right;word-break:break-all}
-    .row .v.live{color:#4ade80}
-    .row .v.warn{color:#f59e0b}
-    .timer-block{display:flex;flex-direction:column;gap:.5rem;
-      padding-bottom:1.15rem;margin-bottom:1.15rem;border-bottom:1px solid var(--line)}
-    .timer-block .k{color:var(--dim);letter-spacing:.06em;text-transform:uppercase;font-size:.7rem}
-    .time-left{font-family:var(--display);font-size:clamp(1.4rem,7vw,1.95rem);line-height:1.05;
-      letter-spacing:.01em;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums}
-    .time-left.live{color:#4ade80}
-    .feature{display:block;text-align:center;background:transparent;border:1px solid var(--line-2);color:#eaeaea;font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;padding:.8rem;margin:.3rem 0 1.1rem}
-    .btn{width:100%;padding:1rem;border:none;cursor:pointer;font-family:var(--mono);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;transition:opacity .16s,background .16s,color .16s}
-    .btn-primary{background:#fff;color:#000;margin-bottom:.7rem}
-    .btn-primary:hover{opacity:.9}
-    .btn-ghost{background:transparent;color:#eaeaea;border:1px solid var(--line-2)}
-    .btn-ghost:hover{background:#111;color:#fff}
-    .setup-box{background:#0a0a0a;border:1px solid var(--line);padding:1.4rem}
-    .setup-box h3{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#fff;margin-bottom:1rem;font-weight:700}
-    .setup-box ol{padding-left:1.15rem;color:var(--dim);font-size:.78rem;line-height:2}
-    .setup-box ol b{color:#fff}
-
-    /* ---------- FEATURE SWITCHES ---------- */
-    .toggles-wrap{margin:.3rem 0 1.1rem}
-    .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-      background:#0a0a0a;border:1px solid var(--line);padding:.85rem 1.15rem;margin-bottom:.55rem}
-    .toggle-row:last-child{margin-bottom:0}
-    .toggle-title{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#eaeaea}
-    .toggle-note{font-size:.6rem;letter-spacing:.05em;color:var(--dim-2);margin-top:.35rem;line-height:1.6;text-transform:lowercase}
-    .switch{position:relative;flex:none;width:46px;height:25px;border-radius:99px;border:1px solid var(--line-2);
-      background:#0f0f0f;cursor:pointer;padding:0;transition:background .18s,border-color .18s;
-      -webkit-tap-highlight-color:transparent}
-    .switch::after{content:"";position:absolute;top:2px;left:2px;width:19px;height:19px;border-radius:50%;
-      background:#5a5a5a;transition:transform .18s,background .18s}
-    .switch[aria-checked="true"]{background:#ffffff;border-color:#ffffff}
-    .switch[aria-checked="true"]::after{transform:translateX(21px);background:#000000}
-    .switch:active{transform:scale(.97)}
-
-    /* ---------- CONTACT ---------- */
-    .contact-card{background:#0a0a0a;border:1px solid var(--line);padding:1.15rem;margin-bottom:.9rem}
-    .contact-card .t{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim-2);margin-bottom:.4rem;font-weight:700}
-    .contact-card .c{font-size:.95rem;font-weight:700;color:#fff;letter-spacing:.06em}
-
-    /* the LOGO itself is the link */
-    .tg-logo-link{display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;
-      cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s,opacity .18s}
-    .tg-logo-link:hover{opacity:.85}
-    .tg-logo-link:active{transform:scale(.96)}
-    .tg-logo{width:36px;height:36px;display:block;flex:none;
-      filter:drop-shadow(0 0 14px rgba(41,169,235,.35))}
-    .tg-logo.wa{filter:drop-shadow(0 0 14px rgba(37,211,102,.35))}
-    .tg-handle{font-size:.88rem;font-weight:700;color:#fff;letter-spacing:.06em}
-
-    .dev-credit{margin-top:1.6rem;text-align:center;font-size:.72rem;font-weight:800;
-      letter-spacing:.18em;text-transform:uppercase;color:#fff;line-height:1.9}
-
-    /* ---------- UPDATES ---------- */
-    .updates-box{background:#0a0a0a;border:1px solid var(--line);padding:1.4rem}
-    .updates-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-      padding-bottom:.9rem;margin-bottom:1.1rem;border-bottom:1px solid var(--line)}
-    .updates-head .t{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dim-2);font-weight:700}
-    .updates-refresh{background:transparent;border:1px solid var(--line-2);color:#cfcfcf;
-      font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
-      padding:.4rem .62rem;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
-    .updates-refresh:hover{background:#141414;border-color:#fff;color:#fff}
-    .updates-refresh:active{transform:scale(.97)}
-    .updates-body{font-family:var(--mono);font-size:.78rem;line-height:1.95;color:#d4d4d4;
-      letter-spacing:.02em;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
-    .updates-body.muted{color:var(--dim-2)}
-
-    .maint{border:1px solid #ffffff;background:#0a0a0a;padding:2rem 1.5rem;text-align:center;margin-top:1rem}
-    .maint h3{font-family:var(--display);font-size:1.05rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem}
-    .maint p{color:var(--dim);font-size:.8rem;line-height:1.8;letter-spacing:.04em}
-    @media(max-width:480px){.strip{border:none;padding:1.8rem 1.4rem 2rem}.brand{font-size:1.7rem}.top-logo img{height:88px}}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="theme-color" content="#0a0c10" />
+<title>PC5 ANDROID</title>
+<link rel="icon" href="logo/favicon.png" />
+<style>
+  :root{
+    --bg:#0a0c10;
+    --bg2:#0f131a;
+    --card:#12171f;
+    --line:#1e2632;
+    --fg:#e7edf6;
+    --mut:#7d8a9c;
+    --accent:#3ea6ff;
+    --live:#2fd08a;
+    --warn:#f5b642;
+    --danger:#ff5f6d;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    margin:0;background:radial-gradient(1200px 600px at 50% -10%,#131b26 0%,var(--bg) 55%);
+    color:var(--fg);font:14px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    display:flex;flex-direction:column;min-height:100%;
+  }
+  .wrap{width:100%;max-width:520px;margin:0 auto;padding:18px 16px 28px;flex:1;display:flex;flex-direction:column}
+  header{display:flex;align-items:center;gap:12px;padding:6px 0 18px}
+  header .brand{display:flex;flex-direction:column;line-height:1.15}
+  header .brand b{font-size:15px;letter-spacing:.5px}
+  header .brand span{font-size:10px;color:var(--mut);letter-spacing:2px;text-transform:uppercase}
+  header .logo{
+    width:42px;height:42px;border-radius:12px;flex:0 0 42px;
+    background:linear-gradient(140deg,#1c2534,#0d1218);border:1px solid var(--line);
+    display:grid;place-items:center;font-weight:800;color:var(--accent);font-size:13px
+  }
+  header .spacer{flex:1}
+  header a.tg{
+    font-size:11px;color:var(--mut);text-decoration:none;border:1px solid var(--line);
+    padding:7px 10px;border-radius:9px;background:var(--bg2)
+  }
+  main{flex:1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+  .hidden{display:none !important}
+  h2{margin:0 0 4px;font-size:16px}
+  p.sub{margin:0 0 16px;font-size:12px;color:var(--mut)}
+  label.form-label{display:block;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mut);margin-bottom:7px}
+  input[type=text]{
+    width:100%;padding:13px 14px;border-radius:11px;border:1px solid var(--line);
+    background:var(--bg2);color:var(--fg);font:600 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:1.5px;text-transform:uppercase;outline:none
+  }
+  input[type=text]:focus{border-color:var(--accent)}
+  .btn{
+    display:block;width:100%;padding:13px;border-radius:11px;border:0;cursor:pointer;
+    font:700 13px/1 inherit;letter-spacing:.4px;margin-top:12px;
+    background:linear-gradient(180deg,#3ea6ff,#2b86d6);color:#04121f
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn.subtle{background:var(--bg2);color:var(--fg);border:1px solid var(--line)}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--mut)}
+  .err{min-height:16px;margin-top:10px;font-size:12px;color:var(--danger)}
+  .maint{display:flex;flex-direction:column;align-items:center;text-align:center;padding:34px 18px}
+  .maint .ico{font-size:34px;margin-bottom:12px}
+  .maint h2{margin-bottom:10px}
+  .maint p{margin:0;font-size:13px;color:var(--mut);max-width:300px}
+  .stats{display:grid;gap:10px;margin-bottom:14px}
+  .stat{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:11px 13px}
+  .stat .k{font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:var(--mut)}
+  .stat .v{font:600 13px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:right;word-break:break-all}
+  .v.live{color:var(--live)}
+  .v.warn{color:var(--warn)}
+  .time-left{font-variant-numeric:tabular-nums;font-size:15px;font-weight:700}
+  .tabs{display:flex;gap:8px;margin-bottom:12px}
+  .tab{flex:1;padding:9px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);
+    color:var(--mut);font:700 11px/1 inherit;letter-spacing:.6px;text-transform:uppercase;cursor:pointer}
+  .tab.on{background:#17222f;border-color:#2b4a68;color:var(--fg)}
+  .row{display:flex;gap:8px}
+  .row .btn{margin-top:0}
+  ul.features{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:7px}
+  ul.features li{font-size:11.5px;color:var(--mut);display:flex;gap:8px;align-items:flex-start;
+    background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:8px 10px}
+  ul.features li::before{content:"✓";color:var(--live);font-weight:800}
+  .kv{font-size:12px;color:var(--mut);word-break:break-all;margin:0 0 10px}
+  .kv b{color:var(--fg);font-family:ui-monospace,Menlo,monospace}
+  #updatesList{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-height:230px;overflow:auto}
+  #updatesList li{font-size:12px;color:var(--mut);background:var(--bg2);border:1px solid var(--line);
+    border-radius:9px;padding:9px 11px}
+  footer{text-align:center;font-size:10px;color:#4a5567;padding-top:16px}
+  #toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);opacity:0;pointer-events:none;
+    background:#1a2432;border:1px solid #2b3a4d;color:var(--fg);font-size:12px;
+    padding:10px 16px;border-radius:10px;transition:.22s;max-width:90vw;text-align:center
+  }
+  #toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
 </head>
 <body>
+<div class="wrap">
 
-  <div class="strip">
-    <span class="lang">
-      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 6h-2.95a15.6 15.6 0 00-1.4-3.6A8 8 0 0118.9 8zM12 4c.8 1.2 1.4 2.6 1.8 4h-3.6c.4-1.4 1-2.8 1.8-4zM4.3 14a8 8 0 010-4h3.3a17 17 0 000 4H4.3zm.8 2h2.95c.35 1.3.82 2.5 1.4 3.6A8 8 0 015.1 16zm2.95-8H5.1a8 8 0 014.35-3.6A15.6 15.6 0 008.05 8zM12 20c-.8-1.2-1.4-2.6-1.8-4h3.6c-.4 1.4-1 2.8-1.8 4zm2.2-6H9.8a15 15 0 010-4h4.4a15 15 0 010 4zm.35 5.6c.58-1.1 1.05-2.3 1.4-3.6h2.95a8 8 0 01-4.35 3.6zm1.85-5.6a17 17 0 000-4h3.3a8 8 0 010 4h-3.3z"/></svg>
-      EN
-    </span>
+  <header>
+    <div class="logo">PC5</div>
+    <div class="brand"><b>PC5 ANDROID</b><span>access portal</span></div>
+    <div class="spacer"></div>
+    <a class="tg" id="tgLink" href="#" target="_blank" rel="noopener">Telegram</a>
+  </header>
 
-    <div id="maintenanceView" class="hidden">
-      <div class="maint">
-        <h3>⚠ SYSTEM MAINTENANCE</h3>
-        <p id="maintenanceMsgText"></p>
-      </div>
-    </div>
+  <main>
 
-    <div id="unlockView">
-      <!-- YOUR LOGO — TOP MIDDLE (no status text below) -->
-      <div class="top-logo">
-        <img id="brandLogo" src="logo/logo.png" alt="PC5 ANDROID">
-      </div>
+    <!-- ============ UNLOCK ============ -->
+    <section id="unlockView" class="card">
+      <h2>Unlock access</h2>
+      <p class="sub">Paste your access key to load your profile.</p>
+      <label class="form-label" for="keyInput">Access key</label>
+      <input type="text" id="keyInput" placeholder="PC5-XXXXXX" autocomplete="off"
+             autocapitalize="characters" spellcheck="false" maxlength="12" />
+      <button class="btn" id="unlockBtn" type="button">Unlock</button>
+      <div class="err" id="errorMsg"></div>
+    </section>
 
-      <h1 class="brand">Pc5 Android</h1>
-      <p class="tagline">No account. No password. Just your key.</p>
+    <!-- ============ MAINTENANCE ============ -->
+    <section id="maintenanceView" class="card maint hidden">
+      <div class="ico">🛠️</div>
+      <h2>Under maintenance</h2>
+      <p id="maintenanceMsgText">System under maintenance.</p>
+      <button class="btn subtle" id="maintRetryBtn" type="button" style="margin-top:18px;max-width:220px">Retry now</button>
+    </section>
 
-      <div class="field-label">Access Key</div>
-      <div class="input-shell">
-        <input type="text" id="keyInput" placeholder="PC5-XXXXXX" autocomplete="off" spellcheck="false">
-        <button class="paste-btn" onclick="pasteKey()">Paste</button>
-      </div>
-      <button class="unlock" onclick="unlockPortal()">Unlock</button>
-      <div id="errorMsg" class="error-box"></div>
+    <!-- ============ DASHBOARD ============ -->
+    <section id="dashboardView" class="hidden">
 
-      <p class="foot">no key? contact your seller.<br>your time starts when you connect.</p>
-    </div>
-
-    <div id="dashboardView" class="hidden">
-      <!-- YOUR LOGO — TOP MIDDLE + LOGOUT TOP RIGHT -->
-      <div class="dash-top">
-        <div class="top-logo small">
-          <img src="logo/logo.png" alt="PC5 ANDROID">
-        </div>
-        <button class="logout-btn" onclick="confirmLogout()" title="Log out" aria-label="Log out">Log out</button>
-      </div>
-
-      <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('proxyTab', this)">Proxy</button>
-        <button class="tab-btn" onclick="switchTab('setupTab', this)">Setup</button>
-        <button class="tab-btn" onclick="switchTab('contactTab', this)">Contact</button>
-        <button class="tab-btn" onclick="switchTab('updatesTab', this)">Updates</button>
-      </div>
-
-      <div id="proxyTab">
-        <div class="status"><span class="dot"></span> Active Subscription</div>
-        <div class="panel-box">
-          <div class="timer-block">
-            <span class="k">Time Left</span>
-            <span class="time-left live" id="displayLeft">—</span>
+      <div class="card">
+        <div class="stats">
+          <div class="stat">
+            <span class="k">Access key</span>
+            <span class="v" id="displayKey">—</span>
           </div>
-          <div class="row"><span class="k">Access Key</span><span class="v" id="displayKey">PC5-XXXXXX</span></div>
-          <div class="row"><span class="k">Device</span><span class="v" id="displayDevice">—</span></div>
-          <div class="row"><span class="k">Expires At</span><span class="v" id="displayExpiry">Loading...</span></div>
-        </div>
-
-        <div class="toggles-wrap">
-          <div class="toggle-row">
-            <div>
-              <div class="toggle-title">Aimbot</div>
-            </div>
-            <button class="switch" id="swAimbot" role="switch" aria-checked="true"
-                    aria-label="Toggle aimbot" onclick="toggleFeature('aimbot')"></button>
+          <div class="stat">
+            <span class="k">Device</span>
+            <span class="v" id="displayDevice">—</span>
           </div>
-          <div class="toggle-row">
-            <div>
-              <div class="toggle-title">Location</div>
-              <div class="toggle-note">{ use at own risk location may give ban }</div>
-            </div>
-            <button class="switch" id="swLocation" role="switch" aria-checked="false"
-                    aria-label="Toggle location" onclick="toggleFeature('location')"></button>
+          <div class="stat">
+            <span class="k">Expires</span>
+            <span class="v" id="displayExpiry">—</span>
+          </div>
+          <div class="stat">
+            <span class="k">Time left</span>
+            <span class="v live time-left" id="displayLeft">—</span>
           </div>
         </div>
 
-        <button class="btn btn-primary" onclick="openHappApp()">🚀 ADD TO HAPP</button>
-      </div>
-
-      <div id="setupTab" class="hidden">
-        <div class="setup-box">
-          <h3>How to Connect</h3>
-          <ol>
-            <li>Go back to the <b>PROXY</b> tab and tap <b>Add to Happ</b>.</li>
-            <li>Happ opens and the subscription is added automatically.</li>
-            <li>If it doesn't, open Happ, tap the add (<b>+</b>) icon and choose <b>Clipboard</b>.</li>
-          </ol>
-        </div>
-      </div>
-
-      <div id="contactTab" class="hidden">
-        <!-- BRAND -->
-        <div class="contact-card">
-          <div class="t">Support</div>
-          <div class="c">Pc5 Android</div>
+        <div class="tabs">
+          <button class="tab on" id="tabProxy" type="button">Profile</button>
+          <button class="tab" id="tabUpdates" type="button">Updates</button>
+          <button class="tab" id="tabInfo" type="button">Info</button>
         </div>
 
-        <!-- TELEGRAM — the LOGO is the link. Tap it -> t.me/Pc5AndroidUpdates -->
-        <div class="contact-card">
-          <div class="t">Telegram</div>
-          <a class="tg-logo-link" href="https://t.me/Pc5AndroidUpdates" onclick="return openTelegram()">
-            <svg class="tg-logo" viewBox="0 0 24 24" aria-hidden="true">
-              <path fill="#29A9EB" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.933z"/>
-            </svg>
-            <span class="tg-handle">@Pc5AndroidUpdates</span>
-          </a>
-        </div>
-
-        <!-- DEVELOPER CREDIT -->
-        <div class="dev-credit"></div>
-      </div>
-
-      <div id="updatesTab" class="hidden">
-        <div class="updates-box">
-          <div class="updates-head">
-            <span class="t">Latest Updates</span>
-            <button class="updates-refresh" onclick="loadUpdates(true)">Refresh</button>
+        <div id="proxyTab">
+          <button class="btn" id="happBtn" type="button">Open in Happ</button>
+          <div class="row" style="margin-top:10px">
+            <button class="btn subtle" id="copySubBtn" type="button">Copy sub link</button>
+            <button class="btn ghost" id="copyKeyBtn" type="button">Copy key</button>
           </div>
-          <div class="updates-body muted" id="updatesBody">Loading…</div>
+          <ul class="features" id="featureList"></ul>
+        </div>
+
+        <div id="updatesTab" class="hidden">
+          <ul id="updatesList"><li>Loading…</li></ul>
+        </div>
+
+        <div id="infoTab" class="hidden">
+          <p class="kv">Device id<br /><b id="displayDeviceFull">—</b></p>
+          <p class="kv">Support<br /><b id="displaySupport">—</b></p>
+          <div class="row">
+            <button class="btn subtle" id="refreshBtn" type="button">Refresh</button>
+            <button class="btn ghost" id="logoutBtn" type="button">Sign out</button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <script>
-    /* same service serves the site AND the API — resolve against this origin */
-    const BACKEND_URL = location.origin;
-    const STORAGE_KEY = "pc5_android_session";
-    const TELEGRAM_URL = "https://t.me/cyberxsilent";
-    const UPDATES_URL = "updates/update.txt";
+    </section>
 
-    let rawSubUrl = "";
-    let happLink = "";
-    let activeKey = "";
-    let expiryTimer = null;
-    let countdownTimer = null;
-    let expiresAtMs = 0;
-    let updatesLoaded = false;
+  </main>
 
-    /* ============ DEVICE FINGERPRINT (HWID) ============ */
-    /*
-      Deterministic per device: same phone always produces the same id even if
-      localStorage is wiped. Stored as a cache so it also works when the
-      fingerprint inputs change slightly (rotated UA, resized viewport, etc).
-    */
-    const DEVICE_KEY = "pc5_device_id";
+  <footer>PC5 ANDROID · private build</footer>
+</div>
 
-    function fingerprint(){
-      const parts = [
-        navigator.userAgent || "",
-        (screen.width || 0) + "x" + (screen.height || 0) + "x" + (screen.colorDepth || 0),
-        window.devicePixelRatio || 1,
-        (window.innerWidth || 0) + "x" + (window.innerHeight || 0),
-        Intl.DateTimeFormat().resolvedOptions().timeZone || "",
-        navigator.language || "",
-        (navigator.languages || []).join(","),
-        navigator.hardwareConcurrency || 0,
-        navigator.maxTouchPoints || 0,
-        navigator.platform || ""
-      ].join("~");
+<div id="toast"></div>
 
-      let a = 0x811c9dc5, b = 0x01000193;
-      for (let i = 0; i < parts.length; i++){
-        const ch = parts.charCodeAt(i);
-        a = ((a ^ ch) * 16777619) >>> 0;
-        b = ((b + ch * (i + 7)) ^ ((b + ch * (i + 7)) >>> 13)) >>> 0;
-      }
-      return "D" + a.toString(16).padStart(8, "0") + b.toString(16).padStart(8, "0");
-    }
+<script>
+(function () {
+  "use strict";
 
-    function deviceId(){
-      let cached = "";
-      try { cached = localStorage.getItem(DEVICE_KEY) || ""; } catch(e){}
-      if (cached) return cached;
-      const id = fingerprint();
-      try { localStorage.setItem(DEVICE_KEY, id); } catch(e){}
-      return id;
-    }
+  /* ================= CONFIG ================= */
+  /* same service serves the site AND the API — resolve against this origin */
+  const BACKEND_URL = location.origin;
+  const STORAGE_KEY = "pc5_android_session";
+  const DEVICE_KEY  = "pc5_android_device";
+  const TELEGRAM_URL = "https://t.me/cyberxsilent";
+  const UPDATES_URL = "updates/update.txt";
 
-    const DEVICE_ID = deviceId();
-    const DEVICE_SHORT = DEVICE_ID.slice(0, 10);
+  /* ================= STATE ================= */
+  let rawSubUrl = "";
+  let happLink = "";
+  let activeKey = "";
+  let expiryTimer = null;
+  let countdownTimer = null;
+  let expiresAtMs = 0;
+  let frozenLeftMs = null;
+  let updatesLoaded = false;
 
-    /* ============ TELEGRAM LOGO CLICK ============ */
-    function openTelegram(){
-      /* works even inside in-app WebViews that ignore target="_blank" */
-      window.location.href = TELEGRAM_URL;
-      return false; /* stop the default anchor navigation double-firing */
-    }
+  /* ================= DEVICE ================= */
+  function makeDeviceId() {
+    const a = new Uint8Array(8);
+    (crypto.getRandomValues ? crypto : { getRandomValues: (x) => { for (let i = 0; i < x.length; i++) x[i] = Math.floor(Math.random() * 256); return x; } }).getRandomValues(a);
+    return "D" + Array.prototype.map.call(a, b => b.toString(16).padStart(2, "0")).join("");
+  }
+  let DEVICE_ID = localStorage.getItem(DEVICE_KEY);
+  if (!DEVICE_ID) { DEVICE_ID = makeDeviceId(); localStorage.setItem(DEVICE_KEY, DEVICE_ID); }
+  const DEVICE_SHORT = DEVICE_ID.slice(1, 9);
 
-    /* ============ LOGO (no status text) ============ */
-    const LOGO_FILE = "";
-    const NAMES = [
-      "logo.png","logo.jpg","logo.jpeg","logo.webp","logo.gif","logo.svg",
-      "logo.avif","logo.ico","logo.bmp","logo.jfif","logo","LOGO.png","Logo.png","logo.PNG","logo.JPG"
-    ];
-    const DIRS = ["logo/", "../logo/", "", "../"];
-    const CANDIDATES = LOGO_FILE ? [LOGO_FILE] : DIRS.flatMap(d => NAMES.map(n => d + n));
+  /* ================= HELPERS ================= */
+  const $ = (id) => document.getElementById(id);
 
-    function applyLogo(url){
-      document.querySelectorAll('.top-logo img').forEach(i => i.src = url);
-      let fav = document.querySelector("link[rel='icon']");
-      if(!fav){ fav = document.createElement('link'); fav.rel='icon'; document.head.appendChild(fav); }
-      fav.href = url;
-    }
-    function probe(url){
-      return new Promise(res => {
-        const im = new Image();
-        im.onload  = () => res(im.naturalWidth > 0 ? url : null);
-        im.onerror = () => res(null);
-        im.src = url;
-      });
-    }
-    async function findLogo(){
-      if (LOGO_FILE && await probe(LOGO_FILE)) return applyLogo(LOGO_FILE);
-      for (const url of CANDIDATES) { if (await probe(url)) return applyLogo(url); }
-    }
+  function toast(msg) {
+    const el = $("toast");
+    if (!el) return;
+    el.innerText = msg;
+    el.classList.add("on");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => el.classList.remove("on"), 2000);
+  }
 
-    /* ============ SESSION ============ */
-    function saveSession(key, expiresAt){
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ key, expiresAt })); } catch(e){}
-    }
-    function readSession(){
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if(!raw) return null;
-        const obj = JSON.parse(raw);
-        return (obj && obj.key) ? obj : null;
-      } catch(e){ return null; }
-    }
-    function clearSession(){ try { localStorage.removeItem(STORAGE_KEY); } catch(e){} }
+  function normalizeKey(v) {
+    let s = String(v || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (s.startsWith("PC5")) s = s.slice(3);
+    return s ? "PC5-" + s.slice(0, 6) : "";
+  }
 
-    /* ============ FEATURE SWITCHES ============ */
-    const FEATURES_KEY = "pc5_features";
-    const FEATURES_DEFAULT = { aimbot: true, location: false };
+  function maskKey(k) {
+    if (!k) return "—";
+    return k.slice(0, 4) + "•••" + k.slice(-2);
+  }
 
-    function readFeatures(){
-      try{
-        const raw = localStorage.getItem(FEATURES_KEY);
-        if(!raw) return { ...FEATURES_DEFAULT };
-        const o = JSON.parse(raw) || {};
-        return {
-          aimbot:   typeof o.aimbot   === "boolean" ? o.aimbot   : FEATURES_DEFAULT.aimbot,
-          location: typeof o.location === "boolean" ? o.location : FEATURES_DEFAULT.location
-        };
-      }catch(e){ return { ...FEATURES_DEFAULT }; }
-    }
-    function saveFeatures(o){ try{ localStorage.setItem(FEATURES_KEY, JSON.stringify(o)); }catch(e){} }
-
-    function paintFeatures(){
-      const f = readFeatures();
-      const a = document.getElementById("swAimbot");
-      const l = document.getElementById("swLocation");
-      if(a) a.setAttribute("aria-checked", f.aimbot ? "true" : "false");
-      if(l) l.setAttribute("aria-checked", f.location ? "true" : "false");
-    }
-
-    function toggleFeature(name){
-      const f = readFeatures();
-      f[name] = !f[name];
-      saveFeatures(f);
-      paintFeatures();
-    }
-
-    /* ============ UPDATES ============ */
-    async function loadUpdates(force){
-      const box = document.getElementById('updatesBody');
-      if(!box) return;
-      if(updatesLoaded && !force) return;
-
-      box.classList.add('muted');
-      box.textContent = "Loading…";
-      try{
-        const r = await fetch(`${UPDATES_URL}?t=${Date.now()}`, { cache: "no-store" });
-        if(!r.ok) throw new Error(r.status);
-        const txt = (await r.text()).trim();
-        if(!txt){
-          box.classList.add('muted');
-          box.textContent = "No updates posted yet.";
-          return;
-        }
-        box.classList.remove('muted');
-        box.textContent = txt;
-        updatesLoaded = true;
-      }catch(e){
-        box.classList.add('muted');
-        box.textContent = "Could not load updates.";
-      }
-    }
-
-    /* ============ LIVE COUNTDOWN ============ */
-    function startCountdown(){
-      if(countdownTimer) clearInterval(countdownTimer);
-      updateLeft();
-      countdownTimer = setInterval(updateLeft, 1000);
-    }
-    function stopCountdown(){ if(countdownTimer) clearInterval(countdownTimer); countdownTimer = null; }
-    function updateLeft(){
-      const el = document.getElementById('displayLeft');
-      if(!el) return;
-      if(!expiresAtMs){ el.innerText = "—"; return; }
-      let ms = expiresAtMs - Date.now();
-      if(ms <= 0){ el.innerText = "EXPIRED"; return; }
-      const d = Math.floor(ms / 86400000);
-      const h = Math.floor((ms % 86400000) / 3600000);
-      const m = Math.floor((ms % 3600000) / 60000);
-      const s = Math.floor((ms % 60000) / 1000);
-      el.innerText = `${d > 0 ? d + "d " : ""}${h}h ${m}m ${s}s`;
-    }
-
-    /* ============ VIEWS ============ */
-    function showUnlock(){
-      stopCountdown();
-      document.getElementById('dashboardView').classList.add('hidden');
-      document.getElementById('maintenanceView').classList.add('hidden');
-      document.getElementById('unlockView').classList.remove('hidden');
-    }
-    function showMaintenance(msg){
-      document.getElementById('unlockView').classList.add('hidden');
-      document.getElementById('dashboardView').classList.add('hidden');
-      document.getElementById('maintenanceMsgText').innerText = msg || "System under maintenance.";
-      document.getElementById('maintenanceView').classList.remove('hidden');
-    }
-    function showDashboard(key, expiresAt, deviceLimit, deviceLocked){
-      const changed = (activeKey !== key);
-      activeKey = key;
-      rawSubUrl = `${BACKEND_URL}/sub?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`;
-
-      if (changed){ happLink = ""; loadHappLink(key); }
-
-      expiresAtMs = expiresAt ? new Date(expiresAt).getTime() : 0;
-      const keyEl = document.getElementById('displayKey');
-      keyEl.innerText = maskKey(key);
-      keyEl.title = key;
-
-      const devEl = document.getElementById('displayDevice');
-      if (deviceLimit === 'single'){
-        devEl.innerText = deviceLocked ? `1 device · locked (${DEVICE_SHORT}…)` : `1 device (${DEVICE_SHORT}…)`;
-        devEl.className = "v warn";
+  async function copyText(text, okMsg) {
+    if (!text) return;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
       } else {
-        devEl.innerText = "Unlimited";
-        devEl.className = "v live";
+        const t = document.createElement("textarea");
+        t.value = text; t.style.position = "fixed"; t.style.opacity = "0";
+        document.body.appendChild(t); t.select(); document.execCommand("copy");
+        document.body.removeChild(t);
       }
+      toast(okMsg || "Copied");
+    } catch (e) { toast("Copy failed"); }
+  }
 
-      document.getElementById('displayExpiry').innerText = expiresAt ? new Date(expiresAt).toLocaleString() : "—";
-      document.getElementById('maintenanceView').classList.add('hidden');
-      document.getElementById('unlockView').classList.add('hidden');
-      document.getElementById('dashboardView').classList.remove('hidden');
+  /* ================= SESSION ================= */
+  function saveSession(key, expiresAt) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ key: key, expiresAt: expiresAt || null })); } catch (e) {}
+  }
+  function readSession() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); } catch (e) { return null; }
+  }
+  function clearSession() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
 
-      paintFeatures();
-      startCountdown();
-      scheduleExpiry(expiresAt);
-    }
-    function scheduleExpiry(expiresAt){
-      if(expiryTimer) clearTimeout(expiryTimer);
-      if(!expiresAt) return;
-      const ms = new Date(expiresAt).getTime() - Date.now();
-      if(ms <= 0){ logout(); return; }
-      expiryTimer = setTimeout(revalidate, Math.min(ms, 3600000));
-    }
-    function logout(){
-      clearSession();
-      stopCountdown();
-      activeKey = ""; rawSubUrl = ""; happLink = ""; expiresAtMs = 0;
-      const ki = document.getElementById('keyInput');
-      if(ki) ki.value = "";
-      document.getElementById('errorMsg').innerText = "";
-      showUnlock();
-    }
-    /* Manual logout from the top bar — asks first */
-    function confirmLogout(){
-      if(confirm("Log out of this device?")) logout();
-    }
+  /* ================= VIEWS ================= */
+  function showUnlock() {
+    stopCountdown();
+    if (expiryTimer) { clearTimeout(expiryTimer); expiryTimer = null; }
+    frozenLeftMs = null;
+    expiresAtMs = 0;
+    activeKey = "";
+    $("maintenanceView").classList.add("hidden");
+    $("dashboardView").classList.add("hidden");
+    $("unlockView").classList.remove("hidden");
+  }
 
-    /* ============ NETWORK ============ */
-    async function checkKey(key){
-      const res = await fetch(`${BACKEND_URL}/api/check-key?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`);
-      return res.json();
-    }
-    async function getMaintenance(){
-      try { const r = await fetch(`${BACKEND_URL}/api/maintenance-status`); return r.json(); }
-      catch(e){ return { enabled:false }; }
-    }
-    async function loadHappLink(key){
-      try {
-        const r = await fetch(`${BACKEND_URL}/api/happ-link?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`);
-        const d = await r.json();
-        if (d && d.ok && d.link) {
-          happLink = d.link;
-        }
-      } catch(e){}
-    }
+  function showMaintenance(msg) {
+    $("unlockView").classList.add("hidden");
+    $("dashboardView").classList.add("hidden");
+    $("maintenanceMsgText").innerText = msg || "System under maintenance.";
+    $("maintenanceView").classList.remove("hidden");
+  }
 
-    function normalizeKey(v){ return (v || "").replace(/\s+/g, "").toUpperCase(); }
-    function maskKey(k){
-      if(!k) return "PC5-XXXXXX";
-      const parts = k.split("-");
-      if(parts.length < 2) return k.slice(0,4) + "xxxx";
-      const tail = parts.slice(1).join("-");
-      return parts[0] + "-" + tail.slice(0,2) + "xxxx";
+  function showDashboard(key, expiresAt, deviceLimit, deviceLocked, pausedRemaining) {
+    const changed = (activeKey !== key);
+    activeKey = key;
+    rawSubUrl = `${BACKEND_URL}/sub?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`;
+
+    if (changed) { happLink = ""; loadHappLink(key); }
+
+    expiresAtMs = expiresAt ? new Date(expiresAt).getTime() : 0;
+    frozenLeftMs = (typeof pausedRemaining === "number") ? pausedRemaining : null;
+
+    const keyEl = $("displayKey");
+    keyEl.innerText = maskKey(key);
+    keyEl.title = key;
+
+    const devEl = $("displayDevice");
+    if (deviceLimit === "single") {
+      devEl.innerText = deviceLocked ? `1 device · locked (${DEVICE_SHORT}…)` : `1 device (${DEVICE_SHORT}…)`;
+      devEl.className = "v warn";
+    } else {
+      devEl.innerText = "Unlimited";
+      devEl.className = "v live";
     }
 
-    /* ============ AUTH FLOW ============ */
-    async function unlockPortal(){
-      const input = document.getElementById('keyInput');
-      const errorMsg = document.getElementById('errorMsg');
-      errorMsg.innerText = "";
+    $("displayExpiry").innerText = expiresAt ? new Date(expiresAt).toLocaleString() : "—";
+    $("displayDeviceFull").innerText = DEVICE_ID;
+    $("maintenanceView").classList.add("hidden");
+    $("unlockView").classList.add("hidden");
+    $("dashboardView").classList.remove("hidden");
 
-      const key = normalizeKey(input.value);
-      input.value = key;
-      if(!key){ errorMsg.innerText = "Please enter your access key."; return; }
+    paintFeatures();
+    startCountdown();
+    scheduleExpiry(expiresAt);
+  }
 
-      try {
-        const data = await checkKey(key);
-        if(data.maintenance){ showMaintenance(data.message); return; }
-        if(data.valid){
-          saveSession(data.key, data.expiresAt);
-          showDashboard(data.key, data.expiresAt, data.deviceLimit, data.deviceLocked);
-        } else {
-          errorMsg.innerText = data.message || "Invalid key.";
-        }
-      } catch(err){
-        errorMsg.innerText = "Connection error. Check your server status.";
-      }
+  function logout() {
+    clearSession();
+    stopCountdown();
+    if (expiryTimer) { clearTimeout(expiryTimer); expiryTimer = null; }
+    frozenLeftMs = null;
+    expiresAtMs = 0;
+    activeKey = "";
+    happLink = "";
+    rawSubUrl = "";
+    showUnlock();
+  }
+
+  /* ================= COUNTDOWN ================= */
+  function startCountdown() {
+    if (countdownTimer) clearInterval(countdownTimer);
+    updateLeft();
+    countdownTimer = setInterval(updateLeft, 1000);
+  }
+  function stopCountdown() {
+    if (countdownTimer) clearInterval(countdownTimer);
+    countdownTimer = null;
+  }
+  function updateLeft() {
+    const el = $("displayLeft");
+    if (!el) return;
+    if (frozenLeftMs == null && !expiresAtMs) { el.innerText = "—"; return; }
+    /* while frozen the remaining value is held constant — nothing drains */
+    let ms = frozenLeftMs != null ? frozenLeftMs : (expiresAtMs - Date.now());
+    if (ms <= 0) { el.innerText = "EXPIRED"; return; }
+    const d = Math.floor(ms / 86400000);
+    const h = Math.floor((ms % 86400000) / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    el.innerText = `${d > 0 ? d + "d " : ""}${h}h ${m}m ${s}s${frozenLeftMs != null ? " · paused" : ""}`;
+  }
+  function scheduleExpiry(expiresAt) {
+    if (expiryTimer) clearTimeout(expiryTimer);
+    const ms = frozenLeftMs != null ? frozenLeftMs : (expiresAt ? new Date(expiresAt).getTime() - Date.now() : 0);
+    /* revalidate rather than hard logout: a stale local stamp may just be maintenance */
+    if (ms <= 0) { revalidate(); return; }
+    expiryTimer = setTimeout(revalidate, Math.min(ms, 3600000));
+  }
+
+  /* ================= API ================= */
+  async function checkKey(key) {
+    const res = await fetch(`${BACKEND_URL}/api/check-key?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`);
+    return res.json();
+  }
+  async function getMaintenance() {
+    try { const r = await fetch(`${BACKEND_URL}/api/maintenance-status`); return r.json(); }
+    catch (e) { return { enabled: false }; }
+  }
+
+  /* ================= MAINTENANCE BRANCH ================= */
+  /* Already unlocked? keep the panel and hold the clock. Otherwise show the
+     maintenance view. Either way the server hands over a frozen remainingMs. */
+  function handleMaintenance(data) {
+    frozenLeftMs = (typeof data.remainingMs === "number") ? data.remainingMs : null;
+    if (!$("dashboardView").classList.contains("hidden")) {
+      updateLeft();
+    } else {
+      showMaintenance(data.message);
     }
+  }
 
-    async function revalidate(){
-      const s = readSession();
-      const key = s ? s.key : activeKey;
+  /* ================= ACTIONS ================= */
+  async function unlockPortal() {
+    const input = $("keyInput");
+    const errorMsg = $("errorMsg");
+    errorMsg.innerText = "";
 
-      if(!key){
-        const m = await getMaintenance();
-        if(m && !m.enabled) showUnlock();
-        return;
-      }
-      try {
-        const data = await checkKey(key);
-        if(data.maintenance){ showMaintenance(data.message); return; }
-        if(!data.valid){ logout(); return; }
+    const key = normalizeKey(input.value);
+    input.value = key;
+    if (!key) { errorMsg.innerText = "Please enter your access key."; return; }
+
+    try {
+      const data = await checkKey(key);
+      if (data.maintenance) { handleMaintenance(data); return; }
+      if (data.valid) {
         saveSession(data.key, data.expiresAt);
-        showDashboard(data.key, data.expiresAt, data.deviceLimit, data.deviceLocked);
-      } catch(err){}
+        showDashboard(data.key, data.expiresAt, data.deviceLimit, data.deviceLocked, null);
+      } else {
+        errorMsg.innerText = data.message || "Invalid key.";
+      }
+    } catch (err) {
+      errorMsg.innerText = "Connection error. Check your server status.";
     }
+  }
 
-    async function restoreSession(){
-      const s = readSession();
-      if(!s) return false;
-      if(s.expiresAt && new Date(s.expiresAt).getTime() <= Date.now()){ clearSession(); return false; }
-      try {
-        const data = await checkKey(s.key);
-        if(data.maintenance){ showMaintenance(data.message); return true; }
-        if(data.valid){
-          saveSession(data.key, data.expiresAt);
-          showDashboard(data.key, data.expiresAt, data.deviceLimit, data.deviceLocked);
-          return true;
-        }
-        clearSession();
-        return false;
-      } catch(err){
-        showDashboard(s.key, s.expiresAt, "unlimited", false);
+  async function revalidate() {
+    const s = readSession();
+    const key = s ? s.key : activeKey;
+
+    if (!key) {
+      const m = await getMaintenance();
+      if (m && !m.enabled) showUnlock();
+      return;
+    }
+    try {
+      const data = await checkKey(key);
+      if (data.maintenance) { handleMaintenance(data); return; }
+      if (!data.valid) { logout(); return; }
+      saveSession(data.key, data.expiresAt);
+      showDashboard(data.key, data.expiresAt, data.deviceLimit, data.deviceLocked, null);
+    } catch (err) {}
+  }
+
+  async function restoreSession() {
+    const s = readSession();
+    if (!s) return false;
+    /* the local stamp is not trusted — a frozen key legitimately sits in the
+       past during maintenance, so the server decides */
+    try {
+      const data = await checkKey(s.key);
+      if (data.maintenance) { handleMaintenance(data); return true; }
+      if (data.valid) {
+        saveSession(data.key, data.expiresAt);
+        showDashboard(data.key, data.expiresAt, data.deviceLimit, data.deviceLocked, null);
         return true;
       }
+      clearSession();
+      return false;
+    } catch (err) {
+      showDashboard(s.key, s.expiresAt, "unlimited", false, null);
+      return true;
     }
+  }
 
-    /* ============ BOOT ============ */
-    window.addEventListener('DOMContentLoaded', async () => {
-      findLogo();
-      paintFeatures();
-
-      const m = await getMaintenance();
-      if(m && m.enabled){
-        showMaintenance(m.message);
+  async function loadHappLink(key) {
+    try {
+      const r = await fetch(`${BACKEND_URL}/api/happ-link?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`);
+      const d = await r.json();
+      if (d && d.ok && d.link) {
+        happLink = d.link;
+        $("happBtn").innerText = "Open in Happ";
+        $("happBtn").disabled = false;
       } else {
-        const ok = await restoreSession();
-        if(!ok) showUnlock();
+        happLink = "";
+        $("happBtn").innerText = d && d.message ? d.message : "Happ link unavailable";
+        $("happBtn").disabled = true;
       }
+    } catch (e) {
+      happLink = "";
+      $("happBtn").innerText = "Happ link unavailable";
+      $("happBtn").disabled = true;
+    }
+  }
 
-      setInterval(revalidate, 60000);
-      document.addEventListener('visibilitychange', () => { if(!document.hidden) revalidate(); });
+  /* ================= TABS ================= */
+  const TABS = [
+    { btn: "tabProxy",   pane: "proxyTab" },
+    { btn: "tabUpdates", pane: "updatesTab" },
+    { btn: "tabInfo",    pane: "infoTab" }
+  ];
+  function selectTab(activeBtn) {
+    TABS.forEach(t => {
+      const on = (t.btn === activeBtn);
+      $(t.btn).classList.toggle("on", on);
+      $(t.pane).classList.toggle("hidden", !on);
     });
+    if (activeBtn === "tabUpdates") loadUpdates();
+  }
 
-    /* ============ ACTIONS ============ */
-    function pasteKey(){
-      const input = document.getElementById('keyInput');
-      if (navigator.clipboard && navigator.clipboard.readText) {
-        navigator.clipboard.readText().then(t => { input.value = normalizeKey(t); }).catch(() => input.focus());
-      } else { input.focus(); }
-    }
+  /* ================= FEATURES ================= */
+  const FEATURES = [
+    "Game traffic routed through the proxy",
+    "Event and CDN hosts kept direct",
+    "UDP + TCP game ports forwarded",
+    "Automatic profile refresh every minute",
+    "Device-locked key protection"
+  ];
+  function paintFeatures() {
+    const ul = $("featureList");
+    if (ul.childElementCount) return;
+    FEATURES.forEach(f => {
+      const li = document.createElement("li");
+      li.innerText = f;
+      ul.appendChild(li);
+    });
+  }
 
-    function switchTab(tabId, btnElement){
-      document.getElementById('proxyTab').classList.add('hidden');
-      document.getElementById('setupTab').classList.add('hidden');
-      document.getElementById('contactTab').classList.add('hidden');
-      document.getElementById('updatesTab').classList.add('hidden');
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(tabId).classList.remove('hidden');
-      btnElement.classList.add('active');
-      if(tabId === 'updatesTab') loadUpdates(false);
+  /* ================= UPDATES ================= */
+  async function loadUpdates() {
+    if (updatesLoaded) return;
+    const ul = $("updatesList");
+    try {
+      const r = await fetch(UPDATES_URL, { cache: "no-store" });
+      if (!r.ok) throw new Error("http " + r.status);
+      const txt = (await r.text()).trim();
+      const lines = txt.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+      ul.innerHTML = "";
+      if (!lines.length) { ul.innerHTML = "<li>No updates posted.</li>"; return; }
+      lines.forEach(l => {
+        const li = document.createElement("li");
+        li.innerText = l;
+        ul.appendChild(li);
+      });
+      updatesLoaded = true;
+    } catch (e) {
+      ul.innerHTML = "<li>Could not load updates.</li>";
     }
+  }
 
-    // Opens Happ and imports (encrypted link preferred, raw deep link fallback)
-    function openHappApp(){
-      const deep = happLink ? happLink : (rawSubUrl ? `happ://add/${rawSubUrl}` : "happ://");
-      const a = document.createElement('a');
-      a.href = deep;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+  /* ================= WIRING ================= */
+  $("unlockBtn").addEventListener("click", unlockPortal);
+  $("keyInput").addEventListener("keydown", (e) => { if (e.key === "Enter") unlockPortal(); });
+  $("keyInput").addEventListener("input", (e) => {
+    const pos = e.target.selectionStart;
+    e.target.value = String(e.target.value).toUpperCase();
+    e.target.setSelectionRange(pos, pos);
+  });
+
+  $("maintRetryBtn").addEventListener("click", async () => {
+    const m = await getMaintenance();
+    if (m && !m.enabled) { await revalidate(); if (!activeKey && !readSession()) showUnlock(); }
+    else showMaintenance(m && m.message);
+  });
+
+  TABS.forEach(t => $(t.btn).addEventListener("click", () => selectTab(t.btn)));
+
+  $("happBtn").addEventListener("click", () => {
+    if (!happLink) return;
+    window.location.href = happLink;
+  });
+  $("copySubBtn").addEventListener("click", () => copyText(rawSubUrl, "Sub link copied"));
+  $("copyKeyBtn").addEventListener("click", () => copyText(activeKey, "Key copied"));
+  $("refreshBtn").addEventListener("click", revalidate);
+  $("logoutBtn").addEventListener("click", logout);
+
+  $("tgLink").href = TELEGRAM_URL;
+  $("displaySupport").innerText = TELEGRAM_URL.replace("https://", "");
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && readSession()) revalidate();
+  });
+  setInterval(revalidate, 60000);
+
+  /* ================= BOOT ================= */
+  (async function boot() {
+    paintFeatures();
+    const m = await getMaintenance();
+    if (m && m.enabled) {
+      const restored = await restoreSession();
+      if (!restored) showMaintenance(m.message);
+      return;
     }
-  </script>
+    const restored = await restoreSession();
+    if (!restored) showUnlock();
+  })();
+})();
+</script>
 </body>
 </html>
