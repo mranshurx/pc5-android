@@ -1225,7 +1225,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-06T12:22:41.279Z",
+      "activatedAt": "2026-11-06T12:22:41.279Z",
+      "expiresAt": "2026-11-07T12:22:41.279Z"
     },
     {
       "key": "PC5-0TFOMO",
