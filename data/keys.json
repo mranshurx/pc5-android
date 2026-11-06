@@ -1224,7 +1224,14 @@
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": [],
+      "devices": [
+        {
+          "id": "D8ec2f46c011b814f",
+          "firstSeen": "2026-11-06T12:22:42.605Z",
+          "lastSeen": "2026-11-06T12:22:42.605Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
+        }
+      ],
       "startedAt": "2026-11-06T12:22:41.279Z",
       "activatedAt": "2026-11-06T12:22:41.279Z",
       "expiresAt": "2026-11-07T12:22:41.279Z"
