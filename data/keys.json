@@ -1378,6 +1378,19 @@
       "revoked": false,
       "deviceId": null,
       "devices": []
+    },
+    {
+      "key": "PC5-ZTN3TE",
+      "plan": "1d",
+      "durationHours": 24,
+      "maxDevices": 1,
+      "cost": 7,
+      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
+      "reseller": "namanraj",
+      "createdAt": "2026-11-06T03:49:52.558Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
