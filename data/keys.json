@@ -1098,28 +1098,6 @@
       "expiresAt": "2026-11-04T12:00:58.690Z"
     },
     {
-      "key": "PC5-NQCNPK",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "505e236f-1909-480c-87c3-867c12525caa",
-      "reseller": "aimdevil",
-      "createdAt": "2026-11-04T08:00:09.942Z",
-      "startedAt": "2026-11-04T08:00:27.810Z",
-      "activatedAt": "2026-11-04T08:00:27.810Z",
-      "expiresAt": "2026-11-04T09:00:27.810Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D231dde7f010cb869",
-          "firstSeen": "2026-11-04T08:00:28.952Z",
-          "lastSeen": "2026-11-04T08:00:28.952Z",
-          "ua": "Mozilla/5.0 (X11; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0"
-        }
-      ]
-    },
-    {
       "key": "PC5-68OB9T",
       "durationHours": 1,
       "maxDevices": 1,
