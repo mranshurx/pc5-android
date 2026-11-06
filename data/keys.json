@@ -1378,19 +1378,6 @@
       "revoked": false,
       "deviceId": null,
       "devices": []
-    },
-    {
-      "key": "PC5-Q3JUJ8",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-06T03:44:33.345Z",
-      "startedAt": "2026-11-06T03:49:36.723Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-07T03:49:36.723Z"
     }
   ],
   "maintenance": {
