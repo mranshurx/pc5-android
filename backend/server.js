@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 const crypto = require('crypto');
 
 const app = express();
@@ -183,6 +184,8 @@ async function requireAdmin(req, res) {
   adoptToken(req);
   return state;
 }
+
+const HAPP_PROVIDER_ID = "";
 
 const FRONTEND_DIR = fs.existsSync(path.join(__dirname, '..', 'frontend'))
   ? path.join(__dirname, '..', 'frontend')
@@ -542,200 +545,173 @@ const REASON_TEXT = {
   'device-mismatch': 'This key is locked to another device.'
 };
 
-/* ================= ROUTING SOURCE =================
-   Upstream: dripwire India, Hysteria2.
-   Tester endpoints and game traffic go through the proxy so the client can
-   measure a real latency; CDN and event hosts stay direct; catch-all is proxy.
+/* ================= ROUTING CONFIG ================= */
+/* Upstream: dripwire India, Hysteria2.
+   Tester endpoints and game traffic go through the proxy so Happ can measure a
+   real latency; CDN and event hosts stay direct; catch-all is the proxy. */
+const BASE_CONFIG = {
+  "remarks": "PC5 ANDROID",
+  "profile-update-interval": 1,
+  "inbounds": [
+    {
+      "listen": "127.0.0.1", "port": 10808, "protocol": "socks",
+      "settings": { "auth": "noauth", "udp": true },
+      "sniffing": { "destOverride": ["http", "tls", "quic"], "enabled": true, "routeOnly": false },
+      "tag": "socks"
+    },
+    {
+      "listen": "127.0.0.1", "port": 10809, "protocol": "http",
+      "sniffing": { "destOverride": ["http", "tls", "quic"], "enabled": true, "routeOnly": false },
+      "tag": "http"
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "hysteria",
+      "settings": { "address": "proxy-ind.dripwire.cc", "port": 443, "version": 2 },
+      "streamSettings": {
+        "hysteriaSettings": { "auth": "2292878901", "version": 2 },
+        "network": "hysteria",
+        "security": "tls",
+        "tlsSettings": { "alpn": ["h3"], "serverName": "proxy-ind.dripwire.cc", "show": false },
+        "finalmask": { "quicParams": { "disableChromeParrot": true } }
+      },
+      "tag": "proxy"
+    },
+    { "protocol": "freedom", "tag": "direct" }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "domain": [
+          "full:cp.cloudflare.com", "domain:cloudflare.com", "full:connectivitycheck.gstatic.com",
+          "full:www.gstatic.com", "domain:gstatic.com", "full:www.google.com", "domain:google.com",
+          "domain:googleapis.com", "domain:gvt1.com", "domain:gvt2.com", "domain:googleusercontent.com",
+          "full:time.android.com", "domain:whatsapp.net", "domain:facebook.com", "domain:instagram.com",
+          "domain:youtube.com", "domain:ggpht.com"
+        ],
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "full:clientbp.ggpolarbear.com", "full:loginbp.ggpolarbear.com", "full:core-bs.ggpolarbear.com",
+          "full:core-bs.freefiremobile.com", "full:core-tata.freefireind.in", "full:core-gmc.freefiremobile.com",
+          "full:client.ind.freefiremobile.com", "full:client.us.freefiremobile.com", "full:sgnetwork.ggblueshark.com",
+          "full:menetwork.ggblueshark.com", "full:bdnetwork.ggpolarbear.com", "full:100067.connect.garena.com",
+          "full:100067.msdk.garena.com", "full:clientbp.ppmainecoonghj.com", "full:loginbp.ppmainecoonghj.com",
+          "full:ffmconnect.ppmainecoonghj.com", "full:ffmmsdk.ppmainecoonghj.com",
+          "regexp:^(clientbp|loginbp|core-[a-z0-9]+|[a-z]+network|ffmconnect|ffmmsdk)\\."
+        ],
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "101.32.114.0/23", "101.33.44.0/22", "102.204.191.0/24", "102.217.238.0/24",
+          "103.103.244.0/24", "103.108.100.0/22", "103.117.4.0/22", "103.123.54.0/23",
+          "103.127.228.0/22", "103.16.32.0/22", "103.215.127.0/24", "103.219.200.0/22",
+          "103.237.102.0/23", "103.247.204.0/22"
+        ],
+        "outboundTag": "proxy"
+      },
+      { "type": "field", "network": "tcp", "port": "39000-39999", "outboundTag": "proxy" },
+      { "type": "field", "network": "udp", "port": "10000-10999", "outboundTag": "proxy" },
+      {
+        "type": "field",
+        "domain": [
+          "full:event-vodka.freefireind.in", "full:indevent.ggblueshark.com", "full:sgevent.ggblueshark.com",
+          "full:meevent.ggblueshark.com", "full:thevent.ggblueshark.com", "full:sacevent.ggblueshark.com",
+          "full:idevent.ggblueshark.com", "full:bdevent.ggpolarbear.com", "regexp:event\\.gg(blueshark|polarbear)\\.com$",
+          "full:gin.freefireind.in", "full:gin.freefiremobile.com", "full:vodka.freefireind.in",
+          "full:dl.castle.freefiremobile.com", "full:dl.cdn.freefiremobile.com", "full:dl-core.cdn.freefiremobile.com",
+          "domain:freefiremobile-a.akamaihd.net"
+        ],
+        "outboundTag": "direct"
+      },
+      { "type": "field", "network": "tcp,udp", "outboundTag": "proxy" }
+    ]
+  }
+};
 
-   Kept as prefix-tagged strings ('full:', 'domain:', 'regexp:') so the three
-   output formats below can all be generated from one source of truth.
-*/
-const NODE_HOST = 'proxy-ind.dripwire.cc';
-const NODE_PORT = 443;
-const NODE_AUTH = '2292878901';
+/* ================= SUBSCRIPTION BODY ================= */
 const PROFILE_TITLE = 'PC5 ANDROID';
 
 /* Auth handed to the node while the key is dead. The server rejects it, so the
    QUIC handshake dies and the client reports a genuine failure. */
 const DEAD_AUTH = 'PC5-BLOCKED';
 
-const PROXY_HOSTS = [
-  'full:cp.cloudflare.com', 'domain:cloudflare.com', 'full:connectivitycheck.gstatic.com',
-  'full:www.gstatic.com', 'domain:gstatic.com', 'full:www.google.com', 'domain:google.com',
-  'domain:googleapis.com', 'domain:gvt1.com', 'domain:gvt2.com', 'domain:googleusercontent.com',
-  'full:time.android.com', 'domain:whatsapp.net', 'domain:facebook.com', 'domain:instagram.com',
-  'domain:youtube.com', 'domain:ggpht.com'
-];
-
-const PROXY_GAME_HOSTS = [
-  'full:clientbp.ggpolarbear.com', 'full:loginbp.ggpolarbear.com', 'full:core-bs.ggpolarbear.com',
-  'full:core-bs.freefiremobile.com', 'full:core-tata.freefireind.in', 'full:core-gmc.freefiremobile.com',
-  'full:client.ind.freefiremobile.com', 'full:client.us.freefiremobile.com', 'full:sgnetwork.ggblueshark.com',
-  'full:menetwork.ggblueshark.com', 'full:bdnetwork.ggpolarbear.com', 'full:100067.connect.garena.com',
-  'full:100067.msdk.garena.com', 'full:clientbp.ppmainecoonghj.com', 'full:loginbp.ppmainecoonghj.com',
-  'full:ffmconnect.ppmainecoonghj.com', 'full:ffmmsdk.ppmainecoonghj.com',
-  'regexp:^(clientbp|loginbp|core-[a-z0-9]+|[a-z]+network|ffmconnect|ffmmsdk)\\.'
-];
-
-const PROXY_IPS = [
-  '101.32.114.0/23', '101.33.44.0/22', '102.204.191.0/24', '102.217.238.0/24',
-  '103.103.244.0/24', '103.108.100.0/22', '103.117.4.0/22', '103.123.54.0/23',
-  '103.127.228.0/22', '103.16.32.0/22', '103.215.127.0/24', '103.219.200.0/22',
-  '103.237.102.0/23', '103.247.204.0/22'
-];
-
-const DIRECT_HOSTS = [
-  'full:event-vodka.freefireind.in', 'full:indevent.ggblueshark.com', 'full:sgevent.ggblueshark.com',
-  'full:meevent.ggblueshark.com', 'full:thevent.ggblueshark.com', 'full:sacevent.ggblueshark.com',
-  'full:idevent.ggblueshark.com', 'full:bdevent.ggpolarbear.com', 'regexp:event\\.gg(blueshark|polarbear)\\.com$',
-  'full:gin.freefireind.in', 'full:gin.freefiremobile.com', 'full:vodka.freefireind.in',
-  'full:dl.castle.freefiremobile.com', 'full:dl.cdn.freefiremobile.com', 'full:dl-core.cdn.freefiremobile.com',
-  'domain:freefiremobile-a.akamaihd.net'
-];
-
-const TCP_GAME_PORTS = '39000:39999';
-const UDP_GAME_PORTS = '10000:10999';
-
-/* sing-box accepts the same prefixes, but spells regex as 'regex:'. */
-function sbHost(item) { return item.replace(/^regexp:/, 'regex:'); }
-
-/* Clash spells the prefixes as rule types. */
-function clashHost(item) {
-  if (item.startsWith('full:')) return 'DOMAIN,' + item.slice(5);
-  if (item.startsWith('domain:')) return 'DOMAIN-SUFFIX,' + item.slice(7);
-  if (item.startsWith('regexp:')) return 'DOMAIN-REGEX,' + item.slice(7);
-  return 'DOMAIN-SUFFIX,' + item;
-}
-
-/* ================= PROFILE BUILDERS ================= */
-
 /*
-  Every format keeps the node present while the key is dead, so the client always
-  renders a profile instead of an empty file. A blackhole outbound is NOT used:
-  it accepts the local socket and only then discards the payload, so the handshake
-  never leaves the device and the client prints a fake ~0ms ping on a dead key.
-  Instead the node keeps its name and gets a rejected auth, and routing is
-  collapsed onto it, so ping fails for real (N/A).
+  Every /sub response carries the inbounds and a real outbound, so Happ always
+  has a node to render and never falls back to dumping the raw JSON as a file.
+
+  A blackhole outbound is NOT used for the blocked state: it accepts the local
+  TCP connection and only then discards the payload, so the handshake never
+  leaves the device and Happ prints a fake ~0ms ping on a dead key. Instead the
+  proxy keeps its tag/name but gets a rejected auth, and routing is collapsed
+  onto it. Ping then fails for real (N/A) whether the client measures through
+  the routing table or straight at the outbound.
 */
-
-function singboxProfile(blocked, remarks) {
-  const outbounds = [
-    {
-      type: 'hysteria2',
-      tag: 'proxy',
-      server: NODE_HOST,
-      server_port: NODE_PORT,
-      password: blocked ? DEAD_AUTH : NODE_AUTH,
-      tls: {
-        enabled: true,
-        server_name: NODE_HOST,
-        alpn: ['h3']
-      }
-    },
-    { type: 'direct', tag: 'direct' },
-    { type: 'block', tag: 'block' }
-  ];
-
-  const rules = [];
-  if (!blocked) {
-    rules.push({ domain: [...PROXY_HOSTS, ...PROXY_GAME_HOSTS].map(sbHost), outbound: 'proxy' });
-    rules.push({ ip_cidr: PROXY_IPS, outbound: 'proxy' });
-    rules.push({ network: 'tcp', port_range: TCP_GAME_PORTS, outbound: 'proxy' });
-    rules.push({ network: 'udp', port_range: UDP_GAME_PORTS, outbound: 'proxy' });
-    rules.push({ domain: DIRECT_HOSTS.map(sbHost), outbound: 'direct' });
+function subConfig(blocked, remarks) {
+  const c = JSON.parse(JSON.stringify(BASE_CONFIG));
+  c.remarks = remarks;
+  if (blocked) {
+    c.outbounds[0].streamSettings.hysteriaSettings.auth = DEAD_AUTH;
+    c.routing = {
+      domainStrategy: 'AsIs',
+      rules: [{ type: 'field', network: 'tcp,udp', outboundTag: 'proxy' }]
+    };
   }
-
-  return {
-    log: { level: 'warn', timestamp: true },
-    inbounds: [
-      {
-        type: 'mixed',
-        tag: 'mixed-in',
-        listen: '127.0.0.1',
-        listen_port: 2080,
-        sniff: true,
-        sniff_override_destination: false
-      }
-    ],
-    outbounds,
-    route: {
-      rules,
-      final: 'proxy',
-      auto_detect_interface: true
-    },
-    experimental: {
-      cache_file: { enabled: true }
-    }
-  };
+  return c;
 }
 
-function clashProfile(blocked, remarks) {
-  const lines = [
-    '# ' + (remarks || PROFILE_TITLE),
-    'mixed-port: 2080',
-    'allow-lan: false',
-    'mode: rule',
-    'log-level: info',
-    'ipv6: false',
-    'proxies:',
-    `  - name: "${PROFILE_TITLE}"`,
-    '    type: hysteria2',
-    `    server: ${NODE_HOST}`,
-    `    port: ${NODE_PORT}`,
-    `    password: "${blocked ? DEAD_AUTH : NODE_AUTH}"`,
-    `    sni: ${NODE_HOST}`,
-    '    alpn:',
-    '      - h3',
-    '    skip-cert-verify: false',
-    'proxy-groups:',
-    '  - name: PROXY',
-    '    type: select',
-    '    proxies:',
-    `      - "${PROFILE_TITLE}"`,
-    'rules:'
-  ];
+/* ================= HAPP LINK ================= */
+const happLinkCache = new Map();
+const HAPP_CACHE_TTL = 10 * 60 * 1000;
+const HAPP_CACHE_MAX = 500;
 
-  if (!blocked) {
-    [...PROXY_HOSTS, ...PROXY_GAME_HOSTS].forEach(h => lines.push('  - ' + clashHost(h) + ',PROXY'));
-    PROXY_IPS.forEach(ip => lines.push('  - IP-CIDR,' + ip + ',PROXY,no-resolve'));
-    lines.push(`  - DST-PORT,${TCP_GAME_PORTS.replace(':', '-')},PROXY`);
-    lines.push(`  - DST-PORT,${UDP_GAME_PORTS.replace(':', '-')},PROXY`);
-    DIRECT_HOSTS.forEach(h => lines.push('  - ' + clashHost(h) + ',DIRECT'));
+function happCacheGet(k) {
+  const hit = happLinkCache.get(k);
+  if (!hit) return null;
+  if (Date.now() - hit.at > HAPP_CACHE_TTL) { happLinkCache.delete(k); return null; }
+  return hit.link;
+}
+function happCacheSet(k, link) {
+  if (happLinkCache.size >= HAPP_CACHE_MAX) {
+    const oldest = happLinkCache.keys().next().value;
+    if (oldest) happLinkCache.delete(oldest);
   }
-
-  lines.push('  - MATCH,PROXY');
-  return lines.join('\n') + '\n';
+  happLinkCache.set(k, { link, at: Date.now() });
 }
 
-function base64Profile(blocked) {
-  const auth = blocked ? DEAD_AUTH : NODE_AUTH;
-  const uri =
-    `hysteria2://${encodeURIComponent(auth)}@${NODE_HOST}:${NODE_PORT}` +
-    `?sni=${encodeURIComponent(NODE_HOST)}&alpn=h3#${encodeURIComponent(PROFILE_TITLE)}`;
-  return Buffer.from(uri + '\n', 'utf8').toString('base64');
-}
-
-/* ================= SUB LINK ================= */
 function baseUrl(req) {
   const proto = req.headers['x-forwarded-proto'] || req.protocol || 'https';
   return `${proto}://${req.get('host')}`;
 }
+function encryptHappLink(subUrl) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const done = (v) => { if (!settled) { settled = true; resolve(v); } };
 
-/* Hiddify wants a plain https subscription URL; it fetches the profile itself. */
-function subUrlFor(req, key, did, format) {
-  const qs = new URLSearchParams();
-  qs.set('key', key);
-  if (did) qs.set('did', did);
-  if (format) qs.set('format', format);
-  return `${baseUrl(req)}/sub?${qs.toString()}`;
+    const body = JSON.stringify({ url: subUrl });
+    const req = https.request({
+      hostname: 'crypto.happ.su', path: '/api-v2.php', method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
+    }, (res) => {
+      let data = '';
+      res.setEncoding('utf8');
+      res.on('data', c => data += c);
+      res.on('end', () => { try { const j = JSON.parse(data); done(j && j.encrypted_link ? j.encrypted_link : null); } catch (e) { done(null); } });
+      res.on('error', () => done(null));
+    });
+    req.on('error', () => done(null));
+    req.setTimeout(5000, () => { req.destroy(); done(null); });
+    req.write(body);
+    req.end();
+  });
 }
-
-/* hiddify://import/<sublink>#name — the app reads the URL out of the path. */
-function hiddifyDeepLink(subUrl) {
-  return `hiddify://import/${encodeURIComponent(subUrl)}#${encodeURIComponent(PROFILE_TITLE)}`;
-}
-
-const FORMATS = new Set(['singbox', 'clash', 'base64']);
 
 /* ================= PUBLIC API ================= */
 app.get('/api/maintenance-status', async (req, res) => {
@@ -750,7 +726,7 @@ app.get('/api/maintenance-status', async (req, res) => {
   }
 });
 
-app.get('/api/sub-link', async (req, res) => {
+app.get('/api/happ-link', async (req, res) => {
   const { key } = req.query;
   if (!key) return res.json({ ok: false, reason: 'no-key' });
   try {
@@ -759,31 +735,29 @@ app.get('/api/sub-link', async (req, res) => {
     const out = await accessKey(key, c, did, deviceUa(req));
     if (!out.ok) return res.json({ ok: false, reason: out.reason, message: REASON_TEXT[out.reason] });
 
-    const raw = subUrlFor(req, key, did, 'singbox');
-    return res.json({ ok: true, link: hiddifyDeepLink(raw), raw });
+    const subUrl = `${baseUrl(req)}/sub?key=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}`;
+    const cacheKey = `${key}|${did}`;
+    const cachedLink = happCacheGet(cacheKey);
+    if (cachedLink) return res.json({ ok: true, link: cachedLink, raw: subUrl });
+    const link = await encryptHappLink(subUrl);
+    if (link) happCacheSet(cacheKey, link);
+    return res.json({ ok: !!link, link: link || subUrl, raw: subUrl, encrypted: !!link });
   } catch (e) {
     return res.json({ ok: false, reason: 'storage-error', detail: e.message });
   }
 });
 
-/* Old path kept so an older cached page keeps working. */
-app.get('/api/happ-link', (req, res) => {
-  req.url = '/api/sub-link' + (req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '');
-  app.handle(req, res);
-});
-
 app.get('/sub', async (req, res) => {
-  const format = FORMATS.has(String(req.query.format)) ? String(req.query.format) : 'singbox';
-
   res.setHeader('profile-update-interval', '1');
   res.setHeader('profile-title', PROFILE_TITLE);
   res.setHeader('subscription-auto-update-enable', '1');
   res.setHeader('subscription-auto-update-open-enable', '1');
   res.setHeader('hide-settings', '1');
-  res.setHeader('cache-control', 'no-store');
-  if (format === 'singbox') res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  else if (format === 'clash') res.setHeader('Content-Type', 'text/yaml; charset=utf-8');
-  else res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  if (HAPP_PROVIDER_ID) res.setHeader('providerid', HAPP_PROVIDER_ID);
+  /* .json extension so any client knows the type; text/plain so Happ sniffs
+     the body itself instead of treating the reply as a document download. */
+  res.setHeader('content-disposition', 'attachment; filename="dripwire.json"');
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
 
   let body;
   try {
@@ -793,36 +767,30 @@ app.get('/sub', async (req, res) => {
 
     if (m.enabled) {
       res.setHeader('x-pc5-status', 'maintenance');
-      body = render(format, true, `⚠️ MAINTENANCE: ${m.message}`);
+      body = subConfig(true, `⚠️ MAINTENANCE: ${m.message}`);
     } else {
       const { key } = req.query;
       const did = deviceOf(req);
       const out = key ? await accessKey(key, c, did, deviceUa(req)) : { ok: false, reason: 'invalid' };
       if (!out.ok) {
         res.setHeader('x-pc5-status', out.reason);
-        body = render(format, true, `❌ ${REASON_TEXT[out.reason] || 'SUBSCRIPTION EXPIRED OR TERMINATED'}`);
+        body = subConfig(true, `❌ ${REASON_TEXT[out.reason] || 'SUBSCRIPTION EXPIRED OR TERMINATED'}`);
       } else {
         /* Advertised expiry uses the paused clock so the date does not creep
            forward in the client while the service is down. */
         const liveExpiry = effectiveExpiry(out.record, maintStart(db));
         res.setHeader('x-pc5-status', 'ok');
         res.setHeader('subscription-userinfo', `upload=0; download=0; total=107374182400; expire=${Math.floor(liveExpiry / 1000)}`);
-        body = render(format, false, PROFILE_TITLE);
+        body = subConfig(false, BASE_CONFIG.remarks);
       }
     }
   } catch (e) {
     res.setHeader('x-pc5-status', 'storage-error');
-    body = render(format, true, '❌ SUBSCRIPTION EXPIRED OR TERMINATED');
+    body = subConfig(true, '❌ SUBSCRIPTION EXPIRED OR TERMINATED');
   }
 
-  return res.status(200).send(body);
+  return res.status(200).send(JSON.stringify(body));
 });
-
-function render(format, blocked, remarks) {
-  if (format === 'clash') return clashProfile(blocked, remarks);
-  if (format === 'base64') return base64Profile(blocked);
-  return JSON.stringify(singboxProfile(blocked, remarks));
-}
 
 app.get('/api/check-key', async (req, res) => {
   try {
@@ -1061,6 +1029,7 @@ app.post('/api/admin/revoke-key', async (req, res) => {
       const idx = db.keys.findIndex(k => k.key === key);
       if (idx >= 0) db.keys.splice(idx, 1);
     });
+    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
     return res.json({ success: true, message: `Key ${key} revoked.` });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
@@ -1086,6 +1055,7 @@ app.post('/api/admin/repair-key', async (req, res) => {
       return r;
     });
     if (!rec) return res.status(404).json({ error: "Key not found." });
+    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
     return res.json({ success: true, record: rec, durationHours });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
@@ -1107,6 +1077,7 @@ app.post('/api/admin/reset-device', async (req, res) => {
       return r;
     });
     if (!rec) return res.status(404).json({ error: "Key not found." });
+    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
     return res.json({ success: true, message: `Device lock cleared for ${key}.` });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
@@ -1131,6 +1102,7 @@ app.post('/api/admin/set-device-limit', async (req, res) => {
       return r;
     });
     if (!rec) return res.status(404).json({ error: "Key not found." });
+    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
     return res.json({ success: true, record: rec, maxDevices });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
@@ -1181,6 +1153,8 @@ app.post('/api/admin/maintenance', async (req, res) => {
       return db.maintenance;
     });
 
+    /* Cached Happ links embed the dead auth, so drop them on every toggle. */
+    happLinkCache.clear();
     return res.json({ success: true, maintenance: m });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
@@ -1209,7 +1183,6 @@ const PORT = process.env.PORT || 3000;
     console.log(`[cfg] storage -> ${cfg.owner}/${cfg.repo}:${cfg.file}`);
     console.log(`[cfg] token -> ${tokenShape(cfg.token)}`);
     console.log(`[admin] key source -> ${ADMIN_KEY_URL}`);
-    console.log(`[node] ${NODE_HOST}:${NODE_PORT} hysteria2`);
     getAdminKey(true);
   });
 })();
