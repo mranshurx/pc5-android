@@ -1506,6 +1506,19 @@
       "deviceId": null,
       "devices": [],
       "startedAt": null
+    },
+    {
+      "key": "PC5-35SG77",
+      "plan": "1h",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "cost": 0.5,
+      "resellerId": "505e236f-1909-480c-87c3-867c12525caa",
+      "reseller": "aimdevil",
+      "createdAt": "2026-11-07T02:20:42.767Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
