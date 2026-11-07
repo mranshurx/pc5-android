@@ -1259,7 +1259,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-07T04:26:48.965Z",
+      "activatedAt": "2026-11-07T04:26:48.965Z",
+      "expiresAt": "2026-11-08T04:26:48.965Z"
     },
     {
       "key": "PC5-RF3K2X",
