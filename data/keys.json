@@ -1349,7 +1349,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-07T19:08:31.320Z",
+      "activatedAt": "2026-11-07T19:08:31.320Z",
+      "expiresAt": "2026-11-08T19:08:31.320Z"
     },
     {
       "key": "PC5-4IPU8F",
