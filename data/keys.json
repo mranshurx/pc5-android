@@ -1475,7 +1475,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-07T03:26:52.865Z",
+      "activatedAt": "2026-11-07T03:26:52.865Z",
+      "expiresAt": "2026-11-08T03:26:52.865Z"
     },
     {
       "key": "PC5-LL8Q83",
