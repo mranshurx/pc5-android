@@ -160,7 +160,7 @@
         </div>
 
         <div id="proxyTab">
-          <button class="btn" id="happBtn" type="button">Open in Happ</button>
+          <button class="btn" id="importBtn" type="button">Add to Hiddify</button>
           <div class="row" style="margin-top:10px">
             <button class="btn subtle" id="copySubBtn" type="button">Copy sub link</button>
             <button class="btn ghost" id="copyKeyBtn" type="button">Copy key</button>
@@ -205,7 +205,7 @@
 
   /* ================= STATE ================= */
   let rawSubUrl = "";
-  let happLink = "";
+  let importLink = "";
   let activeKey = "";
   let expiryTimer = null;
   let countdownTimer = null;
@@ -294,9 +294,9 @@
   function showDashboard(key, expiresAt, deviceLimit, deviceLocked, pausedRemaining) {
     const changed = (activeKey !== key);
     activeKey = key;
-    rawSubUrl = `${BACKEND_URL}/sub?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`;
+    rawSubUrl = `${BACKEND_URL}/sub?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}&format=singbox`;
 
-    if (changed) { happLink = ""; loadHappLink(key); }
+    if (changed) { importLink = ""; loadImportLink(key); }
 
     expiresAtMs = expiresAt ? new Date(expiresAt).getTime() : 0;
     frozenLeftMs = (typeof pausedRemaining === "number") ? pausedRemaining : null;
@@ -332,7 +332,7 @@
     frozenLeftMs = null;
     expiresAtMs = 0;
     activeKey = "";
-    happLink = "";
+    importLink = "";
     rawSubUrl = "";
     showUnlock();
   }
@@ -453,23 +453,26 @@
     }
   }
 
-  async function loadHappLink(key) {
+  /* Hiddify fetches the profile itself; we only hand over the deep link. */
+  async function loadImportLink(key) {
+    const btn = $("importBtn");
     try {
-      const r = await fetch(`${BACKEND_URL}/api/happ-link?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`);
+      const r = await fetch(`${BACKEND_URL}/api/sub-link?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`);
       const d = await r.json();
       if (d && d.ok && d.link) {
-        happLink = d.link;
-        $("happBtn").innerText = "Open in Happ";
-        $("happBtn").disabled = false;
+        importLink = d.link;
+        if (d.raw) rawSubUrl = d.raw;
+        btn.innerText = "Add to Hiddify";
+        btn.disabled = false;
       } else {
-        happLink = "";
-        $("happBtn").innerText = d && d.message ? d.message : "Happ link unavailable";
-        $("happBtn").disabled = true;
+        importLink = "";
+        btn.innerText = d && d.message ? d.message : "Hiddify link unavailable";
+        btn.disabled = true;
       }
     } catch (e) {
-      happLink = "";
-      $("happBtn").innerText = "Happ link unavailable";
-      $("happBtn").disabled = true;
+      importLink = "";
+      btn.innerText = "Hiddify link unavailable";
+      btn.disabled = true;
     }
   }
 
@@ -490,6 +493,7 @@
 
   /* ================= FEATURES ================= */
   const FEATURES = [
+    "One tap import into Hiddify",
     "Game traffic routed through the proxy",
     "Event and CDN hosts kept direct",
     "UDP + TCP game ports forwarded",
@@ -545,9 +549,9 @@
 
   TABS.forEach(t => $(t.btn).addEventListener("click", () => selectTab(t.btn)));
 
-  $("happBtn").addEventListener("click", () => {
-    if (!happLink) return;
-    window.location.href = happLink;
+  $("importBtn").addEventListener("click", () => {
+    if (!importLink) return;
+    window.location.href = importLink;
   });
   $("copySubBtn").addEventListener("click", () => copyText(rawSubUrl, "Sub link copied"));
   $("copyKeyBtn").addEventListener("click", () => copyText(activeKey, "Key copied"));
