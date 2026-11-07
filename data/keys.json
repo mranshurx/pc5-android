@@ -1528,6 +1528,17 @@
           "ua": "Mozilla/5.0 (Android 10; Mobile; rv:159.0) Gecko/159.0 Firefox/159.0"
         }
       ]
+    },
+    {
+      "key": "PC5-TVT2HC",
+      "durationHours": 72,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-07T02:21:32.187Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
