@@ -1271,7 +1271,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-07T03:20:19.319Z",
+      "activatedAt": "2026-11-07T03:20:19.319Z",
+      "expiresAt": "2026-11-08T03:20:19.319Z"
     },
     {
       "key": "PC5-TE3V8E",
