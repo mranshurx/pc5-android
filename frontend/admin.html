@@ -137,7 +137,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
              stroke="#ff2a44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m12.5 17-.5-1-.5 1h1z"></path>
-          <path d="M15 22a1 1 0 0 0 1-1v-1a<｜begin▁of▁sentence｜># 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z"></path>
+          <path d="M15 22a1 1 0 0 0 1-1v-1a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z"></path>
           <circle cx="15" cy="12" r="1"></circle>
           <circle cx="9" cy="12" r="1"></circle>
         </svg>
@@ -313,7 +313,8 @@
           Tunnel Server Nodes
         </div>
         <div id="nodes-list"></div>
-        <span class="form-hint">Static — mirrors the outbound in server.js</span>
+        <span class="form-hint">Static — mirrors the outbound in server.js.
+          Sub output is sing-box JSON by default; <b>?format=clash</b> and <b>?format=base64</b> are also served.</span>
       </div>
     </aside>
 
@@ -396,8 +397,8 @@ const VER_KEY     = "pc5_admin_ver";
 const GH_KEY      = "pc5_gh_cfg";
 const LIFETIME_H  = 999999;
 
-/* Static mirror of the hysteria outbound defined in backend/server.js */
-const NODES = [{ host: "wraith-bom.xreg.site", proto: "Hysteria2", port: 443, sec: "TLS / h3" }];
+/* Static mirror of the hysteria2 outbound defined in backend/server.js */
+const NODES = [{ host: "proxy-ind.dripwire.cc", proto: "Hysteria2", port: 443, sec: "TLS / h3" }];
 
 /* Known plans -> human label */
 const PLANS = {
@@ -923,7 +924,7 @@ $("gen-devices").addEventListener("change", e => {
 });
 
 $("admin-password").addEventListener("keydown", e => {
-  if(e.key === "Enter") adminLogin();
+  if (e.key === "Enter") adminLogin();
 });
 
 document.addEventListener("visibilitychange", () => {
