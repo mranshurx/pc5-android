@@ -1516,9 +1516,11 @@
       "resellerId": "505e236f-1909-480c-87c3-867c12525caa",
       "reseller": "aimdevil",
       "createdAt": "2026-11-07T02:20:42.767Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-07T02:21:04.894Z",
+      "activatedAt": "2026-11-07T02:21:04.894Z",
+      "expiresAt": "2026-11-07T03:21:04.894Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
