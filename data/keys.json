@@ -1612,11 +1612,8 @@
     }
   ],
   "maintenance": {
-    "enabled": false,
+    "enabled": true,
     "message": "Garena patch update wait some time.",
-    "since": null,
-    "lastPausedMs": 48611353,
-    "lastPausedKeys": 22,
-    "lastEndedAt": "2026-11-07T01:56:26.080Z"
+    "since": "2026-11-07T13:52:30.004Z"
   }
 }
