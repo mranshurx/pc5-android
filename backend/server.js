@@ -546,9 +546,8 @@ const REASON_TEXT = {
 };
 
 /* ================= ROUTING CONFIG ================= */
-/* Upstream: dripwire India, Hysteria2.
-   Tester endpoints and game traffic go through the proxy so Happ can measure a
-   real latency; CDN and event hosts stay direct; catch-all is the proxy. */
+/* Upstream: dripwire BD, Hysteria2 (user:pass auth).
+   Game traffic goes through the proxy, everything else stays direct. */
 const BASE_CONFIG = {
   "remarks": "PC5 ANDROID",
   "profile-update-interval": 1,
@@ -568,12 +567,12 @@ const BASE_CONFIG = {
   "outbounds": [
     {
       "protocol": "hysteria",
-      "settings": { "address": "proxy-ind.dripwire.cc", "port": 443, "version": 2 },
+      "settings": { "address": "proxy-bd.dripwire.cc", "port": 443, "version": 2 },
       "streamSettings": {
-        "hysteriaSettings": { "auth": "2292878901", "version": 2 },
+        "hysteriaSettings": { "auth": "7718186935:a5ba1084953d0707", "version": 2 },
         "network": "hysteria",
         "security": "tls",
-        "tlsSettings": { "alpn": ["h3"], "serverName": "proxy-ind.dripwire.cc", "show": false },
+        "tlsSettings": { "alpn": ["h3"], "serverName": "proxy-bd.dripwire.cc", "show": false },
         "finalmask": { "quicParams": { "disableChromeParrot": true } }
       },
       "tag": "proxy"
@@ -583,55 +582,9 @@ const BASE_CONFIG = {
   "routing": {
     "domainStrategy": "AsIs",
     "rules": [
-      {
-        "type": "field",
-        "domain": [
-          "full:cp.cloudflare.com", "domain:cloudflare.com", "full:connectivitycheck.gstatic.com",
-          "full:www.gstatic.com", "domain:gstatic.com", "full:www.google.com", "domain:google.com",
-          "domain:googleapis.com", "domain:gvt1.com", "domain:gvt2.com", "domain:googleusercontent.com",
-          "full:time.android.com", "domain:whatsapp.net", "domain:facebook.com", "domain:instagram.com",
-          "domain:youtube.com", "domain:ggpht.com"
-        ],
-        "outboundTag": "proxy"
-      },
-      {
-        "type": "field",
-        "domain": [
-          "full:clientbp.ggpolarbear.com", "full:loginbp.ggpolarbear.com", "full:core-bs.ggpolarbear.com",
-          "full:core-bs.freefiremobile.com", "full:core-tata.freefireind.in", "full:core-gmc.freefiremobile.com",
-          "full:client.ind.freefiremobile.com", "full:client.us.freefiremobile.com", "full:sgnetwork.ggblueshark.com",
-          "full:menetwork.ggblueshark.com", "full:bdnetwork.ggpolarbear.com", "full:100067.connect.garena.com",
-          "full:100067.msdk.garena.com", "full:clientbp.ppmainecoonghj.com", "full:loginbp.ppmainecoonghj.com",
-          "full:ffmconnect.ppmainecoonghj.com", "full:ffmmsdk.ppmainecoonghj.com",
-          "regexp:^(clientbp|loginbp|core-[a-z0-9]+|[a-z]+network|ffmconnect|ffmmsdk)\\."
-        ],
-        "outboundTag": "proxy"
-      },
-      {
-        "type": "field",
-        "ip": [
-          "101.32.114.0/23", "101.33.44.0/22", "102.204.191.0/24", "102.217.238.0/24",
-          "103.103.244.0/24", "103.108.100.0/22", "103.117.4.0/22", "103.123.54.0/23",
-          "103.127.228.0/22", "103.16.32.0/22", "103.215.127.0/24", "103.219.200.0/22",
-          "103.237.102.0/23", "103.247.204.0/22"
-        ],
-        "outboundTag": "proxy"
-      },
       { "type": "field", "network": "tcp", "port": "39000-39999", "outboundTag": "proxy" },
       { "type": "field", "network": "udp", "port": "10000-10999", "outboundTag": "proxy" },
-      {
-        "type": "field",
-        "domain": [
-          "full:event-vodka.freefireind.in", "full:indevent.ggblueshark.com", "full:sgevent.ggblueshark.com",
-          "full:meevent.ggblueshark.com", "full:thevent.ggblueshark.com", "full:sacevent.ggblueshark.com",
-          "full:idevent.ggblueshark.com", "full:bdevent.ggpolarbear.com", "regexp:event\\.gg(blueshark|polarbear)\\.com$",
-          "full:gin.freefireind.in", "full:gin.freefiremobile.com", "full:vodka.freefireind.in",
-          "full:dl.castle.freefiremobile.com", "full:dl.cdn.freefiremobile.com", "full:dl-core.cdn.freefiremobile.com",
-          "domain:freefiremobile-a.akamaihd.net"
-        ],
-        "outboundTag": "direct"
-      },
-      { "type": "field", "network": "tcp,udp", "outboundTag": "proxy" }
+      { "type": "field", "network": "tcp,udp", "outboundTag": "direct" }
     ]
   }
 };
@@ -756,7 +709,7 @@ app.get('/sub', async (req, res) => {
   if (HAPP_PROVIDER_ID) res.setHeader('providerid', HAPP_PROVIDER_ID);
   /* .json extension so any client knows the type; text/plain so Happ sniffs
      the body itself instead of treating the reply as a document download. */
-  res.setHeader('content-disposition', 'attachment; filename="dripwire.json"');
+  res.setHeader('content-disposition', 'attachment; filename="pc5-android.json"');
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
 
   let body;
