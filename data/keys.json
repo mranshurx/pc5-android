@@ -1673,15 +1673,15 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-08T14:49:20.025Z",
-      "startedAt": "2026-11-08T18:40:45.542Z",
-      "activatedAt": "2026-11-08T18:40:45.542Z",
-      "expiresAt": "2026-11-08T21:40:45.542Z",
+      "startedAt": "2026-11-08T18:40:44.595Z",
+      "activatedAt": "2026-11-08T18:40:44.595Z",
+      "expiresAt": "2026-11-08T21:40:44.595Z",
       "deviceLimit": "single",
       "devices": [
         {
           "id": "D4caf5d0ad0965d06",
-          "firstSeen": "2026-11-08T18:40:47.265Z",
-          "lastSeen": "2026-11-08T18:40:47.265Z",
+          "firstSeen": "2026-11-08T18:40:46.085Z",
+          "lastSeen": "2026-11-08T18:40:47.698Z",
           "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1"
         }
       ]
