@@ -1703,7 +1703,14 @@
       "activatedAt": "2026-11-08T15:46:44.655Z",
       "expiresAt": "2026-12-08T15:46:44.655Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D4e014a388d525224",
+          "firstSeen": "2026-11-08T15:46:46.112Z",
+          "lastSeen": "2026-11-08T15:46:46.112Z",
+          "ua": "Mozilla/5.0 (Linux; Android 16; REDMI Note 15 5G Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 Mobile Safari/537.36 XiaoMi/MiuiBrowser/14.66.0-gn"
+        }
+      ]
     }
   ],
   "maintenance": {
