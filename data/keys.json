@@ -1040,7 +1040,14 @@
       "activatedAt": "2026-11-03T20:10:29.992Z",
       "expiresAt": "2026-12-05T08:30:33.891Z",
       "deviceLimit": "single",
-      "devices": [],
+      "devices": [
+        {
+          "id": "D1a9270caf7bd7f84",
+          "firstSeen": "2026-11-08T16:09:32.292Z",
+          "lastSeen": "2026-11-08T16:09:32.292Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36"
+        }
+      ],
       "maintenancePausedMs": 130803899
     },
     {
