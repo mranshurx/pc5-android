@@ -1040,14 +1040,7 @@
       "activatedAt": "2026-11-03T20:10:29.992Z",
       "expiresAt": "2026-12-05T08:30:33.891Z",
       "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D8eb7a228012ad268",
-          "firstSeen": "2026-11-03T20:10:31.603Z",
-          "lastSeen": "2026-11-03T20:10:31.603Z",
-          "ua": "Mozilla/5.0 (Linux; Android 16; REDMI Note 15 5G Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 Mobile Safari/537.36 XiaoMi/MiuiBrowser/14.66.0-gn"
-        }
-      ],
+      "devices": [],
       "maintenancePausedMs": 130803899
     },
     {
