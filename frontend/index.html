@@ -103,13 +103,16 @@
     .setup-box ol{padding-left:1.15rem;color:var(--dim);font-size:.78rem;line-height:2}
     .setup-box ol b{color:#fff}
 
-    /* ---------- FEATURE SWITCHES ---------- */
+    /* ---------- FEATURE SWITCHES (exclusive) ---------- */
     .toggles-wrap{margin:.3rem 0 1.1rem}
     .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;
-      background:#0a0a0a;border:1px solid var(--line);padding:.85rem 1.15rem;margin-bottom:.55rem}
+      background:#0a0a0a;border:1px solid var(--line);padding:.85rem 1.15rem;margin-bottom:.55rem;
+      cursor:pointer;transition:border-color .18s,background .18s}
     .toggle-row:last-child{margin-bottom:0}
+    .toggle-row.on{border-color:#3a3a3a;background:#0d0d0d}
     .toggle-title{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#eaeaea}
     .toggle-note{font-size:.6rem;letter-spacing:.05em;color:var(--dim-2);margin-top:.35rem;line-height:1.6;text-transform:lowercase}
+    .toggle-note.warn{color:#b08a3a}
     .switch{position:relative;flex:none;width:46px;height:25px;border-radius:99px;border:1px solid var(--line-2);
       background:#0f0f0f;cursor:pointer;padding:0;transition:background .18s,border-color .18s;
       -webkit-tap-highlight-color:transparent}
@@ -131,11 +134,7 @@
     .tg-logo-link:active{transform:scale(.96)}
     .tg-logo{width:36px;height:36px;display:block;flex:none;
       filter:drop-shadow(0 0 14px rgba(41,169,235,.35))}
-    .tg-logo.wa{filter:drop-shadow(0 0 14px rgba(37,211,102,.35))}
     .tg-handle{font-size:.88rem;font-weight:700;color:#fff;letter-spacing:.06em}
-
-    .dev-credit{margin-top:1.6rem;text-align:center;font-size:.72rem;font-weight:800;
-      letter-spacing:.18em;text-transform:uppercase;color:#fff;line-height:1.9}
 
     /* ---------- UPDATES ---------- */
     .updates-box{background:#0a0a0a;border:1px solid var(--line);padding:1.4rem}
@@ -220,21 +219,23 @@
           <div class="row"><span class="k">Expires At</span><span class="v" id="displayExpiry">Loading...</span></div>
         </div>
 
+        <!-- Only one mode can be active. Picking one swaps the tunnel auth. -->
         <div class="toggles-wrap">
-          <div class="toggle-row">
+          <div class="toggle-row" id="rowAimbot" onclick="pickMode('aimbot')">
             <div>
               <div class="toggle-title">Aimbot</div>
+              <div class="toggle-note" id="noteAimbot">aimbot only</div>
             </div>
-            <button class="switch" id="swAimbot" role="switch" aria-checked="true"
-                    aria-label="Toggle aimbot" onclick="toggleFeature('aimbot')"></button>
+            <button class="switch" id="swAimbot" role="radio" aria-checked="true"
+                    aria-label="Use aimbot mode"></button>
           </div>
-          <div class="toggle-row">
+          <div class="toggle-row" id="rowLocation" onclick="pickMode('location')">
             <div>
-              <div class="toggle-title">Location</div>
-              <div class="toggle-note">{ use at own risk location may give ban }</div>
+              <div class="toggle-title">Location + Aimbot</div>
+              <div class="toggle-note warn" id="noteLocation">{ use at own risk — location may give ban }</div>
             </div>
-            <button class="switch" id="swLocation" role="switch" aria-checked="false"
-                    aria-label="Toggle location" onclick="toggleFeature('location')"></button>
+            <button class="switch" id="swLocation" role="radio" aria-checked="false"
+                    aria-label="Use location plus aimbot mode"></button>
           </div>
         </div>
 
@@ -245,7 +246,8 @@
         <div class="setup-box">
           <h3>How to Connect</h3>
           <ol>
-            <li>Go back to the <b>PROXY</b> tab and tap <b>Add to Happ</b>.</li>
+            <li>Go back to the <b>PROXY</b> tab and choose <b>Aimbot</b> or <b>Location + Aimbot</b>.</li>
+            <li>Tap <b>Add to Happ</b>.</li>
             <li>Happ opens and the subscription is added automatically.</li>
             <li>If it doesn't, open Happ, tap the add (<b>+</b>) icon and choose <b>Clipboard</b>.</li>
           </ol>
@@ -263,20 +265,6 @@
             <span class="tg-handle">@cyberxsilent</span>
           </a>
         </div>
-
-        <!-- WHATSAPP — the LOGO is the link. Tap it -> channel -->
-        <div class="contact-card">
-          <div class="t">WhatsApp</div>
-          <a class="tg-logo-link" href="https://whatsapp.com/channel/0029Vb9C6unB4hdWExyDTA2h" onclick="return openWhatsApp()">
-            <svg class="tg-logo wa" viewBox="0 0 24 24" aria-hidden="true">
-              <path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-            <span class="tg-handle">PC5</span>
-          </a>
-        </div>
-
-        <!-- DEVELOPER CREDIT -->
-        <div class="dev-credit">DEVELOPER- CYBER ANXHU</div>
       </div>
 
       <div id="updatesTab" class="hidden">
@@ -295,8 +283,8 @@
     const BACKEND_URL = location.origin;
     const STORAGE_KEY = "pc5_session";
     const DEVICE_KEY  = "pc5_device";
+    const MODE_KEY    = "pc5_mode";
     const TELEGRAM_URL = "https://t.me/cyberxsilent";
-    const WHATSAPP_URL = "https://whatsapp.com/channel/0029Vb9C6unB4hdWExyDTA2h";
     const UPDATES_URL = "updates/update.txt";
 
     let rawSubUrl = "";
@@ -323,12 +311,6 @@
       /* works even inside in-app WebViews that ignore target="_blank" */
       window.location.href = TELEGRAM_URL;
       return false; /* stop the default anchor navigation double-firing */
-    }
-
-    /* ============ WHATSAPP LOGO CLICK ============ */
-    function openWhatsApp(){
-      window.location.href = WHATSAPP_URL;
-      return false;
     }
 
     /* ============ LOGO (no status text) ============ */
@@ -373,36 +355,50 @@
     }
     function clearSession(){ try { localStorage.removeItem(STORAGE_KEY); } catch(e){} }
 
-    /* ============ FEATURE SWITCHES ============ */
-    const FEATURES_KEY = "pc5_features";
-    const FEATURES_DEFAULT = { aimbot: true, location: false };
+    /* ============ MODE (exactly one: aimbot | location) ============ */
+    const MODES = ["aimbot", "location"];
+    const MODE_DEFAULT = "aimbot";
 
-    function readFeatures(){
-      try{
-        const raw = localStorage.getItem(FEATURES_KEY);
-        if(!raw) return { ...FEATURES_DEFAULT };
-        const o = JSON.parse(raw) || {};
-        return {
-          aimbot:   typeof o.aimbot   === "boolean" ? o.aimbot   : FEATURES_DEFAULT.aimbot,
-          location: typeof o.location === "boolean" ? o.location : FEATURES_DEFAULT.location
-        };
-      }catch(e){ return { ...FEATURES_DEFAULT }; }
+    function readMode(){
+      const m = localStorage.getItem(MODE_KEY);
+      return MODES.includes(m) ? m : MODE_DEFAULT;
     }
-    function saveFeatures(o){ try{ localStorage.setItem(FEATURES_KEY, JSON.stringify(o)); }catch(e){} }
+    function writeMode(m){
+      try { localStorage.setItem(MODE_KEY, m); } catch(e){}
+    }
+    function mode(){ return readMode(); }
 
-    function paintFeatures(){
-      const f = readFeatures();
+    function paintModes(){
+      const m = readMode();
       const a = document.getElementById("swAimbot");
       const l = document.getElementById("swLocation");
-      if(a) a.setAttribute("aria-checked", f.aimbot ? "true" : "false");
-      if(l) l.setAttribute("aria-checked", f.location ? "true" : "false");
+      const ra = document.getElementById("rowAimbot");
+      const rl = document.getElementById("rowLocation");
+      if(a) a.setAttribute("aria-checked", m === "aimbot" ? "true" : "false");
+      if(l) l.setAttribute("aria-checked", m === "location" ? "true" : "false");
+      if(ra) ra.classList.toggle("on", m === "aimbot");
+      if(rl) rl.classList.toggle("on", m === "location");
     }
 
-    function toggleFeature(name){
-      const f = readFeatures();
-      f[name] = !f[name];
-      saveFeatures(f);
-      paintFeatures();
+    /* Selecting one clears the other — they are never both on. */
+    function pickMode(name){
+      if(!MODES.includes(name)) return;
+      if(readMode() === name) return;
+      writeMode(name);
+      paintModes();
+      refreshSub();
+    }
+
+    /* Rebuild the sub link for the current mode and re-request the Happ link. */
+    function refreshSub(){
+      if(!activeKey) return;
+      rawSubUrl = subUrlFor(activeKey, mode());
+      happLink = "";
+      loadHappLink(activeKey);
+    }
+
+    function subUrlFor(key, m){
+      return `${BACKEND_URL}/sub?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}&mode=${encodeURIComponent(m)}`;
     }
 
     /* ============ UPDATES ============ */
@@ -472,7 +468,7 @@
     function showDashboard(key, expiresAt, deviceLimit, deviceLocked, pausedRemaining){
       const changed = (activeKey !== key);
       activeKey = key;
-      rawSubUrl = `${BACKEND_URL}/sub?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`;
+      rawSubUrl = subUrlFor(key, mode());
 
       if (changed){ happLink = ""; loadHappLink(key); }
 
@@ -497,7 +493,7 @@
       document.getElementById('unlockView').classList.add('hidden');
       document.getElementById('dashboardView').classList.remove('hidden');
 
-      paintFeatures();
+      paintModes();
       startCountdown();
       scheduleExpiry(expiresAt);
     }
@@ -533,13 +529,26 @@
       catch(e){ return { enabled:false }; }
     }
     async function loadHappLink(key){
+      const m = mode();
       try {
-        const r = await fetch(`${BACKEND_URL}/api/happ-link?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}`);
+        const r = await fetch(`${BACKEND_URL}/api/happ-link?key=${encodeURIComponent(key)}&did=${encodeURIComponent(DEVICE_ID)}&mode=${encodeURIComponent(m)}`);
         const d = await r.json();
         if (d && d.ok && d.link) {
           happLink = d.link;
           if (d.raw) rawSubUrl = d.raw;
         }
+      } catch(e){}
+    }
+
+    /* Which modes actually have an auth saved — soft hint only. */
+    async function loadFeatureFlags(){
+      try {
+        const r = await fetch(`${BACKEND_URL}/api/features`, { cache: "no-store" });
+        const f = await r.json();
+        const na = document.getElementById("noteAimbot");
+        const nl = document.getElementById("noteLocation");
+        if(na && f && f.aimbot === false) na.textContent = "aimbot only · not configured yet";
+        if(nl && f && f.location === false) nl.textContent = "{ not configured yet — may fail to connect }";
       } catch(e){}
     }
 
@@ -631,7 +640,8 @@
     /* ============ BOOT ============ */
     window.addEventListener('DOMContentLoaded', async () => {
       findLogo();
-      paintFeatures();
+      paintModes();
+      loadFeatureFlags();
 
       const m = await getMaintenance();
       if(m && m.enabled){
