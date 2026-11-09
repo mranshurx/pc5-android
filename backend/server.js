@@ -192,7 +192,8 @@ const FRONTEND_DIR = fs.existsSync(path.join(__dirname, '..', 'frontend'))
   : path.join(__dirname, 'frontend');
 
 const DEFAULT_MAINT = { enabled: false, message: 'System under maintenance.', since: null };
-const EMPTY_DB = () => ({ keys: [], maintenance: { ...DEFAULT_MAINT } });
+const EMPTY_FEATURES = { aimbot: '', location: '' };
+const EMPTY_DB = () => ({ keys: [], maintenance: { ...DEFAULT_MAINT }, features: { ...EMPTY_FEATURES } });
 
 /* ================= GITHUB API ================= */
 function apiHeaders(c, json) {
@@ -295,6 +296,9 @@ async function getDb(force, c) {
   if (!Array.isArray(db.keys)) db.keys = [];
   if (!db.maintenance) db.maintenance = { ...DEFAULT_MAINT };
   if (!('since' in db.maintenance)) db.maintenance.since = null;
+  if (!db.features || typeof db.features !== 'object') db.features = { ...EMPTY_FEATURES };
+  if (typeof db.features.aimbot !== 'string') db.features.aimbot = '';
+  if (typeof db.features.location !== 'string') db.features.location = '';
   db.keys.forEach(migrateRecord);
 
   cache = { data: db, sha: f ? f.sha : null, at: Date.now(), sig };
@@ -589,6 +593,27 @@ const BASE_CONFIG = {
   }
 };
 
+/* ================= FEATURE MODES ================= */
+/* aimbot | location. Each mode maps to its own upstream auth string. */
+const FEATURE_MODES = ['aimbot', 'location'];
+const FEATURE_LABEL = { aimbot: 'AIMBOT', location: 'LOCATION + AIMBOT' };
+
+function cleanAuth(v) {
+  const s = String(v == null ? '' : v).trim();
+  if (!s) return '';
+  if (!s.includes(':')) return null;              /* must be user:pass */
+  const [u, p] = s.split(':');
+  if (!u.trim() || !p.trim()) return null;
+  return s.slice(0, 160);
+}
+
+/* Auth for a mode, falling back to the built-in default when unset. */
+function authFor(db, mode) {
+  const f = (db && db.features) || {};
+  if (mode && FEATURE_MODES.includes(mode) && f[mode]) return f[mode];
+  return BASE_CONFIG.outbounds[0].streamSettings.hysteriaSettings.auth;
+}
+
 /* ================= SUBSCRIPTION BODY ================= */
 const PROFILE_TITLE = 'PC5 ANDROID';
 
@@ -607,7 +632,7 @@ const DEAD_AUTH = 'PC5-BLOCKED';
   onto it. Ping then fails for real (N/A) whether the client measures through
   the routing table or straight at the outbound.
 */
-function subConfig(blocked, remarks) {
+function subConfig(blocked, remarks, auth) {
   const c = JSON.parse(JSON.stringify(BASE_CONFIG));
   c.remarks = remarks;
   if (blocked) {
@@ -616,6 +641,8 @@ function subConfig(blocked, remarks) {
       domainStrategy: 'AsIs',
       rules: [{ type: 'field', network: 'tcp,udp', outboundTag: 'proxy' }]
     };
+  } else if (auth) {
+    c.outbounds[0].streamSettings.hysteriaSettings.auth = auth;
   }
   return c;
 }
@@ -637,6 +664,12 @@ function happCacheSet(k, link) {
     if (oldest) happLinkCache.delete(oldest);
   }
   happLinkCache.set(k, { link, at: Date.now() });
+}
+/* Drop every cached link for a key so a mode/auth change is picked up at once. */
+function happCacheDrop(key) {
+  for (const k of [...happLinkCache.keys()]) {
+    if (!key || k.startsWith(key + '|')) happLinkCache.delete(k);
+  }
 }
 
 function baseUrl(req) {
@@ -679,8 +712,20 @@ app.get('/api/maintenance-status', async (req, res) => {
   }
 });
 
+/* Which modes currently have an auth configured — drives the client badges. */
+app.get('/api/features', async (req, res) => {
+  try {
+    const db = await getDb(false, credsFrom(req));
+    const f = db.features || {};
+    res.json({ aimbot: !!f.aimbot, location: !!f.location });
+  } catch (e) {
+    res.json({ aimbot: false, location: false });
+  }
+});
+
 app.get('/api/happ-link', async (req, res) => {
   const { key } = req.query;
+  const mode = String(req.query.mode || '').toLowerCase();
   if (!key) return res.json({ ok: false, reason: 'no-key' });
   try {
     const c = credsFrom(req);
@@ -688,13 +733,14 @@ app.get('/api/happ-link', async (req, res) => {
     const out = await accessKey(key, c, did, deviceUa(req));
     if (!out.ok) return res.json({ ok: false, reason: out.reason, message: REASON_TEXT[out.reason] });
 
-    const subUrl = `${baseUrl(req)}/sub?key=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}`;
-    const cacheKey = `${key}|${did}`;
+    const m = FEATURE_MODES.includes(mode) ? mode : '';
+    const subUrl = `${baseUrl(req)}/sub?key=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}${m ? `&mode=${m}` : ''}`;
+    const cacheKey = `${key}|${did}|${m}`;
     const cachedLink = happCacheGet(cacheKey);
-    if (cachedLink) return res.json({ ok: true, link: cachedLink, raw: subUrl });
+    if (cachedLink) return res.json({ ok: true, link: cachedLink, raw: subUrl, mode: m });
     const link = await encryptHappLink(subUrl);
     if (link) happCacheSet(cacheKey, link);
-    return res.json({ ok: !!link, link: link || subUrl, raw: subUrl, encrypted: !!link });
+    return res.json({ ok: !!link, link: link || subUrl, raw: subUrl, encrypted: !!link, mode: m });
   } catch (e) {
     return res.json({ ok: false, reason: 'storage-error', detail: e.message });
   }
@@ -711,6 +757,9 @@ app.get('/sub', async (req, res) => {
      the body itself instead of treating the reply as a document download. */
   res.setHeader('content-disposition', 'attachment; filename="pc5-android.json"');
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+
+  const reqMode = String(req.query.mode || '').toLowerCase();
+  const mode = FEATURE_MODES.includes(reqMode) ? reqMode : '';
 
   let body;
   try {
@@ -732,9 +781,11 @@ app.get('/sub', async (req, res) => {
         /* Advertised expiry uses the paused clock so the date does not creep
            forward in the client while the service is down. */
         const liveExpiry = effectiveExpiry(out.record, maintStart(db));
+        const tag = mode ? ` · ${FEATURE_LABEL[mode]}` : '';
         res.setHeader('x-pc5-status', 'ok');
+        if (mode) res.setHeader('x-pc5-mode', mode);
         res.setHeader('subscription-userinfo', `upload=0; download=0; total=107374182400; expire=${Math.floor(liveExpiry / 1000)}`);
-        body = subConfig(false, BASE_CONFIG.remarks);
+        body = subConfig(false, BASE_CONFIG.remarks + tag, authFor(db, mode));
       }
     }
   } catch (e) {
@@ -780,7 +831,8 @@ app.get('/api/check-key', async (req, res) => {
       remainingMs,
       deviceLimit: record.maxDevices === 1 ? 'single' : 'unlimited',
       deviceLocked: record.maxDevices === 1 && (record.devices || []).length > 0,
-      deviceCount: (record.devices || []).length
+      deviceCount: (record.devices || []).length,
+      features: { aimbot: !!db.features.aimbot, location: !!db.features.location }
     };
 
     /* Maintenance still reports the key as good and hands over a frozen
@@ -965,9 +1017,38 @@ app.post('/api/admin/list-keys', async (req, res) => {
   try {
     const db = await getDb(true, credsFrom(req));
     const keys = [...db.keys].sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-    return res.json({ keys, maintenance: db.maintenance });
+    return res.json({ keys, maintenance: db.maintenance, features: db.features });
   } catch (e) {
     return res.status(500).json({ error: "Read failed: " + e.message, keys: [] });
+  }
+});
+
+/* Saves the Hysteria2 auth string used for each feature mode. */
+app.post('/api/admin/feature-auth', async (req, res) => {
+  const state = await requireAdmin(req, res);
+  if (!state) return;
+
+  const c = credsFrom(req);
+  const incoming = req.body || {};
+  const aimbot = cleanAuth(incoming.aimbot);
+  const location = cleanAuth(incoming.location);
+
+  if (aimbot === null) return res.status(400).json({ error: 'Aimbot auth must look like user:pass' });
+  if (location === null) return res.status(400).json({ error: 'Location auth must look like user:pass' });
+
+  try {
+    const out = await mutate(c, db => {
+      if (!db.features || typeof db.features !== 'object') db.features = { ...EMPTY_FEATURES };
+      db.features.aimbot = aimbot;
+      db.features.location = location;
+      return { ...db.features };
+    });
+    /* Cached links embed the old auth. */
+    happCacheDrop();
+    console.log('[features] aimbot ->', aimbot ? 'set' : 'cleared', '| location ->', location ? 'set' : 'cleared');
+    return res.json({ success: true, features: out });
+  } catch (e) {
+    return res.status(500).json({ error: 'Write failed: ' + e.message });
   }
 });
 
@@ -982,7 +1063,7 @@ app.post('/api/admin/revoke-key', async (req, res) => {
       const idx = db.keys.findIndex(k => k.key === key);
       if (idx >= 0) db.keys.splice(idx, 1);
     });
-    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
+    happCacheDrop(key);
     return res.json({ success: true, message: `Key ${key} revoked.` });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
@@ -1008,7 +1089,7 @@ app.post('/api/admin/repair-key', async (req, res) => {
       return r;
     });
     if (!rec) return res.status(404).json({ error: "Key not found." });
-    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
+    happCacheDrop(key);
     return res.json({ success: true, record: rec, durationHours });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
@@ -1030,7 +1111,7 @@ app.post('/api/admin/reset-device', async (req, res) => {
       return r;
     });
     if (!rec) return res.status(404).json({ error: "Key not found." });
-    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
+    happCacheDrop(key);
     return res.json({ success: true, message: `Device lock cleared for ${key}.` });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
@@ -1055,7 +1136,7 @@ app.post('/api/admin/set-device-limit', async (req, res) => {
       return r;
     });
     if (!rec) return res.status(404).json({ error: "Key not found." });
-    for (const k of [...happLinkCache.keys()]) if (k.startsWith(key + '|')) happLinkCache.delete(k);
+    happCacheDrop(key);
     return res.json({ success: true, record: rec, maxDevices });
   } catch (e) {
     return res.status(500).json({ error: "Write failed: " + e.message });
