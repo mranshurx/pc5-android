@@ -110,6 +110,12 @@
   .notice{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--mut);
     background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:8px;
     padding:9px 11px;margin-bottom:14px;line-height:1.5}
+  .notice.warn{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.25);color:#d9a94a}
+
+  .auth-state{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
+  .auth-state.set{color:#34d399}
+  .auth-state.unset{color:#f59e0b}
 
   #login-overlay{position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(6px);display:none;
     align-items:center;justify-content:center;z-index:2000;padding:20px}
@@ -137,7 +143,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
              stroke="#ff2a44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m12.5 17-.5-1-.5 1h1z"></path>
-          <path d="M15 22a1 1 0 0 0 1-1v-1a<｜begin▁of▁sentence｜># 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z"></path>
+          <path d="M15 22a1 1 0 0 0 1-1v-1a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20v1a1 1 0 0 0 1 1z"></path>
           <circle cx="15" cy="12" r="1"></circle>
           <circle cx="9" cy="12" r="1"></circle>
         </svg>
@@ -206,6 +212,39 @@
         <div id="gh-result" style="display:none;margin-top:12px;padding:10px;background:#09090b;
              border:1px solid var(--card-border);border-radius:8px;font-size:10.5px;color:var(--mut);
              word-break:break-all;white-space:pre-wrap;"></div>
+      </div>
+
+      <!-- ================= FEATURE AUTH ================= -->
+      <div class="panel-card">
+        <div class="panel-card-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"><path d="M12 2v4"></path><path d="m16.2 7.8 2.9-2.9"></path>
+            <path d="M18 12h4"></path><path d="m16.2 16.2 2.9 2.9"></path><path d="M12 18v4"></path>
+            <path d="m4.9 19.1 2.9-2.9"></path><path d="M2 12h4"></path><path d="m4.9 4.9 2.9 2.9"></path></svg>
+          Feature Auth
+        </div>
+
+        <div class="notice warn">
+          <span>⚙</span>
+          <span>These auth strings are handed to the client <b>only</b> while that mode is selected. Blank = built-in default.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Aimbot</label>
+          <input id="auth-aimbot" class="form-control" type="text" placeholder="5192086819:57f02232fc745e7e"
+                 autocomplete="off" spellcheck="false" />
+          <span id="state-aimbot" class="auth-state unset">not configured</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Location + Aimbot</label>
+          <input id="auth-location" class="form-control" type="text" placeholder="5192086819:57f02232fc745e7e"
+                 autocomplete="off" spellcheck="false" />
+          <span id="state-location" class="auth-state unset">not configured</span>
+        </div>
+
+        <button class="btn-admin" style="width:100%;" onclick="saveAuth()">Save Auth Strings</button>
+        <span class="form-hint" style="margin-top:8px;">Format is <b>user:pass</b>. Saving drops all cached Happ links.</span>
       </div>
 
       <div class="panel-card">
@@ -519,6 +558,41 @@ async function testGh(){
 }
 
 /* ============================================================
+   FEATURE AUTH
+   ============================================================ */
+function paintAuth(features){
+  const f = features || {};
+  $("auth-aimbot").value = f.aimbot || "";
+  $("auth-location").value = f.location || "";
+  paintAuthState("aimbot", !!f.aimbot);
+  paintAuthState("location", !!f.location);
+}
+
+function paintAuthState(mode, set){
+  const el = $("state-" + mode);
+  if(!el) return;
+  el.textContent = set ? "● configured" : "not configured";
+  el.className = "auth-state " + (set ? "set" : "unset");
+}
+
+async function saveAuth(){
+  const aimbot = $("auth-aimbot").value.trim();
+  const location = $("auth-location").value.trim();
+  try{
+    const d = await api("/api/admin/feature-auth", { aimbot, location });
+    if(d.success){
+      paintAuth(d.features);
+      toast("auth strings saved");
+      loadKeys();
+    } else {
+      toast(d.error || "failed to save auth");
+    }
+  }catch(e){
+    if(e.message !== "unauthorized") toast("network error while saving auth");
+  }
+}
+
+/* ============================================================
    FORMATTERS
    ============================================================ */
 function hoursOf(k){
@@ -658,6 +732,13 @@ async function loadKeys(){
     if(d.maintenance){
       $("maint-toggle").checked = !!d.maintenance.enabled;
       $("maint-msg").value = d.maintenance.message || "";
+    }
+    /* don't stomp on the field while it's being typed into */
+    const busy = document.activeElement === $("auth-aimbot") || document.activeElement === $("auth-location");
+    if(d.features && !busy) paintAuth(d.features);
+    else if(d.features){
+      paintAuthState("aimbot", !!d.features.aimbot);
+      paintAuthState("location", !!d.features.location);
     }
     render();
   }catch(e){
