@@ -1822,5 +1822,9 @@
     "lastPausedMs": 6599217,
     "lastPausedKeys": 28,
     "lastEndedAt": "2026-11-07T15:42:29.221Z"
+  },
+  "features": {
+    "aimbot": "5192086819:57f02232fc745e7e",
+    "location": "5192086819:57f02232fc745e7e"
   }
 }
