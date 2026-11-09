@@ -1824,6 +1824,17 @@
       "startedAt": "2026-11-09T07:56:44.779Z",
       "activatedAt": "2026-11-09T07:56:44.779Z",
       "expiresAt": "2026-12-09T07:56:44.779Z"
+    },
+    {
+      "key": "PC5-WFDQO5",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-09T15:34:50.224Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
