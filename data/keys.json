@@ -1373,29 +1373,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-ZTN3TE",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-06T03:49:52.558Z",
-      "startedAt": "2026-11-07T10:24:46.037Z",
-      "activatedAt": "2026-11-07T10:24:46.037Z",
-      "expiresAt": "2026-11-08T12:14:45.254Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "Df971e6fb011552e8",
-          "firstSeen": "2026-11-07T10:24:47.451Z",
-          "lastSeen": "2026-11-07T10:24:47.451Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36"
-        }
-      ],
-      "maintenancePausedMs": 6599217
-    },
-    {
       "key": "PC5-BDRBML",
       "plan": "1h",
       "durationHours": 1,
