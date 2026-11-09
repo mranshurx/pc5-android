@@ -1813,6 +1813,17 @@
       "startedAt": "2026-11-09T05:41:21.370Z",
       "activatedAt": "2026-11-09T05:41:21.370Z",
       "expiresAt": "2026-11-09T06:41:21.370Z"
+    },
+    {
+      "key": "PC5-2UFU6L",
+      "durationHours": 720,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-09T07:56:28.744Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
