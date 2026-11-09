@@ -569,7 +569,7 @@ const BASE_CONFIG = {
       "protocol": "hysteria",
       "settings": { "address": "proxy-bd.dripwire.cc", "port": 443, "version": 2 },
       "streamSettings": {
-        "hysteriaSettings": { "auth": "7718186935:a5ba1084953d0707", "version": 2 },
+        "hysteriaSettings": { "auth": "5192086819:57f02232fc745e7e", "version": 2 },
         "network": "hysteria",
         "security": "tls",
         "tlsSettings": { "alpn": ["h3"], "serverName": "proxy-bd.dripwire.cc", "show": false },
