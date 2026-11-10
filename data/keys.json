@@ -1900,9 +1900,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-10T15:28:01.868Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-10T15:30:21.900Z",
+      "activatedAt": "2026-11-10T15:30:21.900Z",
+      "expiresAt": "2026-11-11T15:30:21.900Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
