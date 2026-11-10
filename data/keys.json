@@ -2047,7 +2047,14 @@
       "activatedAt": "2026-11-10T17:55:06.104Z",
       "expiresAt": "2026-11-11T17:55:06.104Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D7beecd0835d1ed5e",
+          "firstSeen": "2026-11-10T17:55:07.894Z",
+          "lastSeen": "2026-11-10T17:55:07.894Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-4SAM2V",
