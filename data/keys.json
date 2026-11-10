@@ -1740,7 +1740,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-10T23:31:52.410Z",
+      "activatedAt": "2026-11-10T23:31:52.410Z",
+      "expiresAt": "2026-11-11T23:31:52.410Z"
     },
     {
       "key": "PC5-7KZNN2",
