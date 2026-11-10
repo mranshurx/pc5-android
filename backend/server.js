@@ -550,51 +550,50 @@ const REASON_TEXT = {
 };
 
 /* ================= ROUTING CONFIG ================= */
-/* Upstream: dripwire BD, Hysteria2 (user:pass auth).
-   Game traffic goes through the proxy, everything else stays direct. */
-const BASE_CONFIG = {
-  "remarks": "PC5 ANDROID",
-  "profile-update-interval": 1,
-  "inbounds": [
-    {
-      "listen": "127.0.0.1", "port": 10808, "protocol": "socks",
-      "settings": { "auth": "noauth", "udp": true },
-      "sniffing": { "destOverride": ["http", "tls", "quic"], "enabled": true, "routeOnly": false },
-      "tag": "socks"
-    },
-    {
-      "listen": "127.0.0.1", "port": 10809, "protocol": "http",
-      "sniffing": { "destOverride": ["http", "tls", "quic"], "enabled": true, "routeOnly": false },
-      "tag": "http"
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "hysteria",
-      "settings": { "address": "proxy-bd.dripwire.cc", "port": 443, "version": 2 },
-      "streamSettings": {
-        "hysteriaSettings": { "auth": "5192086819:57f02232fc745e7e", "version": 2 },
-        "network": "hysteria",
-        "security": "tls",
-        "tlsSettings": { "alpn": ["h3"], "serverName": "proxy-bd.dripwire.cc", "show": false },
-        "finalmask": { "quicParams": { "disableChromeParrot": true } }
-      },
-      "tag": "proxy"
-    },
-    { "protocol": "freedom", "tag": "direct" }
-  ],
-  "routing": {
-    "domainStrategy": "AsIs",
-    "rules": [
-      { "type": "field", "network": "tcp", "port": "39000-39999", "outboundTag": "proxy" },
-      { "type": "field", "network": "udp", "port": "10000-10999", "outboundTag": "proxy" },
-      { "type": "field", "network": "tcp,udp", "outboundTag": "direct" }
-    ]
-  }
+/*
+  Upstream: REZZX India — plain SOCKS5 with user:pass carried as base64
+  userinfo. Delivered in Happ share-link format: directive headers first,
+  then a single node line. Per-app proxy keeps only the Free Fire packages
+  on the tunnel; the client handles everything else.
+*/
+const UPSTREAM = {
+  scheme: 'socks',
+  host:   'asiarezzx.toulouse-digital31.fr',
+  port:   8443,
+  auth:   'NjMwNzQ5ODQ5ZjQwMjBkYTQ1YTdlMzE5NTEwZDBjNDM6Mg==', /* base64("630749849f4020da45a7e319510d0c43:2") */
+  label:  'PC5 - India'
 };
 
+const PER_APP_LIST = 'com.dts.freefireth,com.dts.freefiremax';
+
+/* Auth handed to the node while the key is dead. The server rejects it, so the
+   handshake dies and the client reports a genuine failure instead of a fake ping. */
+const DEAD_AUTH = 'PC5-BLOCKED:0';
+
+function b64(s) { return Buffer.from(String(s), 'utf8').toString('base64'); }
+
+function nodeLine(auth, label) {
+  const userinfo = auth ? b64(auth) : UPSTREAM.auth;
+  return `${UPSTREAM.scheme}://${userinfo}@${UPSTREAM.host}:${UPSTREAM.port}#${encodeURIComponent(label)}`;
+}
+
+/*
+  Always emits a full, valid share link — a blocked key gets a real node with a
+  rejected credential rather than an empty body, so Happ keeps the profile
+  mounted and simply fails to connect.
+*/
+function subConfig(blocked, label, auth) {
+  const head = [
+    '#hide-settings: 1',
+    '#per-app-proxy-mode: on',
+    `#per-app-proxy-list: ${PER_APP_LIST}`
+  ];
+  const line = nodeLine(blocked ? DEAD_AUTH : auth, label);
+  return head.join('\n') + '\n' + line + '\n';
+}
+
 /* ================= FEATURE MODES ================= */
-/* aimbot | location. Each mode maps to its own upstream auth string. */
+/* aimbot | location. Each mode may carry its own upstream user:pass. */
 const FEATURE_MODES = ['aimbot', 'location'];
 const FEATURE_LABEL = { aimbot: 'AIMBOT', location: 'LOCATION + AIMBOT' };
 
@@ -607,45 +606,15 @@ function cleanAuth(v) {
   return s.slice(0, 160);
 }
 
-/* Auth for a mode, falling back to the built-in default when unset. */
+/* Auth for a mode. Empty string means "use the built-in default". */
 function authFor(db, mode) {
   const f = (db && db.features) || {};
   if (mode && FEATURE_MODES.includes(mode) && f[mode]) return f[mode];
-  return BASE_CONFIG.outbounds[0].streamSettings.hysteriaSettings.auth;
+  return '';
 }
 
 /* ================= SUBSCRIPTION BODY ================= */
 const PROFILE_TITLE = 'PC5 ANDROID';
-
-/* Auth handed to the node while the key is dead. The server rejects it, so the
-   QUIC handshake dies and the client reports a genuine failure. */
-const DEAD_AUTH = 'PC5-BLOCKED';
-
-/*
-  Every /sub response carries the inbounds and a real outbound, so Happ always
-  has a node to render and never falls back to dumping the raw JSON as a file.
-
-  A blackhole outbound is NOT used for the blocked state: it accepts the local
-  TCP connection and only then discards the payload, so the handshake never
-  leaves the device and Happ prints a fake ~0ms ping on a dead key. Instead the
-  proxy keeps its tag/name but gets a rejected auth, and routing is collapsed
-  onto it. Ping then fails for real (N/A) whether the client measures through
-  the routing table or straight at the outbound.
-*/
-function subConfig(blocked, remarks, auth) {
-  const c = JSON.parse(JSON.stringify(BASE_CONFIG));
-  c.remarks = remarks;
-  if (blocked) {
-    c.outbounds[0].streamSettings.hysteriaSettings.auth = DEAD_AUTH;
-    c.routing = {
-      domainStrategy: 'AsIs',
-      rules: [{ type: 'field', network: 'tcp,udp', outboundTag: 'proxy' }]
-    };
-  } else if (auth) {
-    c.outbounds[0].streamSettings.hysteriaSettings.auth = auth;
-  }
-  return c;
-}
 
 /* ================= HAPP LINK ================= */
 const happLinkCache = new Map();
@@ -753,9 +722,9 @@ app.get('/sub', async (req, res) => {
   res.setHeader('subscription-auto-update-open-enable', '1');
   res.setHeader('hide-settings', '1');
   if (HAPP_PROVIDER_ID) res.setHeader('providerid', HAPP_PROVIDER_ID);
-  /* .json extension so any client knows the type; text/plain so Happ sniffs
-     the body itself instead of treating the reply as a document download. */
-  res.setHeader('content-disposition', 'attachment; filename="pc5-android.json"');
+  /* .txt so any client knows the type; text/plain so Happ sniffs the body
+     itself instead of treating the reply as a document download. */
+  res.setHeader('content-disposition', 'attachment; filename="pc5-android.txt"');
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
 
   const reqMode = String(req.query.mode || '').toLowerCase();
@@ -785,7 +754,7 @@ app.get('/sub', async (req, res) => {
         res.setHeader('x-pc5-status', 'ok');
         if (mode) res.setHeader('x-pc5-mode', mode);
         res.setHeader('subscription-userinfo', `upload=0; download=0; total=107374182400; expire=${Math.floor(liveExpiry / 1000)}`);
-        body = subConfig(false, BASE_CONFIG.remarks + tag, authFor(db, mode));
+        body = subConfig(false, UPSTREAM.label + tag, authFor(db, mode));
       }
     }
   } catch (e) {
@@ -793,7 +762,7 @@ app.get('/sub', async (req, res) => {
     body = subConfig(true, '❌ SUBSCRIPTION EXPIRED OR TERMINATED');
   }
 
-  return res.status(200).send(JSON.stringify(body));
+  return res.status(200).send(body);
 });
 
 app.get('/api/check-key', async (req, res) => {
@@ -1023,7 +992,7 @@ app.post('/api/admin/list-keys', async (req, res) => {
   }
 });
 
-/* Saves the Hysteria2 auth string used for each feature mode. */
+/* Saves the SOCKS user:pass used for each feature mode. */
 app.post('/api/admin/feature-auth', async (req, res) => {
   const state = await requireAdmin(req, res);
   if (!state) return;
