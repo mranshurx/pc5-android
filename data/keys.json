@@ -1963,7 +1963,14 @@
       "activatedAt": "2026-11-10T15:55:06.900Z",
       "expiresAt": "2026-11-10T18:55:06.900Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "Dc0467a1d29882e70",
+          "firstSeen": "2026-11-10T15:55:08.944Z",
+          "lastSeen": "2026-11-10T15:55:08.944Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-MZHRSD",
