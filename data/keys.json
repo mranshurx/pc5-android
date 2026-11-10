@@ -2025,7 +2025,14 @@
       "activatedAt": "2026-11-10T17:54:35.426Z",
       "expiresAt": "2026-11-11T17:54:35.426Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D807b3daa3ffa5e9d",
+          "firstSeen": "2026-11-10T17:54:36.954Z",
+          "lastSeen": "2026-11-10T17:54:36.954Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-DDK2BK",
