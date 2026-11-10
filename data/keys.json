@@ -1839,17 +1839,6 @@
       "expiresAt": "2026-11-10T16:10:32.487Z"
     },
     {
-      "key": "PC5-3D0HWQ",
-      "durationHours": 24,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "createdAt": "2026-11-10T14:09:22.454Z",
-      "startedAt": "2026-11-10T14:18:25.188Z",
-      "activatedAt": "2026-11-10T14:18:25.188Z",
-      "expiresAt": "2026-11-11T14:18:25.188Z"
-    },
-    {
       "key": "PC5-AQKAOK",
       "plan": "1d",
       "durationHours": 1,
