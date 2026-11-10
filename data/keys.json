@@ -1837,6 +1837,17 @@
       "startedAt": "2026-11-09T16:10:32.487Z",
       "activatedAt": "2026-11-09T16:10:32.487Z",
       "expiresAt": "2026-11-10T16:10:32.487Z"
+    },
+    {
+      "key": "PC5-3D0HWQ",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-10T14:09:22.454Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
