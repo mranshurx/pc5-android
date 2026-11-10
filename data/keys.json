@@ -1182,7 +1182,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-10T14:06:58.349Z",
+      "activatedAt": "2026-11-10T14:06:58.349Z",
+      "expiresAt": "2026-11-17T14:06:58.349Z"
     },
     {
       "key": "PC5-UWRHJD",
