@@ -2021,9 +2021,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-10T17:51:18.703Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-10T17:54:35.426Z",
+      "activatedAt": "2026-11-10T17:54:35.426Z",
+      "expiresAt": "2026-11-11T17:54:35.426Z",
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-DDK2BK",
@@ -2036,7 +2038,9 @@
       "createdAt": "2026-11-10T17:51:57.907Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-4SAM2V",
@@ -2049,7 +2053,9 @@
       "createdAt": "2026-11-10T17:52:45.799Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
