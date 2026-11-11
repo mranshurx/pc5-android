@@ -2166,9 +2166,9 @@
       "deviceLimit": "unlimited",
       "devices": [],
       "createdAt": "2026-11-11T06:36:19.104Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-11T06:42:14.670Z",
+      "activatedAt": "2026-11-11T06:42:14.670Z",
+      "expiresAt": "2026-11-12T06:42:14.670Z"
     }
   ],
   "maintenance": {
