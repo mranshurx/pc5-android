@@ -2265,6 +2265,17 @@
       "startedAt": "2026-11-11T08:13:22.297Z",
       "activatedAt": "2026-11-11T08:13:22.297Z",
       "expiresAt": "2140-12-09T23:13:22.297Z"
+    },
+    {
+      "key": "PC5-C99E0E",
+      "durationHours": 3,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-11T08:14:00.967Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
