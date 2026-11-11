@@ -2127,6 +2127,17 @@
       "startedAt": "2026-11-11T04:36:59.081Z",
       "activatedAt": "2026-11-11T04:36:59.081Z",
       "expiresAt": "2026-11-11T07:36:59.081Z"
+    },
+    {
+      "key": "PC5-2GR09T",
+      "durationHours": 720,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-11T04:43:22.696Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
