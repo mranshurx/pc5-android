@@ -2216,7 +2216,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-11T11:36:49.389Z",
+      "activatedAt": "2026-11-11T11:36:49.389Z",
+      "expiresAt": "2026-11-12T11:36:49.389Z"
     },
     {
       "key": "PC5-CUX32Y",
