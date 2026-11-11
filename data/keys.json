@@ -2247,6 +2247,17 @@
       "startedAt": "2026-11-11T07:46:30.875Z",
       "activatedAt": "2026-11-11T07:46:30.875Z",
       "expiresAt": "2026-11-11T08:46:30.875Z"
+    },
+    {
+      "key": "PC5-P21YJL",
+      "durationHours": 999999,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-11T08:12:32.059Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
