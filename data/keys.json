@@ -2156,9 +2156,9 @@
       "deviceLimit": "unlimited",
       "devices": [],
       "createdAt": "2026-11-11T04:45:11.210Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-11T13:06:43.726Z",
+      "activatedAt": "2026-11-11T13:06:43.726Z",
+      "expiresAt": "2026-11-18T13:06:43.726Z"
     },
     {
       "key": "PC5-IBGU6Z",
