@@ -2253,11 +2253,18 @@
       "durationHours": 999999,
       "maxDevices": 1,
       "deviceLimit": "single",
-      "devices": [],
+      "devices": [
+        {
+          "id": "D29e4ec73356661a5",
+          "firstSeen": "2026-11-11T08:13:19.959Z",
+          "lastSeen": "2026-11-11T08:13:19.959Z",
+          "ua": "Mozilla/5.0 (Linux; Android 8.0.0; SM-G570F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.7204.179 Safari/537.36"
+        }
+      ],
       "createdAt": "2026-11-11T08:12:32.059Z",
-      "startedAt": "2026-11-11T08:13:18.276Z",
-      "activatedAt": "2026-11-11T08:13:18.276Z",
-      "expiresAt": "2140-12-09T23:13:18.276Z"
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
