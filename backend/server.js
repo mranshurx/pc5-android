@@ -560,7 +560,7 @@ const UPSTREAM = {
   scheme: 'socks',
   host:   'asiarezzx.toulouse-digital31.fr',
   port:   8443,
-  auth:   'NjMwNzQ5ODQ5ZjQwMjBkYTQ1YTdlMzE5NTEwZDBjNDM6Mg==', /* base64("630749849f4020da45a7e319510d0c43:2") */
+  auth:   'YzdiNjg3YWE4OTI4ZjRjOGU3MzZiMGFhZTdhZTIyM2E6Mg==', /* base64("630749849f4020da45a7e319510d0c43:2") */
   label:  'PC5 - India'
 };
 
