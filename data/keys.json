@@ -2248,7 +2248,14 @@
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": [],
+      "devices": [
+        {
+          "id": "D287284c87dd38d05",
+          "firstSeen": "2026-11-11T12:48:47.497Z",
+          "lastSeen": "2026-11-11T12:48:47.497Z",
+          "ua": "Mozilla/5.0 (Linux; Android 16; 2312DRA50I Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.50 Mobile Safari/537.36"
+        }
+      ],
       "startedAt": "2026-11-11T12:48:46.070Z",
       "activatedAt": "2026-11-11T12:48:46.070Z",
       "expiresAt": "2026-11-12T12:48:46.070Z"
