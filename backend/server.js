@@ -564,7 +564,7 @@ const UPSTREAM = {
   label:  'PC5 - India'
 };
 
-const PER_APP_LIST = 'com.dts.freefireth,com.dts.freefiremax';
+const PER_APP_LIST = 'com.garena.game.ffi,com.dts.freefiremax';
 
 /* Auth handed to the node while the key is dead. The server rejects it, so the
    handshake dies and the client reports a genuine failure instead of a fake ping. */
