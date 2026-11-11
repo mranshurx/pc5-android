@@ -2158,6 +2158,17 @@
       "startedAt": "2026-11-11T04:55:11.476Z",
       "activatedAt": "2026-11-11T04:55:11.476Z",
       "expiresAt": "2026-11-12T04:55:11.476Z"
+    },
+    {
+      "key": "PC5-HKWIZM",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-11T06:36:19.104Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
