@@ -2249,7 +2249,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-11T12:48:46.070Z",
+      "activatedAt": "2026-11-11T12:48:46.070Z",
+      "expiresAt": "2026-11-12T12:48:46.070Z"
     },
     {
       "key": "PC5-RLLN19",
