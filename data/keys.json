@@ -2319,17 +2319,6 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
-    },
-    {
-      "key": "PC5-3F495M",
-      "durationHours": 1,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "createdAt": "2026-11-11T14:00:53.587Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
     }
   ],
   "maintenance": {
