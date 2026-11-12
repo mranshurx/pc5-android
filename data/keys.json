@@ -2786,9 +2786,9 @@
     }
   ],
   "maintenance": {
-    "enabled": false,
+    "enabled": true,
     "message": "Garena patch update wait some time.",
-    "since": null
+    "since": "2026-11-12T15:51:20.551Z"
   },
   "features": {
     "aimbot": "",
