@@ -2529,12 +2529,12 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-VNI9LA",
+      "key": "PC5-RMOMOF",
       "durationHours": 1,
       "maxDevices": 1,
       "deviceLimit": "single",
       "devices": [],
-      "createdAt": "2026-11-12T13:55:39.060Z",
+      "createdAt": "2026-11-12T13:55:40.617Z",
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
