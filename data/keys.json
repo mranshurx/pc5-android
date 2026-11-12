@@ -2886,7 +2886,14 @@
       "activatedAt": "2026-11-12T18:47:13.285Z",
       "expiresAt": "2026-11-12T19:47:13.285Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D6bca790f8bce95ff",
+          "firstSeen": "2026-11-12T18:47:14.655Z",
+          "lastSeen": "2026-11-12T18:47:14.655Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-4VDRMX",
