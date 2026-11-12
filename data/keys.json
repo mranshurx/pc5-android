@@ -2972,7 +2972,9 @@
       "createdAt": "2026-11-12T19:13:43.187Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-2G6X2A",
@@ -2983,9 +2985,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-12T19:15:17.049Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-12T19:15:54.251Z",
+      "activatedAt": "2026-11-12T19:15:54.251Z",
+      "expiresAt": "2026-11-12T22:15:54.251Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
