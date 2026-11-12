@@ -2657,17 +2657,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-T61PFG",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-12T13:57:32.685Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-NUOY0C",
       "durationHours": 3,
       "maxDevices": 1,
