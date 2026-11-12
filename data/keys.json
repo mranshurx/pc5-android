@@ -2690,17 +2690,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-HUZV6O",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-12T13:57:39.159Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-P3KJB5",
       "durationHours": 3,
       "maxDevices": 1,
