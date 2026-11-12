@@ -2679,17 +2679,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-XTX5GL",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-12T13:57:43.736Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-VGYQ9H",
       "durationHours": 1,
       "maxDevices": 1,
