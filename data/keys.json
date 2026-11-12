@@ -2689,6 +2689,17 @@
       "activatedAt": "2026-11-12T15:51:08.805Z",
       "expiresAt": "2026-11-12T17:13:46.519Z",
       "maintenancePausedMs": 1357714
+    },
+    {
+      "key": "PC5-OJS5JQ",
+      "durationHours": 3,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-12T16:15:39.153Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
