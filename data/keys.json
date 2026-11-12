@@ -2730,7 +2730,9 @@
       "createdAt": "2026-11-12T17:58:08.190Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-YEWHSB",
@@ -2741,9 +2743,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-12T17:59:31.024Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-12T17:59:58.384Z",
+      "activatedAt": "2026-11-12T17:59:58.384Z",
+      "expiresAt": "2026-11-13T17:59:58.384Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
