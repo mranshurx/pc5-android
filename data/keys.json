@@ -2668,17 +2668,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-NN669E",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-12T13:57:42.224Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-VGYQ9H",
       "durationHours": 1,
       "maxDevices": 1,
