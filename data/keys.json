@@ -2948,11 +2948,18 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-12T19:12:14.697Z",
-      "startedAt": "2026-11-12T19:12:37.037Z",
-      "activatedAt": "2026-11-12T19:12:37.037Z",
-      "expiresAt": "2026-11-15T19:12:37.037Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null,
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D44df42d8397e7c87",
+          "firstSeen": "2026-11-12T19:12:38.500Z",
+          "lastSeen": "2026-11-12T19:12:38.500Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     }
   ],
   "maintenance": {
