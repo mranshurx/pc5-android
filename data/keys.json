@@ -2328,17 +2328,6 @@
       "expiresAt": "2026-11-12T13:28:35.932Z"
     },
     {
-      "key": "PC5-J6V3V3",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-11T15:02:18.019Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-D3RM78",
       "plan": "30d",
       "durationHours": 720,
