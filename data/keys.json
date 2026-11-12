@@ -2582,6 +2582,17 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
+    },
+    {
+      "key": "PC5-04PTDZ",
+      "durationHours": 3,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-12T13:57:00.640Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
