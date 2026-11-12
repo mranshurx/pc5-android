@@ -2316,9 +2316,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-11T08:14:00.967Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-12T10:28:35.932Z",
+      "activatedAt": "2026-11-12T10:28:35.932Z",
+      "expiresAt": "2026-11-12T13:28:35.932Z"
     },
     {
       "key": "PC5-ZBLEUC",
