@@ -2329,17 +2329,6 @@
       "startedAt": "2026-11-12T11:19:11.136Z",
       "activatedAt": "2026-11-12T11:19:11.136Z",
       "expiresAt": "2026-11-12T17:19:11.136Z"
-    },
-    {
-      "key": "PC5-MWSF6X",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-12T13:54:38.050Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
     }
   ],
   "maintenance": {
