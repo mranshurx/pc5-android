@@ -2339,17 +2339,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-IU4U8G",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-11T15:02:24.448Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-D3RM78",
       "plan": "30d",
       "durationHours": 720,
