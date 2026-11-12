@@ -2339,17 +2339,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-WKWX7N",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-11T15:02:20.602Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
       "key": "PC5-CUGT7C",
       "durationHours": 1,
       "maxDevices": 1,
