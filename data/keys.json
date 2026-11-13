@@ -3403,9 +3403,9 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-13T10:47:07.475Z",
-      "startedAt": "2026-11-13T11:25:51.802Z",
-      "activatedAt": "2026-11-13T11:25:51.802Z",
-      "expiresAt": "2026-11-13T12:25:51.802Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null,
       "deviceLimit": "single",
       "devices": []
     },
@@ -4164,6 +4164,17 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:25:50.535Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
+    },
+    {
+      "key": "PC5-HJY8TR",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-13T11:25:56.884Z",
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
