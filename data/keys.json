@@ -5651,6 +5651,17 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
+    },
+    {
+      "key": "PC5-3YF2ZQ",
+      "durationHours": 72,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-13T12:51:47.673Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
