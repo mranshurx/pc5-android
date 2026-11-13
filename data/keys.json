@@ -2942,7 +2942,14 @@
       "activatedAt": "2026-11-13T06:10:37.953Z",
       "expiresAt": "2026-11-14T06:10:37.953Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D6e84a5b561e3667b",
+          "firstSeen": "2026-11-13T06:10:39.383Z",
+          "lastSeen": "2026-11-13T06:10:39.383Z",
+          "ua": "Mozilla/5.0 (Linux; Android 16; SM-A336E Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.40 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-HRSVXC",
