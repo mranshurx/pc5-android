@@ -6003,6 +6003,17 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
+    },
+    {
+      "key": "PC5-ZK3ZV1",
+      "durationHours": 168,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-13T12:54:06.311Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
