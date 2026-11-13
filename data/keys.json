@@ -3270,17 +3270,6 @@
       ]
     },
     {
-      "key": "PC5-XLOADE",
-      "durationHours": 3,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "createdAt": "2026-11-13T10:02:45.324Z",
-      "startedAt": "2026-11-13T10:05:54.996Z",
-      "activatedAt": "2026-11-13T10:05:54.996Z",
-      "expiresAt": "2026-11-13T13:05:54.996Z"
-    },
-    {
       "key": "PC5-N5GQVA",
       "plan": "3h",
       "durationHours": 3,
@@ -3372,7 +3361,9 @@
       "createdAt": "2026-11-13T10:45:26.152Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
