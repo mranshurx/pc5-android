@@ -2625,28 +2625,6 @@
       ]
     },
     {
-      "key": "PC5-CPMBSN",
-      "plan": "3h",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "cost": 2,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-12T19:13:43.187Z",
-      "startedAt": "2026-11-12T19:17:03.024Z",
-      "activatedAt": "2026-11-12T19:17:03.024Z",
-      "expiresAt": "2026-11-12T22:17:03.024Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D07244bd571e13116",
-          "firstSeen": "2026-11-12T19:17:05.327Z",
-          "lastSeen": "2026-11-12T19:17:05.327Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
-        }
-      ]
-    },
-    {
       "key": "PC5-2G6X2A",
       "plan": "3h",
       "durationHours": 3,
