@@ -2722,19 +2722,6 @@
           "ua": "Mozilla/5.0 (Linux; Android 14; RMX3710 Build/UKQ1.230924.001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.47 Mobile Safari/537.36"
         }
       ]
-    },
-    {
-      "key": "PC5-9ENSY8",
-      "plan": "3d",
-      "durationHours": 72,
-      "maxDevices": 1,
-      "cost": 14,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-13T03:46:15.626Z",
-      "startedAt": "2026-11-13T03:46:28.544Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-16T03:46:28.544Z"
     }
   ],
   "maintenance": {
