@@ -3643,9 +3643,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:22:20.435Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T11:48:18.563Z",
+      "activatedAt": "2026-11-13T11:48:18.563Z",
+      "expiresAt": "2026-11-13T12:48:18.563Z"
     },
     {
       "key": "PC5-SIZF5X",
