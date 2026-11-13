@@ -1935,29 +1935,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-4SAM2V",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-10T17:52:45.799Z",
-      "startedAt": "2026-11-10T18:39:07.845Z",
-      "activatedAt": "2026-11-10T18:39:07.845Z",
-      "expiresAt": "2026-11-11T18:43:34.636Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D3621011a66dca436",
-          "firstSeen": "2026-11-10T18:39:09.373Z",
-          "lastSeen": "2026-11-10T18:39:09.373Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
-        }
-      ],
-      "maintenancePausedMs": 266791
-    },
-    {
       "key": "PC5-Y140K7",
       "durationHours": 3,
       "maxDevices": 0,
