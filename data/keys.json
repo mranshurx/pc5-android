@@ -3033,9 +3033,9 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-13T06:17:50.371Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null,
+      "startedAt": "2026-11-13T06:18:36.374Z",
+      "activatedAt": "2026-11-13T06:18:36.374Z",
+      "expiresAt": "2026-11-14T06:18:36.374Z",
       "deviceLimit": "single",
       "devices": []
     }
