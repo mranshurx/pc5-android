@@ -1980,29 +1980,6 @@
       "startedAt": null
     },
     {
-      "key": "PC5-V36MK2",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-10T17:51:18.703Z",
-      "startedAt": "2026-11-10T17:54:35.426Z",
-      "activatedAt": "2026-11-10T17:54:35.426Z",
-      "expiresAt": "2026-11-11T17:59:02.217Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D807b3daa3ffa5e9d",
-          "firstSeen": "2026-11-10T17:54:36.954Z",
-          "lastSeen": "2026-11-10T17:54:36.954Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36"
-        }
-      ],
-      "maintenancePausedMs": 266791
-    },
-    {
       "key": "PC5-DDK2BK",
       "plan": "1d",
       "durationHours": 24,
