@@ -3694,9 +3694,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:22:25.251Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T21:24:52.138Z",
+      "activatedAt": "2026-11-13T21:24:52.138Z",
+      "expiresAt": "2026-11-13T22:24:52.138Z"
     },
     {
       "key": "PC5-GVZES6",
