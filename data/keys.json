@@ -3276,9 +3276,9 @@
       "deviceLimit": "unlimited",
       "devices": [],
       "createdAt": "2026-11-13T10:02:45.324Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T10:05:54.996Z",
+      "activatedAt": "2026-11-13T10:05:54.996Z",
+      "expiresAt": "2026-11-13T13:05:54.996Z"
     },
     {
       "key": "PC5-N5GQVA",
@@ -3291,7 +3291,9 @@
       "createdAt": "2026-11-13T10:04:15.808Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
