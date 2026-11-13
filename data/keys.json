@@ -2802,7 +2802,14 @@
       "activatedAt": "2026-11-13T04:26:49.742Z",
       "expiresAt": "2026-11-13T05:26:49.742Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "Dd5faadbbf80e2db0",
+          "firstSeen": "2026-11-13T04:26:52.085Z",
+          "lastSeen": "2026-11-13T04:26:52.085Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-5AHUET",
