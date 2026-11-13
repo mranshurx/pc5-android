@@ -3403,11 +3403,18 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-13T10:47:07.475Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null,
+      "startedAt": "2026-11-13T11:25:51.802Z",
+      "activatedAt": "2026-11-13T11:25:51.802Z",
+      "expiresAt": "2026-11-13T12:25:51.802Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "Da9c0cbb1c6c84075",
+          "firstSeen": "2026-11-13T11:26:03.684Z",
+          "lastSeen": "2026-11-13T11:26:03.684Z",
+          "ua": "Mozilla/5.0 (Linux; Android 17; moto g57 power Build/A171WAAH.31-9-17) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.47 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-GLM3YD",
@@ -4164,17 +4171,6 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:25:50.535Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
-    },
-    {
-      "key": "PC5-HJY8TR",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [],
-      "createdAt": "2026-11-13T11:25:56.884Z",
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
