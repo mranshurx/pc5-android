@@ -2538,28 +2538,6 @@
       "expiresAt": "2026-11-12T18:16:26.060Z"
     },
     {
-      "key": "PC5-H4TMN6",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-12T17:59:58.884Z",
-      "startedAt": "2026-11-12T18:01:50.795Z",
-      "activatedAt": "2026-11-12T18:01:50.795Z",
-      "expiresAt": "2026-11-13T18:01:50.795Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D7beecd0835d1ed5e",
-          "firstSeen": "2026-11-12T18:01:52.240Z",
-          "lastSeen": "2026-11-12T18:01:52.240Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36"
-        }
-      ]
-    },
-    {
       "key": "PC5-Y553LV",
       "plan": "3d",
       "durationHours": 72,
