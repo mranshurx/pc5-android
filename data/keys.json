@@ -3225,9 +3225,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T09:37:56.190Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T12:02:50.971Z",
+      "activatedAt": "2026-11-13T12:02:50.971Z",
+      "expiresAt": "2026-11-14T12:02:50.971Z"
     },
     {
       "key": "PC5-FQOA90",
