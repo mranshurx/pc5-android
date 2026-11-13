@@ -6521,6 +6521,19 @@
       "createdAt": "2026-11-13T13:38:47.748Z",
       "startedAt": null,
       "activatedAt": null,
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
+    },
+    {
+      "key": "PC5-DT46B5",
+      "durationHours": 1,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-13T14:36:43.214Z",
+      "startedAt": null,
+      "activatedAt": null,
       "expiresAt": null
     }
   ],
