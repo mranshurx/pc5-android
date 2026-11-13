@@ -2820,9 +2820,9 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-13T04:16:33.248Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null,
+      "startedAt": "2026-11-13T04:37:31.768Z",
+      "activatedAt": "2026-11-13T04:37:31.768Z",
+      "expiresAt": "2026-11-13T07:37:31.768Z",
       "deviceLimit": "single",
       "devices": []
     },
