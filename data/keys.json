@@ -2559,28 +2559,6 @@
       ]
     },
     {
-      "key": "PC5-M3VATE",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-12T18:38:13.235Z",
-      "startedAt": "2026-11-12T18:47:13.285Z",
-      "activatedAt": "2026-11-12T18:47:13.285Z",
-      "expiresAt": "2026-11-12T19:47:13.285Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D6bca790f8bce95ff",
-          "firstSeen": "2026-11-12T18:47:14.655Z",
-          "lastSeen": "2026-11-12T18:47:14.655Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36"
-        }
-      ]
-    },
-    {
       "key": "PC5-4VDRMX",
       "plan": "1h",
       "durationHours": 1,
