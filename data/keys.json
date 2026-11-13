@@ -3328,7 +3328,9 @@
       "createdAt": "2026-11-13T10:32:54.882Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-X9TFS6",
@@ -3339,9 +3341,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-13T10:34:39.716Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T10:35:23.836Z",
+      "activatedAt": "2026-11-13T10:35:23.836Z",
+      "expiresAt": "2026-11-13T13:35:23.836Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
