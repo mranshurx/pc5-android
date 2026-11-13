@@ -1902,29 +1902,6 @@
       "expiresAt": "2026-11-10T16:07:07.036Z"
     },
     {
-      "key": "PC5-4SL3HW",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-10T15:30:52.915Z",
-      "startedAt": "2026-11-10T15:31:38.213Z",
-      "activatedAt": "2026-11-10T15:31:38.213Z",
-      "expiresAt": "2026-11-11T15:36:05.004Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "Dfcda24a407fd03e2",
-          "firstSeen": "2026-11-10T15:31:40.258Z",
-          "lastSeen": "2026-11-10T15:31:40.258Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36"
-        }
-      ],
-      "maintenancePausedMs": 266791
-    },
-    {
       "key": "PC5-MZHRSD",
       "plan": "1d",
       "durationHours": 1,
