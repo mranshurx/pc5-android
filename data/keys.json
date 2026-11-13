@@ -3644,24 +3644,6 @@
       "expiresAt": null
     },
     {
-      "key": "PC5-GLK9ZY",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D451b5503e0f3ded1",
-          "firstSeen": "2026-11-13T11:48:20.269Z",
-          "lastSeen": "2026-11-13T11:48:20.269Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
-        }
-      ],
-      "createdAt": "2026-11-13T11:22:20.435Z",
-      "startedAt": "2026-11-13T11:48:18.563Z",
-      "activatedAt": "2026-11-13T11:48:18.563Z",
-      "expiresAt": "2026-11-13T12:48:18.563Z"
-    },
-    {
       "key": "PC5-SIZF5X",
       "durationHours": 1,
       "maxDevices": 1,
