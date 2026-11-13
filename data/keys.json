@@ -3359,9 +3359,9 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-13T10:45:26.152Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null,
+      "startedAt": "2026-11-13T10:46:15.439Z",
+      "activatedAt": "2026-11-13T10:46:15.439Z",
+      "expiresAt": "2026-11-13T13:46:15.439Z",
       "deviceLimit": "single",
       "devices": []
     },
@@ -3376,7 +3376,9 @@
       "createdAt": "2026-11-13T10:45:59.566Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-EC6V95",
@@ -3389,7 +3391,9 @@
       "createdAt": "2026-11-13T10:46:06.644Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
