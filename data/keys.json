@@ -3463,26 +3463,12 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
-    },
-    {
-      "key": "PC5-9F7QQ5",
-      "durationHours": 1,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "createdAt": "2026-11-13T11:20:32.852Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
     }
   ],
   "maintenance": {
     "enabled": false,
     "message": "Garena patch update wait some time.",
-    "since": null,
-    "lastPausedMs": 1357714,
-    "lastPausedKeys": 22,
-    "lastEndedAt": "2026-11-12T16:13:58.265Z"
+    "since": null
   },
   "features": {
     "aimbot": "",
