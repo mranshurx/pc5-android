@@ -2937,28 +2937,6 @@
       ]
     },
     {
-      "key": "PC5-62ZMQT",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-13T05:58:19.794Z",
-      "startedAt": "2026-11-13T06:10:37.953Z",
-      "activatedAt": "2026-11-13T06:10:37.953Z",
-      "expiresAt": "2026-11-14T06:10:37.953Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D6e84a5b561e3667b",
-          "firstSeen": "2026-11-13T06:10:39.383Z",
-          "lastSeen": "2026-11-13T06:10:39.383Z",
-          "ua": "Mozilla/5.0 (Linux; Android 16; SM-A336E Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.40 Mobile Safari/537.36"
-        }
-      ]
-    },
-    {
       "key": "PC5-HRSVXC",
       "plan": "1d",
       "durationHours": 24,
