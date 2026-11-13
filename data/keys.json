@@ -2947,7 +2947,9 @@
       "createdAt": "2026-11-13T05:58:19.794Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-HRSVXC",
@@ -2958,9 +2960,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-13T05:59:15.233Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T06:00:18.180Z",
+      "activatedAt": "2026-11-13T06:00:18.180Z",
+      "expiresAt": "2026-11-14T06:00:18.180Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
