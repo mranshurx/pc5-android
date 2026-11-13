@@ -2824,7 +2824,14 @@
       "activatedAt": "2026-11-13T04:37:31.768Z",
       "expiresAt": "2026-11-13T07:37:31.768Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "Dfd2833c44f1bef5b",
+          "firstSeen": "2026-11-13T04:37:33.271Z",
+          "lastSeen": "2026-11-13T04:37:33.271Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-ZPA8JQ",
