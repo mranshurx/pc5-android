@@ -3661,9 +3661,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:22:22.008Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T11:56:51.527Z",
+      "activatedAt": "2026-11-13T11:56:51.527Z",
+      "expiresAt": "2026-11-13T12:56:51.527Z"
     },
     {
       "key": "PC5-HN38B7",
