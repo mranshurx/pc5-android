@@ -5881,11 +5881,18 @@
       "durationHours": 168,
       "maxDevices": 1,
       "deviceLimit": "single",
-      "devices": [],
+      "devices": [
+        {
+          "id": "D34064849accfa5d3",
+          "firstSeen": "2026-11-13T17:33:49.576Z",
+          "lastSeen": "2026-11-13T17:33:49.576Z",
+          "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1"
+        }
+      ],
       "createdAt": "2026-11-13T12:53:10.200Z",
-      "startedAt": "2026-11-13T17:33:48.341Z",
-      "activatedAt": "2026-11-13T17:33:48.341Z",
-      "expiresAt": "2026-11-20T17:33:48.341Z"
+      "startedAt": "2026-11-13T17:33:45.164Z",
+      "activatedAt": "2026-11-13T17:33:45.164Z",
+      "expiresAt": "2026-11-20T17:33:45.164Z"
     },
     {
       "key": "PC5-RYA91A",
