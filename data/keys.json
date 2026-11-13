@@ -3101,7 +3101,9 @@
       "createdAt": "2026-11-13T08:26:29.290Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-MW7CFP",
@@ -3112,9 +3114,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-13T08:27:48.485Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T08:28:27.256Z",
+      "activatedAt": "2026-11-13T08:28:27.256Z",
+      "expiresAt": "2026-11-13T09:28:27.256Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
