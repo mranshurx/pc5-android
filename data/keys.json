@@ -3316,6 +3316,19 @@
           "ua": "Mozilla/5.0 (Linux; Android 16; 25057RN09I Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.47 Mobile Safari/537.36"
         }
       ]
+    },
+    {
+      "key": "PC5-V3LRK6",
+      "plan": "1d",
+      "durationHours": 24,
+      "maxDevices": 1,
+      "cost": 7,
+      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
+      "reseller": "namanraj",
+      "createdAt": "2026-11-13T10:32:54.882Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
