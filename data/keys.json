@@ -3518,6 +3518,17 @@
       "startedAt": null,
       "activatedAt": null,
       "expiresAt": null
+    },
+    {
+      "key": "PC5-1NLBDM",
+      "durationHours": 1,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-13T11:21:00.281Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
