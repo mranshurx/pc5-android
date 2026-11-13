@@ -6580,9 +6580,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T16:16:47.445Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T16:17:23.583Z",
+      "activatedAt": "2026-11-13T16:17:23.583Z",
+      "expiresAt": "2026-11-20T16:17:23.583Z"
     }
   ],
   "maintenance": {
