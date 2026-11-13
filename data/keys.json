@@ -3268,6 +3268,17 @@
           "ua": "Mozilla/5.0 (Linux; Android 16; V2502 Build/BP2A.250605.031.A3_V000L1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.47 Mobile Safari/537.36"
         }
       ]
+    },
+    {
+      "key": "PC5-XLOADE",
+      "durationHours": 3,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-13T10:02:45.324Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
