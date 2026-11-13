@@ -3405,6 +3405,19 @@
       "createdAt": "2026-11-13T10:47:07.475Z",
       "startedAt": null,
       "activatedAt": null,
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
+    },
+    {
+      "key": "PC5-GLM3YD",
+      "durationHours": 1,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-13T11:20:24.127Z",
+      "startedAt": null,
+      "activatedAt": null,
       "expiresAt": null
     }
   ],
