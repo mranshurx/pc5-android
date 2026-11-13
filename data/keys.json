@@ -2690,7 +2690,9 @@
       "createdAt": "2026-11-13T03:23:38.452Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-Y3XQYJ",
@@ -2701,9 +2703,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-13T03:28:28.529Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T03:31:19.942Z",
+      "activatedAt": "2026-11-13T03:31:19.942Z",
+      "expiresAt": "2026-11-13T15:31:19.942Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
