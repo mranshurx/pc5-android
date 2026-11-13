@@ -6096,9 +6096,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T12:55:01.537Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-13T16:17:04.287Z",
+      "activatedAt": "2026-11-13T16:17:04.287Z",
+      "expiresAt": "2026-11-27T16:17:04.287Z"
     },
     {
       "key": "PC5-ZV3F70",
