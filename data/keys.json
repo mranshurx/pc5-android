@@ -1902,29 +1902,6 @@
       "expiresAt": "2026-11-10T16:07:07.036Z"
     },
     {
-      "key": "PC5-8LA38Q",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-10T15:17:31.282Z",
-      "startedAt": "2026-11-10T15:18:26.426Z",
-      "activatedAt": "2026-11-10T15:18:26.426Z",
-      "expiresAt": "2026-11-11T15:22:53.217Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D3621011a66dca436",
-          "firstSeen": "2026-11-10T15:18:28.097Z",
-          "lastSeen": "2026-11-10T15:18:28.097Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
-        }
-      ],
-      "maintenancePausedMs": 266791
-    },
-    {
       "key": "PC5-M5V23P",
       "plan": "1d",
       "durationHours": 24,
