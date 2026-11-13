@@ -2194,29 +2194,6 @@
       "expiresAt": "2026-11-12T13:28:35.932Z"
     },
     {
-      "key": "PC5-D3RM78",
-      "plan": "30d",
-      "durationHours": 720,
-      "maxDevices": 1,
-      "cost": 80,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-12T01:16:28.559Z",
-      "startedAt": "2026-11-12T04:46:04.403Z",
-      "activatedAt": "2026-11-12T04:46:04.403Z",
-      "expiresAt": "2026-12-12T05:08:42.117Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "Dd454d875ef2ac579",
-          "firstSeen": "2026-11-12T04:46:05.858Z",
-          "lastSeen": "2026-11-12T04:46:05.858Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; TECNO KE5k Build/QP1A.190711.020) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36"
-        }
-      ],
-      "maintenancePausedMs": 1357714
-    },
-    {
       "key": "PC5-YZALRU",
       "durationHours": 6,
       "maxDevices": 0,
