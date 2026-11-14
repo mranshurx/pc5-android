@@ -3730,9 +3730,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:22:28.495Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-14T02:57:41.896Z",
+      "activatedAt": "2026-11-14T02:57:41.896Z",
+      "expiresAt": "2026-11-14T03:57:41.896Z"
     },
     {
       "key": "PC5-NP1VAH",
