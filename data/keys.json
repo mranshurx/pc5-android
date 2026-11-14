@@ -3840,9 +3840,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:23:08.239Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-14T11:33:25.482Z",
+      "activatedAt": "2026-11-14T11:33:25.482Z",
+      "expiresAt": "2026-11-14T12:33:25.482Z"
     },
     {
       "key": "PC5-PPFPNO",
