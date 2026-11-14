@@ -3746,11 +3746,18 @@
       "durationHours": 1,
       "maxDevices": 1,
       "deviceLimit": "single",
-      "devices": [],
+      "devices": [
+        {
+          "id": "Dde49b500dcdcfe3e",
+          "firstSeen": "2026-11-14T03:44:38.392Z",
+          "lastSeen": "2026-11-14T03:44:38.392Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36"
+        }
+      ],
       "createdAt": "2026-11-13T11:22:30.222Z",
-      "startedAt": "2026-11-14T03:44:36.966Z",
-      "activatedAt": "2026-11-14T03:44:36.966Z",
-      "expiresAt": "2026-11-14T04:44:36.966Z"
+      "startedAt": "2026-11-14T03:44:36.725Z",
+      "activatedAt": "2026-11-14T03:44:36.725Z",
+      "expiresAt": "2026-11-14T04:44:36.725Z"
     },
     {
       "key": "PC5-24EDZT",
