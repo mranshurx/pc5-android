@@ -3748,9 +3748,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:22:30.222Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-14T03:44:36.725Z",
+      "activatedAt": "2026-11-14T03:44:36.725Z",
+      "expiresAt": "2026-11-14T04:44:36.725Z"
     },
     {
       "key": "PC5-24EDZT",
@@ -6673,7 +6673,9 @@
       "createdAt": "2026-11-14T03:33:06.022Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
