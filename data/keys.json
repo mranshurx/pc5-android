@@ -6547,7 +6547,14 @@
       "durationHours": 720,
       "maxDevices": 1,
       "deviceLimit": "single",
-      "devices": [],
+      "devices": [
+        {
+          "id": "Db71967ac3a7f643b",
+          "firstSeen": "2026-11-14T01:34:48.912Z",
+          "lastSeen": "2026-11-14T01:34:48.912Z",
+          "ua": "Mozilla/5.0 (Linux; Android 14; SM-X510 Build/UP1A.231005.007) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Safari/537.36"
+        }
+      ],
       "createdAt": "2026-11-13T12:59:12.881Z",
       "startedAt": "2026-11-14T01:34:47.089Z",
       "activatedAt": "2026-11-14T01:34:47.089Z",
