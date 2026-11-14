@@ -6812,9 +6812,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-14T12:16:44.058Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-14T12:23:22.397Z",
+      "activatedAt": "2026-11-14T12:23:22.397Z",
+      "expiresAt": "2026-11-14T15:23:22.397Z",
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-L5K5GF",
@@ -6827,7 +6829,9 @@
       "createdAt": "2026-11-14T12:21:08.720Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
