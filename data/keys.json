@@ -6816,7 +6816,14 @@
       "activatedAt": "2026-11-14T12:23:22.397Z",
       "expiresAt": "2026-11-14T15:23:22.397Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "Db6730e098e485fe2",
+          "firstSeen": "2026-11-14T12:23:24.093Z",
+          "lastSeen": "2026-11-14T12:23:24.093Z",
+          "ua": "Mozilla/5.0 (Linux; Android 16; V2553 Build/BP2A.250605.031.A3_V000L1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.47 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-L5K5GF",
