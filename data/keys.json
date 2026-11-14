@@ -3766,9 +3766,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:22:32.079Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-14T06:59:08.799Z",
+      "activatedAt": "2026-11-14T06:59:08.799Z",
+      "expiresAt": "2026-11-14T07:59:08.799Z"
     },
     {
       "key": "PC5-MWW3EY",
