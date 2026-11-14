@@ -6549,9 +6549,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T12:59:12.881Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-14T01:34:47.089Z",
+      "activatedAt": "2026-11-14T01:34:47.089Z",
+      "expiresAt": "2026-12-14T01:34:47.089Z"
     },
     {
       "key": "PC5-H88PFB",
