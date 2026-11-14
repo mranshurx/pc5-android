@@ -6703,6 +6703,19 @@
       "expiresAt": null,
       "deviceLimit": "single",
       "devices": []
+    },
+    {
+      "key": "PC5-SKCQVW",
+      "plan": "3d",
+      "durationHours": 72,
+      "maxDevices": 1,
+      "cost": 14,
+      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
+      "reseller": "namanraj",
+      "createdAt": "2026-11-14T08:14:10.564Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
