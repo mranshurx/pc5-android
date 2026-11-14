@@ -6868,6 +6868,17 @@
           "ua": "Mozilla/5.0 (Linux; Android 17; SM-E176B Build/CP2A.260605.016) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.50 Mobile Safari/537.36"
         }
       ]
+    },
+    {
+      "key": "PC5-ZD9AY1",
+      "durationHours": 6,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-14T13:48:30.452Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
