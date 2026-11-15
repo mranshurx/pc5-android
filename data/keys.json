@@ -6662,7 +6662,14 @@
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": [],
+      "devices": [
+        {
+          "id": "D1df6e5931c366203",
+          "firstSeen": "2026-11-15T03:42:48.176Z",
+          "lastSeen": "2026-11-15T03:42:48.176Z",
+          "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0.1 Mobile/15E148 Safari/604.1"
+        }
+      ],
       "startedAt": "2026-11-15T03:42:46.683Z",
       "activatedAt": "2026-11-15T03:42:46.683Z",
       "expiresAt": "2026-11-15T04:42:46.683Z"
