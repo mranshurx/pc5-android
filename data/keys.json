@@ -1633,21 +1633,6 @@
       "maintenancePausedMs": 18597568
     },
     {
-      "key": "PC5-TD3GT8",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-08T14:47:41.765Z",
-      "startedAt": "2026-11-15T03:42:01.944Z",
-      "activatedAt": null,
-      "expiresAt": "2026-11-15T04:42:01.944Z",
-      "deviceLimit": "single",
-      "devices": []
-    },
-    {
       "key": "PC5-TUNDKZ",
       "plan": "30d",
       "durationHours": 720,
