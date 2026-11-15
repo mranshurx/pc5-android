@@ -2631,28 +2631,6 @@
       "expiresAt": "2026-11-13T18:26:35.286Z"
     },
     {
-      "key": "PC5-ZPA8JQ",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-13T04:17:31.547Z",
-      "startedAt": "2026-11-13T04:20:44.335Z",
-      "activatedAt": "2026-11-13T04:20:44.335Z",
-      "expiresAt": "2026-11-13T05:20:44.335Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D768e6bcd12dedba4",
-          "firstSeen": "2026-11-13T04:20:45.681Z",
-          "lastSeen": "2026-11-13T04:20:45.681Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Mobile Safari/537.36"
-        }
-      ]
-    },
-    {
       "key": "PC5-CUEGN4",
       "plan": "3h",
       "durationHours": 3,
