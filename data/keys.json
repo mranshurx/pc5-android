@@ -2523,28 +2523,6 @@
       "maintenancePausedMs": 16973063
     },
     {
-      "key": "PC5-4VDRMX",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-12T18:47:01.246Z",
-      "startedAt": "2026-11-12T18:50:23.290Z",
-      "activatedAt": "2026-11-12T18:50:23.290Z",
-      "expiresAt": "2026-11-12T19:50:23.290Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D2cb2bfb4a0db8587",
-          "firstSeen": "2026-11-12T18:50:24.576Z",
-          "lastSeen": "2026-11-12T18:50:24.576Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
-        }
-      ]
-    },
-    {
       "key": "PC5-V5FM36",
       "plan": "7d",
       "durationHours": 168,
