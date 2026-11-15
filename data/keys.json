@@ -3688,9 +3688,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:27:08.263Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-15T07:23:23.537Z",
+      "activatedAt": "2026-11-15T07:23:23.537Z",
+      "expiresAt": "2026-11-15T10:23:23.537Z"
     },
     {
       "key": "PC5-7YLM9V",
