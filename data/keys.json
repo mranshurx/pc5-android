@@ -6663,7 +6663,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-15T03:42:46.683Z",
+      "activatedAt": "2026-11-15T03:42:46.683Z",
+      "expiresAt": "2026-11-15T04:42:46.683Z"
     },
     {
       "key": "PC5-5WP0AG",
