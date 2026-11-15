@@ -2758,29 +2758,6 @@
       "maintenancePausedMs": 13616041
     },
     {
-      "key": "PC5-GCAX2E",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-13T06:02:08.174Z",
-      "startedAt": "2026-11-13T06:03:51.970Z",
-      "activatedAt": "2026-11-13T06:03:51.970Z",
-      "expiresAt": "2026-11-14T10:19:23.576Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D50bae335bba1e37c",
-          "firstSeen": "2026-11-13T06:03:53.224Z",
-          "lastSeen": "2026-11-13T06:03:53.224Z",
-          "ua": "Mozilla/5.0 (Linux; Android 16; V2338 Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.47 Mobile Safari/537.36"
-        }
-      ],
-      "maintenancePausedMs": 15331606
-    },
-    {
       "key": "PC5-NXN5JM",
       "plan": "3h",
       "durationHours": 3,
