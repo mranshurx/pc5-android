@@ -4305,9 +4305,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:27:06.631Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-15T03:39:43.865Z",
+      "activatedAt": "2026-11-15T03:39:43.865Z",
+      "expiresAt": "2026-11-15T06:39:43.865Z"
     },
     {
       "key": "PC5-DBAC49",
