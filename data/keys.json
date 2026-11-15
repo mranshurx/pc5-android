@@ -2802,29 +2802,6 @@
       ]
     },
     {
-      "key": "PC5-MVVFUH",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-13T06:17:50.371Z",
-      "startedAt": "2026-11-13T06:18:36.374Z",
-      "activatedAt": "2026-11-13T06:18:36.374Z",
-      "expiresAt": "2026-11-14T10:48:52.384Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D7f74f116a9bd1f1f",
-          "firstSeen": "2026-11-13T06:18:37.944Z",
-          "lastSeen": "2026-11-13T06:18:37.944Z",
-          "ua": "Mozilla/5.0 (Linux; Android 16; SM-A336E Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.40 Mobile Safari/537.36"
-        }
-      ],
-      "maintenancePausedMs": 16216010
-    },
-    {
       "key": "PC5-GEQ8HD",
       "plan": "1h",
       "durationHours": 1,
