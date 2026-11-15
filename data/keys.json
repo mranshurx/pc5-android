@@ -6343,7 +6343,7 @@
   ],
   "maintenance": {
     "enabled": false,
-    "message": "Garena patch update wait some time. BACK IN SOME DAYS",
+    "message": "Garena patch update wait some time.",
     "since": null
   },
   "features": {
