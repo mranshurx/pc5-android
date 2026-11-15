@@ -2676,29 +2676,6 @@
       "maintenancePausedMs": 7123637
     },
     {
-      "key": "PC5-YCSZTK",
-      "plan": "1d",
-      "durationHours": 24,
-      "maxDevices": 1,
-      "cost": 7,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-13T03:47:11.762Z",
-      "startedAt": "2026-11-13T03:48:37.942Z",
-      "activatedAt": "2026-11-13T03:48:37.942Z",
-      "expiresAt": "2026-11-14T06:54:24.679Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "Dc0467a1d29882e70",
-          "firstSeen": "2026-11-13T03:48:39.307Z",
-          "lastSeen": "2026-11-13T03:48:39.307Z",
-          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"
-        }
-      ],
-      "maintenancePausedMs": 11146737
-    },
-    {
       "key": "PC5-CD6AQY",
       "plan": "3h",
       "durationHours": 3,
