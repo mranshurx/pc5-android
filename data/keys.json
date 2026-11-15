@@ -6343,11 +6343,8 @@
   ],
   "maintenance": {
     "enabled": false,
-    "message": "Garena patch update wait some time.",
-    "since": null,
-    "lastPausedMs": 49020,
-    "lastPausedKeys": 37,
-    "lastEndedAt": "2026-11-14T10:15:05.542Z"
+    "message": "Garena patch update wait some time. BACK IN SOME DAYS",
+    "since": null
   },
   "features": {
     "aimbot": "",
