@@ -3288,9 +3288,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:23:16.644Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-15T16:17:25.394Z",
+      "activatedAt": "2026-11-15T16:17:25.394Z",
+      "expiresAt": "2026-11-15T17:17:25.394Z"
     },
     {
       "key": "PC5-12CO63",
