@@ -2847,28 +2847,6 @@
       "maintenancePausedMs": 8912414
     },
     {
-      "key": "PC5-MW7CFP",
-      "plan": "1h",
-      "durationHours": 1,
-      "maxDevices": 1,
-      "cost": 0.5,
-      "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
-      "reseller": "namanraj",
-      "createdAt": "2026-11-13T08:27:48.485Z",
-      "startedAt": "2026-11-13T08:28:27.256Z",
-      "activatedAt": "2026-11-13T08:28:27.256Z",
-      "expiresAt": "2026-11-13T09:28:27.256Z",
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "D47b893ed9d5aaa72",
-          "firstSeen": "2026-11-13T08:28:28.503Z",
-          "lastSeen": "2026-11-13T08:28:28.503Z",
-          "ua": "Mozilla/5.0 (Linux; Android 16; 25057RN09I Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.47 Mobile Safari/537.36"
-        }
-      ]
-    },
-    {
       "key": "PC5-SE4RNR",
       "plan": "3h",
       "durationHours": 3,
