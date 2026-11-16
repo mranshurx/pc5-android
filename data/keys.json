@@ -6412,9 +6412,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-16T12:24:24.585Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-16T12:46:54.041Z",
+      "activatedAt": "2026-11-16T12:46:54.041Z",
+      "expiresAt": "2026-11-16T13:46:54.041Z"
     },
     {
       "key": "PC5-SQTXMK",
