@@ -3441,9 +3441,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:23:51.901Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-16T19:19:31.522Z",
+      "activatedAt": "2026-11-16T19:19:31.522Z",
+      "expiresAt": "2026-11-16T20:19:31.522Z"
     },
     {
       "key": "PC5-VN74BM",
