@@ -16,11 +16,13 @@ const HARD = {
   repo:   'pc5-android',
   branch: 'main',
   file:   'data/keys.json',
-  token:  ''
+  token:  '',
+  providerId: ''
 };
 
 const LOCAL_CFG = path.join(__dirname, 'github.json');
 const REPO_CFG_PATH = 'data/config.json';
+const CFG_KEYS = ['owner', 'repo', 'branch', 'file', 'token', 'providerId'];
 
 function envOverrides() {
   const o = {};
@@ -29,6 +31,7 @@ function envOverrides() {
   if (process.env.GITHUB_BRANCH) o.branch = process.env.GITHUB_BRANCH;
   if (process.env.GITHUB_KEYS_PATH) o.file = process.env.GITHUB_KEYS_PATH;
   if (process.env.GITHUB_TOKEN) o.token = process.env.GITHUB_TOKEN.trim();
+  if (process.env.HAPP_PROVIDER_ID) o.providerId = process.env.HAPP_PROVIDER_ID.trim();
   return o;
 }
 
@@ -38,7 +41,7 @@ function loadCfg() {
   try {
     if (fs.existsSync(LOCAL_CFG)) {
       const saved = JSON.parse(fs.readFileSync(LOCAL_CFG, 'utf8'));
-      for (const k of ['owner', 'repo', 'branch', 'file', 'token']) {
+      for (const k of CFG_KEYS) {
         if (saved[k]) cfg[k] = String(saved[k]).trim();
       }
       console.log('[cfg] loaded from local github.json');
@@ -86,7 +89,7 @@ async function pullCfgFromRepo() {
     const r = await fetch(raw, { headers: { 'User-Agent': 'pc5-android' } });
     if (!r.ok) return;
     const j = await r.json();
-    for (const k of ['owner', 'repo', 'branch', 'file', 'token']) {
+    for (const k of CFG_KEYS) {
       if (j[k]) cfg[k] = String(j[k]).trim();
     }
     saveCfg();
@@ -186,10 +189,13 @@ async function requireAdmin(req, res) {
 }
 
 /*
-  Provider ID is optional. Only set it if you ever want Happ's advanced
-  parameters (hide-settings, sub-info, autoconnect...). Left empty by design.
+  Provider ID — the only thing that lets Happ honour hide-settings (which is
+  what hides the server address and the settings sheet). Free at
+  https://happ-proxy.com — paste it in the admin panel, no redeploy needed.
 */
-const HAPP_PROVIDER_ID = (process.env.HAPP_PROVIDER_ID || '').trim();
+function providerId() {
+  return String(cfg.providerId || process.env.HAPP_PROVIDER_ID || '').trim();
+}
 
 const FRONTEND_DIR = fs.existsSync(path.join(__dirname, '..', 'frontend'))
   ? path.join(__dirname, '..', 'frontend')
@@ -565,8 +571,9 @@ const REASON_TEXT = {
     raw JSON               -> parses, but the whole config is on screen
     base64( link )         -> parses, shows one clean server row   <-- this
 
-  The deep link handed to the ADD button is already encrypted through
-  crypto.happ.su, so the sub URL itself never appears either.
+  The node address itself is never hidden by the client — it always shows in
+  the settings sheet. hide-settings (below) is what removes that sheet, and it
+  needs the providerid.
 */
 const DEFAULT_HYST_AUTH = '6914422730:ca0a93b7b5698e52';
 const HYST_HOST = 'proxy-ind.dripwire.cc';
@@ -792,11 +799,20 @@ app.get('/sub', async (req, res) => {
   res.setHeader('profile-title', PROFILE_TITLE);
   res.setHeader('subscription-auto-update-enable', '1');
   res.setHeader('subscription-auto-update-open-enable', '1');
-  /* Only honoured by Happ when a providerid is also present. Harmless otherwise. */
-  res.setHeader('hide-settings', '1');
   res.setHeader('per-app-proxy-mode', 'on');
   res.setHeader('per-app-proxy-list', PER_APP_LIST);
-  if (HAPP_PROVIDER_ID) res.setHeader('providerid', HAPP_PROVIDER_ID);
+  res.setHeader('subscriptions-collapse', '0');
+
+  /*
+    hide-settings is what removes the server address + the whole settings sheet.
+    Happ only honours it when providerid is present, so both go out together.
+  */
+  const pid = providerId();
+  if (pid) {
+    res.setHeader('providerid', pid);
+    res.setHeader('hide-settings', '1');
+  }
+
   res.setHeader('content-disposition', 'attachment; filename="pc5-android.txt"');
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
 
@@ -918,6 +934,22 @@ app.post('/api/admin/verify', async (req, res) => {
   return res.json({ success: true, ver: state.ver });
 });
 
+/* Sets or clears the providerid. Clearing it also disables hide-settings. */
+app.post('/api/admin/provider-id', async (req, res) => {
+  const state = await requireAdmin(req, res);
+  if (!state) return;
+
+  const raw = String((req.body && req.body.providerId) || '').trim();
+  const next = raw.replace(/[^A-Za-z0-9_-]/g, '').slice(0, 64);
+
+  cfg.providerId = next;
+  saveCfg();
+  happLinkCache.clear();
+  console.log(`[happ] providerid -> ${next ? next.slice(0, 8) + '…' : 'cleared'}`);
+  await pushCfgToRepo(cfg, cfg).catch(() => {});
+  return res.json({ success: true, providerId: next, hideSettings: !!next });
+});
+
 app.post('/api/admin/diag', async (req, res) => {
   const state = await requireAdmin(req, res);
   if (!state) return;
@@ -937,7 +969,8 @@ app.post('/api/admin/diag', async (req, res) => {
       : (c.token === HARD.token ? 'hardcoded' : 'panel override'),
     adminKeyVer: state.ver,
     subFormat: SUB_FORMAT,
-    providerId: HAPP_PROVIDER_ID ? 'set' : 'missing'
+    providerId: providerId() ? 'set' : 'missing',
+    hideSettings: !!providerId()
   };
 
   try {
@@ -1262,7 +1295,7 @@ const PORT = process.env.PORT || 3000;
     console.log(`[cfg] token -> ${tokenShape(cfg.token)}`);
     console.log(`[admin] key source -> ${ADMIN_KEY_URL}`);
     console.log(`[upstream] hysteria2 -> ${HYST_HOST}:${HYST_PORT}`);
-    console.log(`[sub] format -> ${SUB_FORMAT} | providerid -> ${HAPP_PROVIDER_ID ? 'set' : 'missing'}`);
+    console.log(`[sub] format -> ${SUB_FORMAT} | providerid -> ${providerId() ? 'set' : 'missing'}`);
     getAdminKey(true);
   });
 })();
