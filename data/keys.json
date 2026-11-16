@@ -3307,9 +3307,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:23:18.383Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-16T09:26:49.845Z",
+      "activatedAt": "2026-11-16T09:26:49.845Z",
+      "expiresAt": "2026-11-16T10:26:49.845Z"
     },
     {
       "key": "PC5-XAUNV1",
