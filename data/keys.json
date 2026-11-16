@@ -2606,7 +2606,14 @@
       "durationHours": 1,
       "maxDevices": 1,
       "deviceLimit": "single",
-      "devices": [],
+      "devices": [
+        {
+          "id": "D1244bc2c7d0de94e",
+          "firstSeen": "2026-11-16T10:11:27.486Z",
+          "lastSeen": "2026-11-16T10:11:27.486Z",
+          "ua": "Mozilla/5.0 (Linux; Android 17; moto g57 power Build/A171WAAH.31-9-17) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Mobile Safari/537.36"
+        }
+      ],
       "createdAt": "2026-11-13T02:48:30.965Z",
       "startedAt": "2026-11-16T10:11:25.387Z",
       "activatedAt": "2026-11-16T10:11:25.387Z",
