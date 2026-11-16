@@ -6434,7 +6434,14 @@
       "activatedAt": "2026-11-16T11:20:38.847Z",
       "expiresAt": "2026-11-16T14:20:38.847Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D7284f30b52f8689e",
+          "firstSeen": "2026-11-16T11:20:40.256Z",
+          "lastSeen": "2026-11-16T11:20:40.256Z",
+          "ua": "Mozilla/5.0 (Linux; Android 11; Infinix X665B Build/RP1A.200720.011) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Mobile Safari/537.36"
+        }
+      ]
     }
   ],
   "maintenance": {
