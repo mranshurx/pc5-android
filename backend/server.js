@@ -551,49 +551,85 @@ const REASON_TEXT = {
 
 /* ================= ROUTING CONFIG ================= */
 /*
-  Upstream: REZZX India — plain SOCKS5 with user:pass carried as base64
-  userinfo. Delivered in Happ share-link format: directive headers first,
-  then a single node line. Per-app proxy keeps only the Free Fire packages
-  on the tunnel; the client handles everything else.
+  Upstream: DRIPWIRE India — Hysteria2 over TLS (h3/QUIC), port 443.
+  Delivered as a full Xray/Happ JSON config rather than a share link, so the
+  client gets the local SOCKS/HTTP inbounds and the split routing table with it.
+  Port-based routing keeps only the Free Fire game ranges on the tunnel;
+  per-app proxy (response headers) limits which packages get captured at all.
 */
-const UPSTREAM = {
-  scheme: 'socks',
-  host:   'asiarezzx.toulouse-digital31.fr',
-  port:   8443,
-  auth:   'YzdiNjg3YWE4OTI4ZjRjOGU3MzZiMGFhZTdhZTIyM2E6Mg==', /* base64("630749849f4020da45a7e319510d0c43:2") */
-  label:  'PC5 - India'
-};
-
-const PER_APP_LIST = 'com.garena.game.ffi,com.dts.freefiremax';
+const DEFAULT_HYST_AUTH = '6914422730:ca0a93b7b5698e52';
+const HYST_HOST = 'proxy-ind.dripwire.cc';
+const HYST_PORT = 443;
+const PROFILE_NAME = 'PC5';
 
 /* Auth handed to the node while the key is dead. The server rejects it, so the
    handshake dies and the client reports a genuine failure instead of a fake ping. */
 const DEAD_AUTH = 'PC5-BLOCKED:0';
 
-function b64(s) { return Buffer.from(String(s), 'utf8').toString('base64'); }
+const PER_APP_LIST = 'com.garena.game.ffi,com.dts.freefiremax';
 
-function nodeLine(auth, label) {
-  const userinfo = auth ? b64(auth) : UPSTREAM.auth;
-  return `${UPSTREAM.scheme}://${userinfo}@${UPSTREAM.host}:${UPSTREAM.port}#${encodeURIComponent(label)}`;
+/* Builds a fresh config object every call — never mutates a shared template. */
+function buildConfig(blocked, label, auth, host, port) {
+  const addr = host || HYST_HOST;
+  const prt = Number(port) || HYST_PORT;
+  const cred = blocked ? DEAD_AUTH : (auth || DEFAULT_HYST_AUTH);
+
+  return {
+    remarks: label,
+    inbounds: [
+      {
+        listen: '127.0.0.1',
+        port: 10808,
+        protocol: 'socks',
+        settings: { auth: 'noauth', udp: true },
+        sniffing: { destOverride: ['http', 'tls', 'quic'], enabled: true, routeOnly: false },
+        tag: 'socks'
+      },
+      {
+        listen: '127.0.0.1',
+        port: 10809,
+        protocol: 'http',
+        sniffing: { destOverride: ['http', 'tls', 'quic'], enabled: true, routeOnly: false },
+        tag: 'http'
+      }
+    ],
+    outbounds: [
+      {
+        protocol: 'hysteria',
+        settings: { address: addr, port: prt, version: 2 },
+        streamSettings: {
+          hysteriaSettings: { auth: cred, version: 2 },
+          network: 'hysteria',
+          security: 'tls',
+          tlsSettings: { alpn: ['h3'], serverName: addr, show: false },
+          finalmask: { quicParams: { disableChromeParrot: true } }
+        },
+        tag: 'proxy'
+      },
+      { protocol: 'freedom', tag: 'direct' }
+    ],
+    routing: {
+      domainStrategy: 'AsIs',
+      rules: [
+        { network: 'tcp', outboundTag: 'proxy', port: '39000-39999' },
+        { network: 'udp', outboundTag: 'proxy', port: '10000-10999' },
+        { network: 'tcp,udp', outboundTag: 'direct' }
+      ]
+    }
+  };
 }
 
 /*
-  Always emits a full, valid share link — a blocked key gets a real node with a
+  Always emits a full, valid config — a blocked key gets a real outbound with a
   rejected credential rather than an empty body, so Happ keeps the profile
   mounted and simply fails to connect.
 */
-function subConfig(blocked, label, auth) {
-  const head = [
-    '#hide-settings: 1',
-    '#per-app-proxy-mode: on',
-    `#per-app-proxy-list: ${PER_APP_LIST}`
-  ];
-  const line = nodeLine(blocked ? DEAD_AUTH : auth, label);
-  return head.join('\n') + '\n' + line + '\n';
+function subConfig(blocked, label, auth, host, port) {
+  return JSON.stringify(buildConfig(blocked, label, auth, host, port), null, 2);
 }
 
 /* ================= FEATURE MODES ================= */
-/* aimbot | location. Each mode may carry its own upstream user:pass. */
+/* aimbot | location. Each mode may carry its own hysteria user:pass. */
 const FEATURE_MODES = ['aimbot', 'location'];
 const FEATURE_LABEL = { aimbot: 'AIMBOT', location: 'LOCATION + AIMBOT' };
 
@@ -721,11 +757,14 @@ app.get('/sub', async (req, res) => {
   res.setHeader('subscription-auto-update-enable', '1');
   res.setHeader('subscription-auto-update-open-enable', '1');
   res.setHeader('hide-settings', '1');
+  /* The body is JSON now, so the per-app directives travel as headers. */
+  res.setHeader('per-app-proxy-mode', 'on');
+  res.setHeader('per-app-proxy-list', PER_APP_LIST);
   if (HAPP_PROVIDER_ID) res.setHeader('providerid', HAPP_PROVIDER_ID);
-  /* .txt so any client knows the type; text/plain so Happ sniffs the body
-     itself instead of treating the reply as a document download. */
-  res.setHeader('content-disposition', 'attachment; filename="pc5-android.txt"');
-  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  /* .json so any client knows the type; application/json so Happ parses the
+     body as a config instead of treating the reply as a document download. */
+  res.setHeader('content-disposition', 'attachment; filename="pc5-android.json"');
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
   const reqMode = String(req.query.mode || '').toLowerCase();
   const mode = FEATURE_MODES.includes(reqMode) ? reqMode : '';
@@ -738,14 +777,14 @@ app.get('/sub', async (req, res) => {
 
     if (m.enabled) {
       res.setHeader('x-pc5-status', 'maintenance');
-      body = subConfig(true, `⚠️ MAINTENANCE: ${m.message}`);
+      body = subConfig(true, `${PROFILE_NAME} — MAINTENANCE`);
     } else {
       const { key } = req.query;
       const did = deviceOf(req);
       const out = key ? await accessKey(key, c, did, deviceUa(req)) : { ok: false, reason: 'invalid' };
       if (!out.ok) {
         res.setHeader('x-pc5-status', out.reason);
-        body = subConfig(true, `❌ ${REASON_TEXT[out.reason] || 'SUBSCRIPTION EXPIRED OR TERMINATED'}`);
+        body = subConfig(true, `${PROFILE_NAME} — ${(REASON_TEXT[out.reason] || 'SUBSCRIPTION EXPIRED').toUpperCase()}`);
       } else {
         /* Advertised expiry uses the paused clock so the date does not creep
            forward in the client while the service is down. */
@@ -754,12 +793,12 @@ app.get('/sub', async (req, res) => {
         res.setHeader('x-pc5-status', 'ok');
         if (mode) res.setHeader('x-pc5-mode', mode);
         res.setHeader('subscription-userinfo', `upload=0; download=0; total=107374182400; expire=${Math.floor(liveExpiry / 1000)}`);
-        body = subConfig(false, UPSTREAM.label + tag, authFor(db, mode));
+        body = subConfig(false, PROFILE_NAME + tag, authFor(db, mode));
       }
     }
   } catch (e) {
     res.setHeader('x-pc5-status', 'storage-error');
-    body = subConfig(true, '❌ SUBSCRIPTION EXPIRED OR TERMINATED');
+    body = subConfig(true, `${PROFILE_NAME} — SUBSCRIPTION EXPIRED OR TERMINATED`);
   }
 
   return res.status(200).send(body);
@@ -992,7 +1031,7 @@ app.post('/api/admin/list-keys', async (req, res) => {
   }
 });
 
-/* Saves the SOCKS user:pass used for each feature mode. */
+/* Saves the hysteria user:pass used for each feature mode. */
 app.post('/api/admin/feature-auth', async (req, res) => {
   const state = await requireAdmin(req, res);
   if (!state) return;
@@ -1186,6 +1225,7 @@ const PORT = process.env.PORT || 3000;
     console.log(`[cfg] storage -> ${cfg.owner}/${cfg.repo}:${cfg.file}`);
     console.log(`[cfg] token -> ${tokenShape(cfg.token)}`);
     console.log(`[admin] key source -> ${ADMIN_KEY_URL}`);
+    console.log(`[upstream] hysteria2 -> ${HYST_HOST}:${HYST_PORT}`);
     getAdminKey(true);
   });
 })();
