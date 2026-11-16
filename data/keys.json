@@ -3368,9 +3368,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:23:44.638Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-16T10:50:26.862Z",
+      "activatedAt": "2026-11-16T10:50:26.862Z",
+      "expiresAt": "2026-11-16T11:50:26.862Z"
     },
     {
       "key": "PC5-4JLKUA",
