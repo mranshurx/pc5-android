@@ -25,11 +25,12 @@ const HARD = {
 const FALLBACK_PROVIDER_ID = 'ZGD3YGrW';
 
 /* Subscription body encryption (AES-128-GCM, Happ scheme).
+   OFF by default: only enable once you have confirmed imports still work.
    key02 is the public test key — request a private one for real secrecy. */
 const SUB_KEY_ID  = process.env.SUB_KEY_ID  || 'key02';
 const SUB_AES_KEY = Buffer.from(process.env.SUB_AES_KEY || 'key02:+]%4ij#P"/', 'utf8');
 const SUB_IV      = Buffer.from('kkkkkkkkkkkk', 'utf8');
-const SUB_ENCRYPT = process.env.SUB_ENCRYPT !== '0';
+const SUB_ENCRYPT = process.env.SUB_ENCRYPT === '1';
 
 const LOCAL_CFG = path.join(__dirname, 'github.json');
 const REPO_CFG_PATH = 'data/config.json';
@@ -667,23 +668,14 @@ function buildLink(blocked, label, auth, host, port) {
   Always emits a valid body — a blocked key gets a real outbound with a rejected
   credential rather than an empty body, so Happ keeps the profile mounted and
   simply fails to connect.
+
+  Body stays exactly base64( link ). No comment lines: directives travel in the
+  response headers instead, where they cannot corrupt the payload.
 */
 function subConfig(blocked, label, auth, host, port) {
-  const link = buildLink(blocked, label, auth, host, port);
+  const line = buildLink(blocked, label, auth, host, port);
   if (SUB_FORMAT === 'json') return JSON.stringify(buildConfig(blocked, label, auth, host, port), null, 2);
-
-  /* Body-level directives: headers can be lost to a proxy or a CDN rewrite,
-     these ride along with the payload. */
-  return [
-    `#providerid ${providerId()}`,
-    '#hide-settings: 1',
-    `#profile-title: ${PROFILE_TITLE}`,
-    '#subscription-always-hwid-enable: 1',
-    '#manual-block-user-agent: 1',
-    '#dont-use-filter: 1',
-    '#subscriptions-collapse: 0',
-    link
-  ].join('\n') + '\n';
+  return Buffer.from(line, 'utf8').toString('base64');
 }
 
 /* AES-128-GCM. Happ wants the tag in its own header, base64'd — not appended
@@ -813,8 +805,9 @@ app.get('/api/happ-link', async (req, res) => {
     if (!out.ok) return res.json({ ok: false, reason: out.reason, message: REASON_TEXT[out.reason] });
 
     const m = FEATURE_MODES.includes(mode) ? mode : '';
-    const subUrl = `${baseUrl(req)}/sub?k=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}${m ? `&mode=${m}` : ''}&key=${encodeURIComponent(SUB_KEY_ID)}`;
-    const cacheKey = `${key}|${did}|${m}|${SUB_KEY_ID}`;
+    /* k = license, key = AES key id. Encryption only adds `key` when it is on. */
+    const subUrl = `${baseUrl(req)}/sub?k=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}${m ? `&mode=${m}` : ''}${SUB_ENCRYPT ? `&key=${encodeURIComponent(SUB_KEY_ID)}` : ''}`;
+    const cacheKey = `${key}|${did}|${m}|${SUB_ENCRYPT ? SUB_KEY_ID : '-'}`;
     const cachedLink = happCacheGet(cacheKey);
     if (cachedLink) return res.json({ ok: true, link: cachedLink, raw: subUrl, mode: m, encrypted: true });
 
@@ -835,7 +828,6 @@ app.get('/sub', async (req, res) => {
   res.setHeader('per-app-proxy-mode', 'on');
   res.setHeader('per-app-proxy-list', PER_APP_LIST);
   res.setHeader('subscriptions-collapse', '0');
-
   res.setHeader('Cache-Control', 'no-store');
 
   /*
@@ -976,7 +968,7 @@ app.post('/api/admin/verify', async (req, res) => {
   return res.json({ success: true, ver: state.ver });
 });
 
-/* Sets or clears the providerid. Clearing it also disables hide-settings. */
+/* Sets or clears the providerid. Clearing falls back to the hardcoded one. */
 app.post('/api/admin/provider-id', async (req, res) => {
   const state = await requireAdmin(req, res);
   if (!state) return;
@@ -1339,7 +1331,7 @@ const PORT = process.env.PORT || 3000;
     console.log(`[cfg] token -> ${tokenShape(cfg.token)}`);
     console.log(`[admin] key source -> ${ADMIN_KEY_URL}`);
     console.log(`[upstream] hysteria2 -> ${HYST_HOST}:${HYST_PORT}`);
-    console.log(`[sub] format -> ${SUB_FORMAT} | providerid -> ${providerId() ? 'set' : 'missing'}`);
+    console.log(`[sub] format -> ${SUB_FORMAT} | providerid -> ${providerId()}`);
     console.log(`[sub] encrypt -> ${SUB_ENCRYPT ? `on (key id ${SUB_KEY_ID})` : 'off'}`);
     getAdminKey(true);
   });
