@@ -556,10 +556,17 @@ const REASON_TEXT = {
 /* ================= ROUTING CONFIG ================= */
 /*
   Upstream: DRIPWIRE India — Hysteria2 over TLS (h3/QUIC), port 443.
-  Delivered as a full Xray/Happ JSON config rather than a share link, so the
-  client gets the local SOCKS/HTTP inbounds and the split routing table with it.
-  Port-based routing keeps only the Free Fire game ranges on the tunnel;
-  per-app proxy (response headers) limits which packages get captured at all.
+
+  /sub is delivered as a base64-encoded list containing a single hysteria2://
+  node. That is the format every panel serves and the only one Happ parses
+  without either dumping raw text or throwing "unknown content":
+
+    base64( JSON config )  -> decodes to JSON, Happ expects links -> unknown content
+    raw JSON               -> parses, but the whole config is on screen
+    base64( link )         -> parses, shows one clean server row   <-- this
+
+  The deep link handed to the ADD button is already encrypted through
+  crypto.happ.su, so the sub URL itself never appears either.
 */
 const DEFAULT_HYST_AUTH = '6914422730:ca0a93b7b5698e52';
 const HYST_HOST = 'proxy-ind.dripwire.cc';
@@ -567,13 +574,10 @@ const HYST_PORT = 443;
 const PROFILE_NAME = 'PC5';
 
 /*
-  How /sub is delivered:
-    'b64json' — the whole config, base64'd. Nothing readable on screen. (default)
-    'link'    — a hysteria2:// share link. Zero JSON at all, but the routing
-                table is dropped and every packet from the proxied apps tunnels.
-  Flip this one word if base64 still isn't clean enough for you.
+  'b64link' — base64( hysteria2 link ). Default, hidden, parses everywhere.
+  'json'    — raw Xray JSON. Visible on screen, but keeps the port routing table.
 */
-const SUB_FORMAT = 'b64json';
+const SUB_FORMAT = 'b64link';
 
 /* Auth handed to the node while the key is dead. The server rejects it, so the
    handshake dies and the client reports a genuine failure instead of a fake ping. */
@@ -581,7 +585,7 @@ const DEAD_AUTH = 'PC5-BLOCKED:0';
 
 const PER_APP_LIST = 'com.garena.game.ffi,com.dts.freefiremax';
 
-/* Builds a fresh config object every call — never mutates a shared template. */
+/* Full Xray config — used by 'json' mode. Fresh object every call. */
 function buildConfig(blocked, label, auth, host, port) {
   const addr = host || HYST_HOST;
   const prt = Number(port) || HYST_PORT;
@@ -632,7 +636,7 @@ function buildConfig(blocked, label, auth, host, port) {
   };
 }
 
-/* Equivalent of the proxy outbound as a share link (link mode only). */
+/* The same proxy outbound as a hysteria2 share link. */
 function buildLink(blocked, label, auth, host, port) {
   const addr = host || HYST_HOST;
   const prt = Number(port) || HYST_PORT;
@@ -647,9 +651,9 @@ function buildLink(blocked, label, auth, host, port) {
   simply fails to connect.
 */
 function subConfig(blocked, label, auth, host, port) {
-  if (SUB_FORMAT === 'link') return buildLink(blocked, label, auth, host, port) + '\n';
-  const json = JSON.stringify(buildConfig(blocked, label, auth, host, port), null, 2);
-  return Buffer.from(json, 'utf8').toString('base64');
+  const line = buildLink(blocked, label, auth, host, port);
+  if (SUB_FORMAT === 'json') return JSON.stringify(buildConfig(blocked, label, auth, host, port), null, 2);
+  return Buffer.from(line, 'utf8').toString('base64');
 }
 
 /* ================= FEATURE MODES ================= */
@@ -676,7 +680,8 @@ function authFor(db, mode) {
 /* ================= SUBSCRIPTION BODY ================= */
 const PROFILE_TITLE = 'PC5 ANDROID';
 
-/* ================= HAPP LINK ================= */
+/* ================= HAPP CRYPT ================= */
+/* crypto.happ.su returns a happ://cryptN/... deep link wrapping the sub URL. */
 const happLinkCache = new Map();
 const HAPP_CACHE_TTL = 10 * 60 * 1000;
 const HAPP_CACHE_MAX = 500;
@@ -705,6 +710,7 @@ function baseUrl(req) {
   const proto = req.headers['x-forwarded-proto'] || req.protocol || 'https';
   return `${proto}://${req.get('host')}`;
 }
+
 function encryptHappLink(subUrl) {
   return new Promise((resolve) => {
     let settled = false;
@@ -718,11 +724,17 @@ function encryptHappLink(subUrl) {
       let data = '';
       res.setEncoding('utf8');
       res.on('data', c => data += c);
-      res.on('end', () => { try { const j = JSON.parse(data); done(j && j.encrypted_link ? j.encrypted_link : null); } catch (e) { done(null); } });
+      res.on('end', () => {
+        try {
+          const j = JSON.parse(data);
+          const link = j && j.encrypted_link ? String(j.encrypted_link).trim() : null;
+          done(link && link.startsWith('happ://') ? link : null);
+        } catch (e) { done(null); }
+      });
       res.on('error', () => done(null));
     });
     req.on('error', () => done(null));
-    req.setTimeout(5000, () => { req.destroy(); done(null); });
+    req.setTimeout(6000, () => { req.destroy(); done(null); });
     req.write(body);
     req.end();
   });
@@ -766,7 +778,7 @@ app.get('/api/happ-link', async (req, res) => {
     const subUrl = `${baseUrl(req)}/sub?key=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}${m ? `&mode=${m}` : ''}`;
     const cacheKey = `${key}|${did}|${m}`;
     const cachedLink = happCacheGet(cacheKey);
-    if (cachedLink) return res.json({ ok: true, link: cachedLink, raw: subUrl, mode: m });
+    if (cachedLink) return res.json({ ok: true, link: cachedLink, raw: subUrl, mode: m, encrypted: true });
     const link = await encryptHappLink(subUrl);
     if (link) happCacheSet(cacheKey, link);
     return res.json({ ok: !!link, link: link || subUrl, raw: subUrl, encrypted: !!link, mode: m });
@@ -785,16 +797,8 @@ app.get('/sub', async (req, res) => {
   res.setHeader('per-app-proxy-mode', 'on');
   res.setHeader('per-app-proxy-list', PER_APP_LIST);
   if (HAPP_PROVIDER_ID) res.setHeader('providerid', HAPP_PROVIDER_ID);
-
-  if (SUB_FORMAT === 'link') {
-    res.setHeader('content-disposition', 'attachment; filename="pc5-android.txt"');
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  } else {
-    /* Base64 body — Happ decodes it before parsing, so no readable JSON lands
-       in the profile view. */
-    res.setHeader('content-disposition', 'attachment; filename="pc5-android.txt"');
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  }
+  res.setHeader('content-disposition', 'attachment; filename="pc5-android.txt"');
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
 
   const reqMode = String(req.query.mode || '').toLowerCase();
   const mode = FEATURE_MODES.includes(reqMode) ? reqMode : '';
