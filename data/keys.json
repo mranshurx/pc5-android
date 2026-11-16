@@ -4302,9 +4302,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T12:34:36.981Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-16T12:59:07.576Z",
+      "activatedAt": "2026-11-16T12:59:07.576Z",
+      "expiresAt": "2026-11-16T15:59:07.576Z"
     },
     {
       "key": "PC5-DX4B3M",
