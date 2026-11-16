@@ -3386,9 +3386,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:23:46.442Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-16T10:52:28.697Z",
+      "activatedAt": "2026-11-16T10:52:28.697Z",
+      "expiresAt": "2026-11-16T11:52:28.697Z"
     },
     {
       "key": "PC5-RW7PWS",
