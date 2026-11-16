@@ -3422,9 +3422,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:23:50.253Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-16T17:18:52.677Z",
+      "activatedAt": "2026-11-16T17:18:52.677Z",
+      "expiresAt": "2026-11-16T18:18:52.677Z"
     },
     {
       "key": "PC5-T563N5",
