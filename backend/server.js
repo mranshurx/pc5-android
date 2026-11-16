@@ -17,7 +17,7 @@ const HARD = {
   branch: 'main',
   file:   'data/keys.json',
   token:  '',
-  providerId: ''
+  providerId: 'ZGD3YGrW'
 };
 
 const LOCAL_CFG = path.join(__dirname, 'github.json');
@@ -189,9 +189,9 @@ async function requireAdmin(req, res) {
 }
 
 /*
-  Provider ID — the only thing that lets Happ honour hide-settings (which is
-  what hides the server address and the settings sheet). Free at
-  https://happ-proxy.com — paste it in the admin panel, no redeploy needed.
+  Provider ID — required for hide-settings, which is what removes the server
+  address and the whole settings sheet from the client. Hardcoded below and
+  overridable via env HAPP_PROVIDER_ID or the admin panel.
 */
 function providerId() {
   return String(cfg.providerId || process.env.HAPP_PROVIDER_ID || '').trim();
@@ -571,9 +571,8 @@ const REASON_TEXT = {
     raw JSON               -> parses, but the whole config is on screen
     base64( link )         -> parses, shows one clean server row   <-- this
 
-  The node address itself is never hidden by the client — it always shows in
-  the settings sheet. hide-settings (below) is what removes that sheet, and it
-  needs the providerid.
+  With providerid + hide-settings the server row cannot be opened at all, so
+  the address, port, auth and JSON never reach the user's eyes.
 */
 const DEFAULT_HYST_AUTH = '6914422730:ca0a93b7b5698e52';
 const HYST_HOST = 'proxy-ind.dripwire.cc';
@@ -804,8 +803,8 @@ app.get('/sub', async (req, res) => {
   res.setHeader('subscriptions-collapse', '0');
 
   /*
-    hide-settings is what removes the server address + the whole settings sheet.
-    Happ only honours it when providerid is present, so both go out together.
+    providerid + hide-settings together: the user cannot open the server row,
+    so no address, port, auth or JSON is ever exposed.
   */
   const pid = providerId();
   if (pid) {
