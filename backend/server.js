@@ -20,6 +20,17 @@ const HARD = {
   providerId: 'ZGD3YGrW'
 };
 
+/* Lock-down is the default, not a switch. If the admin clears providerid the
+   fallback keeps hide-settings alive instead of silently dropping it. */
+const FALLBACK_PROVIDER_ID = 'ZGD3YGrW';
+
+/* Subscription body encryption (AES-128-GCM, Happ scheme).
+   key02 is the public test key — request a private one for real secrecy. */
+const SUB_KEY_ID  = process.env.SUB_KEY_ID  || 'key02';
+const SUB_AES_KEY = Buffer.from(process.env.SUB_AES_KEY || 'key02:+]%4ij#P"/', 'utf8');
+const SUB_IV      = Buffer.from('kkkkkkkkkkkk', 'utf8');
+const SUB_ENCRYPT = process.env.SUB_ENCRYPT !== '0';
+
 const LOCAL_CFG = path.join(__dirname, 'github.json');
 const REPO_CFG_PATH = 'data/config.json';
 const CFG_KEYS = ['owner', 'repo', 'branch', 'file', 'token', 'providerId'];
@@ -194,7 +205,8 @@ async function requireAdmin(req, res) {
   overridable via env HAPP_PROVIDER_ID or the admin panel.
 */
 function providerId() {
-  return String(cfg.providerId || process.env.HAPP_PROVIDER_ID || '').trim();
+  const v = String(cfg.providerId || process.env.HAPP_PROVIDER_ID || '').trim();
+  return v || FALLBACK_PROVIDER_ID;
 }
 
 const FRONTEND_DIR = fs.existsSync(path.join(__dirname, '..', 'frontend'))
@@ -657,9 +669,29 @@ function buildLink(blocked, label, auth, host, port) {
   simply fails to connect.
 */
 function subConfig(blocked, label, auth, host, port) {
-  const line = buildLink(blocked, label, auth, host, port);
+  const link = buildLink(blocked, label, auth, host, port);
   if (SUB_FORMAT === 'json') return JSON.stringify(buildConfig(blocked, label, auth, host, port), null, 2);
-  return Buffer.from(line, 'utf8').toString('base64');
+
+  /* Body-level directives: headers can be lost to a proxy or a CDN rewrite,
+     these ride along with the payload. */
+  return [
+    `#providerid ${providerId()}`,
+    '#hide-settings: 1',
+    `#profile-title: ${PROFILE_TITLE}`,
+    '#subscription-always-hwid-enable: 1',
+    '#manual-block-user-agent: 1',
+    '#dont-use-filter: 1',
+    '#subscriptions-collapse: 0',
+    link
+  ].join('\n') + '\n';
+}
+
+/* AES-128-GCM. Happ wants the tag in its own header, base64'd — not appended
+   to the ciphertext, and not inside the body. */
+function encryptBody(text) {
+  const cipher = crypto.createCipheriv('aes-128-gcm', SUB_AES_KEY, SUB_IV);
+  const ct = Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]);
+  return { body: ct.toString('base64'), tag: cipher.getAuthTag().toString('base64') };
 }
 
 /* ================= FEATURE MODES ================= */
@@ -781,13 +813,15 @@ app.get('/api/happ-link', async (req, res) => {
     if (!out.ok) return res.json({ ok: false, reason: out.reason, message: REASON_TEXT[out.reason] });
 
     const m = FEATURE_MODES.includes(mode) ? mode : '';
-    const subUrl = `${baseUrl(req)}/sub?key=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}${m ? `&mode=${m}` : ''}`;
-    const cacheKey = `${key}|${did}|${m}`;
+    const subUrl = `${baseUrl(req)}/sub?k=${encodeURIComponent(key)}${did ? `&did=${encodeURIComponent(did)}` : ''}${m ? `&mode=${m}` : ''}&key=${encodeURIComponent(SUB_KEY_ID)}`;
+    const cacheKey = `${key}|${did}|${m}|${SUB_KEY_ID}`;
     const cachedLink = happCacheGet(cacheKey);
     if (cachedLink) return res.json({ ok: true, link: cachedLink, raw: subUrl, mode: m, encrypted: true });
-    const link = await encryptHappLink(subUrl);
+
+    let link = await encryptHappLink(subUrl);
+    if (!link) link = await encryptHappLink(subUrl);   // one retry, then accept the raw URL
     if (link) happCacheSet(cacheKey, link);
-    return res.json({ ok: !!link, link: link || subUrl, raw: subUrl, encrypted: !!link, mode: m });
+    return res.json({ ok: true, link: link || subUrl, raw: subUrl, encrypted: !!link, mode: m });
   } catch (e) {
     return res.json({ ok: false, reason: 'storage-error', detail: e.message });
   }
@@ -802,15 +836,17 @@ app.get('/sub', async (req, res) => {
   res.setHeader('per-app-proxy-list', PER_APP_LIST);
   res.setHeader('subscriptions-collapse', '0');
 
+  res.setHeader('Cache-Control', 'no-store');
+
   /*
-    providerid + hide-settings together: the user cannot open the server row,
-    so no address, port, auth or JSON is ever exposed.
+    Unconditional. hide-settings only applies with a providerid, so both go
+    out together or neither does.
   */
-  const pid = providerId();
-  if (pid) {
-    res.setHeader('providerid', pid);
-    res.setHeader('hide-settings', '1');
-  }
+  res.setHeader('providerid', providerId());
+  res.setHeader('hide-settings', '1');
+  res.setHeader('manual-block-user-agent', '1');
+  res.setHeader('subscription-always-hwid-enable', '1');
+  res.setHeader('dont-use-filter', '1');
 
   res.setHeader('content-disposition', 'attachment; filename="pc5-android.txt"');
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
@@ -828,7 +864,9 @@ app.get('/sub', async (req, res) => {
       res.setHeader('x-pc5-status', 'maintenance');
       body = subConfig(true, `${PROFILE_NAME} — MAINTENANCE`);
     } else {
-      const { key } = req.query;
+      /* k = license. Bare `key` is either the AES key id or a legacy link. */
+      const legacy = String(req.query.key || '');
+      const key = String(req.query.k || (/^key\d+$/.test(legacy) ? '' : legacy)).trim();
       const did = deviceOf(req);
       const out = key ? await accessKey(key, c, did, deviceUa(req)) : { ok: false, reason: 'invalid' };
       if (!out.ok) {
@@ -850,6 +888,11 @@ app.get('/sub', async (req, res) => {
     body = subConfig(true, `${PROFILE_NAME} — SUBSCRIPTION EXPIRED OR TERMINATED`);
   }
 
+  if (SUB_ENCRYPT && SUB_FORMAT !== 'json') {
+    const enc = encryptBody(body);
+    res.setHeader('encrypt-tag', enc.tag);
+    return res.status(200).send(enc.body);
+  }
   return res.status(200).send(body);
 });
 
@@ -944,9 +987,9 @@ app.post('/api/admin/provider-id', async (req, res) => {
   cfg.providerId = next;
   saveCfg();
   happLinkCache.clear();
-  console.log(`[happ] providerid -> ${next ? next.slice(0, 8) + '…' : 'cleared'}`);
+  console.log(`[happ] providerid -> ${next ? next.slice(0, 8) + '…' : 'cleared (using fallback)'}`);
   await pushCfgToRepo(cfg, cfg).catch(() => {});
-  return res.json({ success: true, providerId: next, hideSettings: !!next });
+  return res.json({ success: true, providerId: providerId(), hideSettings: true });
 });
 
 app.post('/api/admin/diag', async (req, res) => {
@@ -968,8 +1011,10 @@ app.post('/api/admin/diag', async (req, res) => {
       : (c.token === HARD.token ? 'hardcoded' : 'panel override'),
     adminKeyVer: state.ver,
     subFormat: SUB_FORMAT,
+    subEncrypt: SUB_ENCRYPT,
+    subKeyId: SUB_KEY_ID,
     providerId: providerId() ? 'set' : 'missing',
-    hideSettings: !!providerId()
+    hideSettings: true
   };
 
   try {
@@ -1295,6 +1340,7 @@ const PORT = process.env.PORT || 3000;
     console.log(`[admin] key source -> ${ADMIN_KEY_URL}`);
     console.log(`[upstream] hysteria2 -> ${HYST_HOST}:${HYST_PORT}`);
     console.log(`[sub] format -> ${SUB_FORMAT} | providerid -> ${providerId() ? 'set' : 'missing'}`);
+    console.log(`[sub] encrypt -> ${SUB_ENCRYPT ? `on (key id ${SUB_KEY_ID})` : 'off'}`);
     getAdminKey(true);
   });
 })();
