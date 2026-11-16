@@ -604,55 +604,137 @@ const DEAD_AUTH = 'PC5-BLOCKED:0';
 
 const PER_APP_LIST = 'com.garena.game.ffi,com.dts.freefiremax';
 
-/* Full Xray config — used by 'json' mode. Fresh object every call. */
+/* ================= BASE XRAY CONFIG (imported) ================= */
+/*
+  Canonical tunnel profile, kept verbatim from the exported config so the
+  sniffing rules, port routing table and QUIC mask live in exactly one place.
+
+  buildConfig() deep-clones this and patches only the fields that vary per
+  request (remarks label, hysteria auth, address, port). Nothing here is ever
+  mutated in place, so a blocked key, a feature auth or a host override can
+  never leak into the next response.
+*/
+const BASE_CONFIG = {
+  remarks: 'dripwire-ind',
+  inbounds: [
+    {
+      listen: '127.0.0.1',
+      port: 10808,
+      protocol: 'socks',
+      settings: {
+        auth: 'noauth',
+        udp: true
+      },
+      sniffing: {
+        destOverride: [
+          'http',
+          'tls',
+          'quic'
+        ],
+        enabled: true,
+        routeOnly: false
+      },
+      tag: 'socks'
+    },
+    {
+      listen: '127.0.0.1',
+      port: 10809,
+      protocol: 'http',
+      sniffing: {
+        destOverride: [
+          'http',
+          'tls',
+          'quic'
+        ],
+        enabled: true,
+        routeOnly: false
+      },
+      tag: 'http'
+    }
+  ],
+  outbounds: [
+    {
+      protocol: 'hysteria',
+      settings: {
+        address: 'proxy-ind.dripwire.cc',
+        port: 443,
+        version: 2
+      },
+      streamSettings: {
+        hysteriaSettings: {
+          auth: '6914422730:ca0a93b7b5698e52',
+          version: 2
+        },
+        network: 'hysteria',
+        security: 'tls',
+        tlsSettings: {
+          alpn: [
+            'h3'
+          ],
+          serverName: 'proxy-ind.dripwire.cc',
+          show: false
+        },
+        finalmask: {
+          quicParams: {
+            disableChromeParrot: true
+          }
+        }
+      },
+      tag: 'proxy'
+    },
+    {
+      protocol: 'freedom',
+      tag: 'direct'
+    }
+  ],
+  routing: {
+    domainStrategy: 'AsIs',
+    rules: [
+      {
+        network: 'tcp',
+        outboundTag: 'proxy',
+        port: '39000-39999'
+      },
+      {
+        network: 'udp',
+        outboundTag: 'proxy',
+        port: '10000-10999'
+      },
+      {
+        network: 'tcp,udp',
+        outboundTag: 'direct'
+      }
+    ]
+  }
+};
+
+/* Full Xray config — used by 'json' mode. Clones BASE_CONFIG, then applies the
+   per-request label / auth / address / port. Fresh object every call. */
 function buildConfig(blocked, label, auth, host, port) {
   const addr = host || HYST_HOST;
   const prt = Number(port) || HYST_PORT;
   const cred = blocked ? DEAD_AUTH : (auth || DEFAULT_HYST_AUTH);
 
-  return {
-    remarks: label,
-    inbounds: [
-      {
-        listen: '127.0.0.1',
-        port: 10808,
-        protocol: 'socks',
-        settings: { auth: 'noauth', udp: true },
-        sniffing: { destOverride: ['http', 'tls', 'quic'], enabled: true, routeOnly: false },
-        tag: 'socks'
-      },
-      {
-        listen: '127.0.0.1',
-        port: 10809,
-        protocol: 'http',
-        sniffing: { destOverride: ['http', 'tls', 'quic'], enabled: true, routeOnly: false },
-        tag: 'http'
-      }
-    ],
-    outbounds: [
-      {
-        protocol: 'hysteria',
-        settings: { address: addr, port: prt, version: 2 },
-        streamSettings: {
-          hysteriaSettings: { auth: cred, version: 2 },
-          network: 'hysteria',
-          security: 'tls',
-          tlsSettings: { alpn: ['h3'], serverName: addr, show: false },
-          finalmask: { quicParams: { disableChromeParrot: true } }
-        },
-        tag: 'proxy'
-      },
-      { protocol: 'freedom', tag: 'direct' }
-    ],
-    routing: {
-      domainStrategy: 'AsIs',
-      rules: [
-        { network: 'tcp', outboundTag: 'proxy', port: '39000-39999' },
-        { network: 'udp', outboundTag: 'proxy', port: '10000-10999' },
-        { network: 'tcp,udp', outboundTag: 'direct' }
-      ]
+  const outCfg = JSON.parse(JSON.stringify(BASE_CONFIG));
+  outCfg.remarks = label;
+
+  const proxyOut = Array.isArray(outCfg.outbounds)
+    ? outCfg.outbounds.find(o => o && o.tag === 'proxy') || outCfg.outbounds[0]
+    : null;
+
+  if (proxyOut) {
+    if (proxyOut.settings) {
+      proxyOut.settings.address = addr;
+      proxyOut.settings.port = prt;
     }
-  };
+    const ss = proxyOut.streamSettings;
+    if (ss) {
+      if (ss.hysteriaSettings) ss.hysteriaSettings.auth = cred;
+      if (ss.tlsSettings) ss.tlsSettings.serverName = addr;
+    }
+  }
+
+  return outCfg;
 }
 
 /* The same proxy outbound as a hysteria2 share link. */
