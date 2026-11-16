@@ -6406,17 +6406,6 @@
       ]
     },
     {
-      "key": "PC5-WY6O53",
-      "durationHours": 12,
-      "maxDevices": 0,
-      "deviceLimit": "unlimited",
-      "devices": [],
-      "createdAt": "2026-11-16T12:07:46.484Z",
-      "startedAt": "2026-11-16T12:12:05.274Z",
-      "activatedAt": "2026-11-16T12:12:05.274Z",
-      "expiresAt": "2026-11-17T00:12:05.274Z"
-    },
-    {
       "key": "PC5-JI03Z6",
       "durationHours": 1,
       "maxDevices": 1,
