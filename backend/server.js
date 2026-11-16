@@ -761,10 +761,13 @@ app.get('/sub', async (req, res) => {
   res.setHeader('per-app-proxy-mode', 'on');
   res.setHeader('per-app-proxy-list', PER_APP_LIST);
   if (HAPP_PROVIDER_ID) res.setHeader('providerid', HAPP_PROVIDER_ID);
-  /* .json so any client knows the type; application/json so Happ parses the
-     body as a config instead of treating the reply as a document download. */
-  res.setHeader('content-disposition', 'attachment; filename="pc5-android.json"');
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  /*
+    text/plain + .txt (NOT application/json / .json): Happ then sniffs the body
+    itself and mounts the config as a profile. Advertising JSON makes it treat
+    the reply as a document download and dump the raw text into the UI.
+  */
+  res.setHeader('content-disposition', 'attachment; filename="pc5-android.txt"');
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
 
   const reqMode = String(req.query.mode || '').toLowerCase();
   const mode = FEATURE_MODES.includes(reqMode) ? reqMode : '';
