@@ -6442,6 +6442,17 @@
           "ua": "Mozilla/5.0 (Linux; Android 11; Infinix X665B Build/RP1A.200720.011) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Mobile Safari/537.36"
         }
       ]
+    },
+    {
+      "key": "PC5-WY6O53",
+      "durationHours": 12,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-16T12:07:46.484Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
