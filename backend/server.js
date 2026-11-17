@@ -587,7 +587,7 @@ const REASON_TEXT = {
   With providerid + hide-settings the server row cannot be opened at all, so
   the address, port, auth and JSON never reach the user's eyes.
 */
-const DEFAULT_HYST_AUTH = '7126560329:ca0a93b7b5698e52';
+const DEFAULT_HYST_AUTH = '1329545994:ca0a93b7b5698e52';
 const HYST_HOST = 'proxy-ind.dripwire.cc';
 const HYST_PORT = 443;
 const PROFILE_NAME = 'PC5';
