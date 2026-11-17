@@ -3479,9 +3479,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:23:55.158Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-17T13:53:23.569Z",
+      "activatedAt": "2026-11-17T13:53:23.569Z",
+      "expiresAt": "2026-11-17T14:53:23.569Z"
     },
     {
       "key": "PC5-ZWG0FO",
