@@ -1917,7 +1917,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-17T11:33:09.869Z",
+      "activatedAt": "2026-11-17T11:33:09.869Z",
+      "expiresAt": "2026-11-17T12:33:09.869Z"
     },
     {
       "key": "PC5-Y140K7",
