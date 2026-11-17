@@ -6709,6 +6709,17 @@
       "expiresAt": null,
       "deviceLimit": "single",
       "devices": []
+    },
+    {
+      "key": "PC5-QTA1EG",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-17T13:54:32.844Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
