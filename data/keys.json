@@ -7019,6 +7019,17 @@
       "expiresAt": null,
       "deviceLimit": "single",
       "devices": []
+    },
+    {
+      "key": "PC5-I0X4AF",
+      "durationHours": 3,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-17T15:16:13.370Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
