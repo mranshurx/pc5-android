@@ -6616,6 +6616,17 @@
         }
       ],
       "maintenancePausedMs": 2168447
+    },
+    {
+      "key": "PC5-F4P89D",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-17T09:02:32.630Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
