@@ -6616,6 +6616,17 @@
         }
       ],
       "maintenancePausedMs": 2168447
+    },
+    {
+      "key": "PC5-J6FT7L",
+      "durationHours": 6,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-17T09:20:26.139Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
