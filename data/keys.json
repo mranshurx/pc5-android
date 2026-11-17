@@ -6732,7 +6732,9 @@
       "createdAt": "2026-11-17T14:06:02.495Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-L5W29A",
@@ -6743,9 +6745,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-17T14:06:15.670Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-17T14:07:04.897Z",
+      "activatedAt": "2026-11-17T14:07:04.897Z",
+      "expiresAt": "2026-11-17T15:07:04.897Z",
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
