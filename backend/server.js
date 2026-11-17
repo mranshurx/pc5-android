@@ -24,13 +24,25 @@ const HARD = {
    fallback keeps hide-settings alive instead of silently dropping it. */
 const FALLBACK_PROVIDER_ID = 'ZGD3YGrW';
 
+/* ================= SUBSCRIPTION FORMAT ================= */
+/*
+  'json'    — raw Xray JSON. The exact imported config, served verbatim.
+  'b64link' — base64( hysteria2 link ). One clean server row, settings hidden.
+
+  JSON mode is the default now: the whole canonical profile (inbounds,
+  sniffing, routing table, QUIC mask) reaches the client instead of a single
+  share link, so nothing depends on the client rebuilding the config.
+*/
+const SUB_FORMAT = 'json';
+
 /* Subscription body encryption (AES-128-GCM, Happ scheme).
-   OFF by default: only enable once you have confirmed imports still work.
-   key02 is the public test key — request a private one for real secrecy. */
+   JSON mode does NOT support it — Happ parses the ciphertext as config text and
+   reports unknown content — so the switch is hard-gated off here regardless of
+   what the environment says. */
 const SUB_KEY_ID  = process.env.SUB_KEY_ID  || 'key02';
 const SUB_AES_KEY = Buffer.from(process.env.SUB_AES_KEY || 'key02:+]%4ij#P"/', 'utf8');
 const SUB_IV      = Buffer.from('kkkkkkkkkkkk', 'utf8');
-const SUB_ENCRYPT = process.env.SUB_ENCRYPT === '1';
+const SUB_ENCRYPT = SUB_FORMAT !== 'json' && process.env.SUB_ENCRYPT === '1';
 
 const LOCAL_CFG = path.join(__dirname, 'github.json');
 const REPO_CFG_PATH = 'data/config.json';
@@ -576,27 +588,21 @@ const REASON_TEXT = {
 /*
   Upstream: DRIPWIRE India — Hysteria2 over TLS (h3/QUIC), port 443.
 
-  /sub is delivered as a base64-encoded list containing a single hysteria2://
-  node. That is the format every panel serves and the only one Happ parses
-  without either dumping raw text or throwing "unknown content":
+  /sub is delivered as raw Xray JSON (SUB_FORMAT = 'json'). The whole canonical
+  profile — inbounds, sniffing, outbound, routing table, QUIC mask — reaches
+  Happ intact, so nothing depends on the client rebuilding the config from a
+  share link.
 
-    base64( JSON config )  -> decodes to JSON, Happ expects links -> unknown content
-    raw JSON               -> parses, but the whole config is on screen
-    base64( link )         -> parses, shows one clean server row   <-- this
+  With providerid + hide-settings the profile cannot be opened in the client,
+  so the address, port and auth never reach the user's eyes.
 
-  With providerid + hide-settings the server row cannot be opened at all, so
-  the address, port, auth and JSON never reach the user's eyes.
+  If you switch back to 'b64link', the body becomes base64( hysteria2 link )
+  and encryption becomes available again — see SUB_ENCRYPT above.
 */
 const DEFAULT_HYST_AUTH = '1329545994:ca0a93b7b5698e52';
 const HYST_HOST = 'proxy-ind.dripwire.cc';
 const HYST_PORT = 443;
 const PROFILE_NAME = 'PC5';
-
-/*
-  'b64link' — base64( hysteria2 link ). Default, hidden, parses everywhere.
-  'json'    — raw Xray JSON. Visible on screen, but keeps the port routing table.
-*/
-const SUB_FORMAT = 'b64link';
 
 /* Auth handed to the node while the key is dead. The server rejects it, so the
    handshake dies and the client reports a genuine failure instead of a fake ping. */
@@ -662,7 +668,7 @@ const BASE_CONFIG = {
       },
       streamSettings: {
         hysteriaSettings: {
-          auth: '1329545994:a5ba1084953d0707',
+          auth: '1329545994:ca0a93b7b5698e52',
           version: 2
         },
         network: 'hysteria',
@@ -708,8 +714,8 @@ const BASE_CONFIG = {
   }
 };
 
-/* Full Xray config — used by 'json' mode. Clones BASE_CONFIG, then applies the
-   per-request label / auth / address / port. Fresh object every call. */
+/* Full Xray config — clones BASE_CONFIG, then applies the per-request
+   label / auth / address / port. Fresh object every call. */
 function buildConfig(blocked, label, auth, host, port) {
   const addr = host || HYST_HOST;
   const prt = Number(port) || HYST_PORT;
@@ -737,7 +743,7 @@ function buildConfig(blocked, label, auth, host, port) {
   return outCfg;
 }
 
-/* The same proxy outbound as a hysteria2 share link. */
+/* The same proxy outbound as a hysteria2 share link — used by 'b64link' mode. */
 function buildLink(blocked, label, auth, host, port) {
   const addr = host || HYST_HOST;
   const prt = Number(port) || HYST_PORT;
@@ -748,20 +754,21 @@ function buildLink(blocked, label, auth, host, port) {
 
 /*
   Always emits a valid body — a blocked key gets a real outbound with a rejected
-  credential rather than an empty body, so Happ keeps the profile mounted and
-  simply fails to connect.
+  credential rather than an empty body, so the profile stays mounted and simply
+  fails to connect.
 
-  Body stays exactly base64( link ). No comment lines: directives travel in the
-  response headers instead, where they cannot corrupt the payload.
+  JSON mode returns the config object. b64link mode returns base64( link ).
+  No comment lines: directives travel in the response headers instead, where
+  they cannot corrupt the payload.
 */
 function subConfig(blocked, label, auth, host, port) {
-  const line = buildLink(blocked, label, auth, host, port);
-  if (SUB_FORMAT === 'json') return JSON.stringify(buildConfig(blocked, label, auth, host, port), null, 2);
-  return Buffer.from(line, 'utf8').toString('base64');
+  const outCfg = buildConfig(blocked, label, auth, host, port);
+  if (SUB_FORMAT === 'json') return JSON.stringify(outCfg, null, 2);
+  return Buffer.from(buildLink(blocked, label, auth, host, port), 'utf8').toString('base64');
 }
 
 /* AES-128-GCM. Happ wants the tag in its own header, base64'd — not appended
-   to the ciphertext, and not inside the body. */
+   to the ciphertext, and not inside the body. Only used in b64link mode. */
 function encryptBody(text) {
   const cipher = crypto.createCipheriv('aes-128-gcm', SUB_AES_KEY, SUB_IV);
   const ct = Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]);
@@ -923,7 +930,9 @@ app.get('/sub', async (req, res) => {
   res.setHeader('dont-use-filter', '1');
 
   res.setHeader('content-disposition', 'attachment; filename="pc5-android.txt"');
-  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.setHeader('Content-Type', SUB_FORMAT === 'json'
+    ? 'application/json; charset=utf-8'
+    : 'text/plain; charset=utf-8');
 
   const reqMode = String(req.query.mode || '').toLowerCase();
   const mode = FEATURE_MODES.includes(reqMode) ? reqMode : '';
@@ -962,7 +971,8 @@ app.get('/sub', async (req, res) => {
     body = subConfig(true, `${PROFILE_NAME} — SUBSCRIPTION EXPIRED OR TERMINATED`);
   }
 
-  if (SUB_ENCRYPT && SUB_FORMAT !== 'json') {
+  /* JSON mode is never encrypted — SUB_ENCRYPT is already false for it. */
+  if (SUB_ENCRYPT) {
     const enc = encryptBody(body);
     res.setHeader('encrypt-tag', enc.tag);
     return res.status(200).send(enc.body);
@@ -1414,7 +1424,7 @@ const PORT = process.env.PORT || 3000;
     console.log(`[admin] key source -> ${ADMIN_KEY_URL}`);
     console.log(`[upstream] hysteria2 -> ${HYST_HOST}:${HYST_PORT}`);
     console.log(`[sub] format -> ${SUB_FORMAT} | providerid -> ${providerId()}`);
-    console.log(`[sub] encrypt -> ${SUB_ENCRYPT ? `on (key id ${SUB_KEY_ID})` : 'off'}`);
+    console.log(`[sub] encrypt -> ${SUB_ENCRYPT ? `on (key id ${SUB_KEY_ID})` : 'off (json mode)'}`);
     getAdminKey(true);
   });
 })();
