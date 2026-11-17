@@ -662,7 +662,7 @@ const BASE_CONFIG = {
       },
       streamSettings: {
         hysteriaSettings: {
-          auth: '7126560329:a5ba1084953d0707',
+          auth: '1329545994:a5ba1084953d0707',
           version: 2
         },
         network: 'hysteria',
