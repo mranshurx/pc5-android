@@ -6528,9 +6528,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-16T12:54:13.989Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-17T13:47:54.025Z",
+      "activatedAt": "2026-11-17T13:47:54.025Z",
+      "expiresAt": "2026-11-17T19:47:54.025Z"
     },
     {
       "key": "PC5-WVHBK9",
@@ -6677,7 +6677,9 @@
       "createdAt": "2026-11-17T13:22:03.517Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-EMCCTF",
@@ -6690,7 +6692,9 @@
       "createdAt": "2026-11-17T13:23:22.594Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
