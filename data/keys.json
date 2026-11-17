@@ -7037,6 +7037,17 @@
       "startedAt": "2026-11-17T15:17:13.012Z",
       "activatedAt": "2026-11-17T15:17:13.012Z",
       "expiresAt": "2026-11-17T18:17:13.012Z"
+    },
+    {
+      "key": "PC5-IU3OG4",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-17T16:05:15.667Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
