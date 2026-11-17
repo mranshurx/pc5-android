@@ -3498,15 +3498,15 @@
       "devices": [
         {
           "id": "Dafadeb331aebcf08",
-          "firstSeen": "2026-11-17T17:47:29.382Z",
-          "lastSeen": "2026-11-17T17:47:29.382Z",
+          "firstSeen": "2026-11-17T17:47:29.833Z",
+          "lastSeen": "2026-11-17T17:47:29.833Z",
           "ua": "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
         }
       ],
       "createdAt": "2026-11-13T11:23:57.045Z",
-      "startedAt": "2026-11-17T17:47:27.457Z",
-      "activatedAt": "2026-11-17T17:47:27.457Z",
-      "expiresAt": "2026-11-17T18:47:27.457Z"
+      "startedAt": "2026-11-17T17:47:27.667Z",
+      "activatedAt": "2026-11-17T17:47:27.667Z",
+      "expiresAt": "2026-11-17T18:47:27.667Z"
     },
     {
       "key": "PC5-BCL4L4",
