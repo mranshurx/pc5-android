@@ -7187,9 +7187,11 @@
       "resellerId": "55d62b9c-f779-42b7-826e-8b38f13400ba",
       "reseller": "namanraj",
       "createdAt": "2026-11-18T15:31:35.167Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-18T15:34:28.469Z",
+      "activatedAt": "2026-11-18T15:34:28.469Z",
+      "expiresAt": "2026-11-18T18:34:28.469Z",
+      "deviceLimit": "single",
+      "devices": []
     },
     {
       "key": "PC5-YH826K",
@@ -7202,7 +7204,9 @@
       "createdAt": "2026-11-18T15:34:13.483Z",
       "startedAt": null,
       "activatedAt": null,
-      "expiresAt": null
+      "expiresAt": null,
+      "deviceLimit": "single",
+      "devices": []
     }
   ],
   "maintenance": {
