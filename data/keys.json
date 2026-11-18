@@ -7108,24 +7108,6 @@
       "expiresAt": "2026-11-18T15:20:56.565Z"
     },
     {
-      "key": "PC5-7COGLW",
-      "durationHours": 3,
-      "maxDevices": 1,
-      "deviceLimit": "single",
-      "devices": [
-        {
-          "id": "Dd67b98bdfd30df50",
-          "firstSeen": "2026-11-18T15:16:45.687Z",
-          "lastSeen": "2026-11-18T15:16:45.687Z",
-          "ua": "Mozilla/5.0 (Linux; Android 12; CPH2321 Build/SP1A.210812.016) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.50 Mobile Safari/537.36"
-        }
-      ],
-      "createdAt": "2026-11-18T15:16:14.600Z",
-      "startedAt": "2026-11-18T15:16:43.984Z",
-      "activatedAt": "2026-11-18T15:16:43.984Z",
-      "expiresAt": "2026-11-18T18:16:43.984Z"
-    },
-    {
       "key": "PC5-M679WP",
       "durationHours": 3,
       "maxDevices": 0,
