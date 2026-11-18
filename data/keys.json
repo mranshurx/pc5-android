@@ -7106,6 +7106,17 @@
       "startedAt": "2026-11-18T14:20:56.565Z",
       "activatedAt": "2026-11-18T14:20:56.565Z",
       "expiresAt": "2026-11-18T15:20:56.565Z"
+    },
+    {
+      "key": "PC5-7COGLW",
+      "durationHours": 3,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-18T15:16:14.600Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
