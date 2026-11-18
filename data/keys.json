@@ -7084,6 +7084,17 @@
           "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/24A437 Safari/604.1"
         }
       ]
+    },
+    {
+      "key": "PC5-9IDUBT",
+      "durationHours": 1,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-18T13:58:38.342Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
