@@ -7117,6 +7117,17 @@
       "startedAt": "2026-11-18T15:18:50.768Z",
       "activatedAt": "2026-11-18T15:18:50.768Z",
       "expiresAt": "2026-11-18T18:18:50.768Z"
+    },
+    {
+      "key": "PC5-P5S13I",
+      "durationHours": 24,
+      "maxDevices": 1,
+      "deviceLimit": "single",
+      "devices": [],
+      "createdAt": "2026-11-18T15:20:39.063Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
