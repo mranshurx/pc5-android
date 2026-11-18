@@ -7191,7 +7191,14 @@
       "activatedAt": "2026-11-18T15:34:28.469Z",
       "expiresAt": "2026-11-18T18:34:28.469Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D599287c5217b28c5",
+          "firstSeen": "2026-11-18T15:34:30.633Z",
+          "lastSeen": "2026-11-18T15:34:30.633Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; TECNO KE5k Build/QP1A.190711.020) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-YH826K",
