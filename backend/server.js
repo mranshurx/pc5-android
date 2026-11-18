@@ -27,10 +27,10 @@ const FALLBACK_PROVIDER_ID = 'ZGD3YGrW';
 /* ================= SUBSCRIPTION FORMAT ================= */
 /*
   'json'    — raw Xray JSON. The exact imported config, served verbatim.
-  'b64link' — base64( hysteria2 link ). One clean server row, settings hidden.
+  'b64link' — base64( socks link ). One clean server row, settings hidden.
 
   JSON mode is the default now: the whole canonical profile (inbounds,
-  sniffing, routing table, QUIC mask) reaches the client instead of a single
+  routing table, outbound) reaches the client instead of a single
   share link, so nothing depends on the client rebuilding the config.
 */
 const SUB_FORMAT = 'json';
@@ -586,22 +586,22 @@ const REASON_TEXT = {
 
 /* ================= ROUTING CONFIG ================= */
 /*
-  Upstream: DRIPWIRE India — Hysteria2 over TLS (h3/QUIC), port 443.
+  Upstream: SOCKS5 on asiarezzx.toulouse-digital31.fr, port 8443, with a
+  user:pass credential.
 
   /sub is delivered as raw Xray JSON (SUB_FORMAT = 'json'). The whole canonical
-  profile — inbounds, sniffing, outbound, routing table, QUIC mask — reaches
-  Happ intact, so nothing depends on the client rebuilding the config from a
-  share link.
+  profile — inbound, outbound, routing table — reaches Happ intact, so nothing
+  depends on the client rebuilding the config from a share link.
 
   With providerid + hide-settings the profile cannot be opened in the client,
-  so the address, port and auth never reach the user's eyes.
+  so the address, port and credential never reach the user's eyes.
 
-  If you switch back to 'b64link', the body becomes base64( hysteria2 link )
+  If you switch back to 'b64link', the body becomes base64( socks link )
   and encryption becomes available again — see SUB_ENCRYPT above.
 */
-const DEFAULT_HYST_AUTH = '1329545994:ca0a93b7b5698e52';
-const HYST_HOST = 'proxy-ind.dripwire.cc';
-const HYST_PORT = 443;
+const DEFAULT_NODE_AUTH = 'bacd383572e7f5092f950c96f489cb66:v1.498613.58db82a3.3f02b42d171737ed393861af';
+const NODE_HOST = 'asiarezzx.toulouse-digital31.fr';
+const NODE_PORT = 8443;
 const PROFILE_NAME = 'PC5';
 
 /* Auth handed to the node while the key is dead. The server rejects it, so the
@@ -613,113 +613,100 @@ const PER_APP_LIST = 'com.garena.game.ffi,com.dts.freefiremax';
 /* ================= BASE XRAY CONFIG (imported) ================= */
 /*
   Canonical tunnel profile, kept verbatim from the exported config so the
-  sniffing rules, port routing table and QUIC mask live in exactly one place.
+  routing table and outbound live in exactly one place.
 
   buildConfig() deep-clones this and patches only the fields that vary per
-  request (remarks label, hysteria auth, address, port). Nothing here is ever
+  request (remarks label, socks credential, address, port). Nothing here is ever
   mutated in place, so a blocked key, a feature auth or a host override can
   never leak into the next response.
 */
 const BASE_CONFIG = {
-  remarks: 'dripwire-ind',
+  log: {
+    loglevel: 'warning'
+  },
   inbounds: [
     {
+      tag: 'socks-in',
+      protocol: 'socks',
       listen: '127.0.0.1',
       port: 10808,
-      protocol: 'socks',
       settings: {
         auth: 'noauth',
         udp: true
       },
       sniffing: {
-        destOverride: [
-          'http',
-          'tls',
-          'quic'
-        ],
-        enabled: true,
-        routeOnly: false
-      },
-      tag: 'socks'
-    },
-    {
-      listen: '127.0.0.1',
-      port: 10809,
-      protocol: 'http',
-      sniffing: {
-        destOverride: [
-          'http',
-          'tls',
-          'quic'
-        ],
-        enabled: true,
-        routeOnly: false
-      },
-      tag: 'http'
+        enabled: false
+      }
     }
   ],
   outbounds: [
     {
-      protocol: 'hysteria',
+      tag: 'proxy',
+      protocol: 'socks',
       settings: {
-        address: 'proxy-ind.dripwire.cc',
-        port: 443,
-        version: 2
-      },
-      streamSettings: {
-        hysteriaSettings: {
-          auth: '1329545994:ca0a93b7b5698e52',
-          version: 2
-        },
-        network: 'hysteria',
-        security: 'tls',
-        tlsSettings: {
-          alpn: [
-            'h3'
-          ],
-          serverName: 'proxy-ind.dripwire.cc',
-          show: false
-        },
-        finalmask: {
-          quicParams: {
-            disableChromeParrot: true
+        servers: [
+          {
+            address: 'asiarezzx.toulouse-digital31.fr',
+            port: 8443,
+            users: [
+              {
+                user: 'bacd383572e7f5092f950c96f489cb66',
+                pass: 'v1.498613.58db82a3.3f02b42d171737ed393861af'
+              }
+            ]
           }
-        }
-      },
-      tag: 'proxy'
+        ]
+      }
     },
     {
+      tag: 'direct',
       protocol: 'freedom',
-      tag: 'direct'
+      settings: {}
+    },
+    {
+      tag: 'block',
+      protocol: 'blackhole',
+      settings: {}
     }
   ],
   routing: {
     domainStrategy: 'AsIs',
     rules: [
       {
+        type: 'field',
         network: 'tcp',
-        outboundTag: 'proxy',
-        port: '39000-39999'
-      },
-      {
-        network: 'udp',
-        outboundTag: 'proxy',
-        port: '10000-10999'
-      },
-      {
-        network: 'tcp,udp',
+        port: '0-7005,7007-39599,39901-65535',
         outboundTag: 'direct'
+      },
+      {
+        type: 'field',
+        network: 'udp',
+        port: '0-10009,10021-65535',
+        outboundTag: 'direct'
+      },
+      {
+        type: 'field',
+        network: 'tcp,udp',
+        outboundTag: 'proxy'
       }
     ]
   }
 };
 
+/* Splits a user:pass credential, tolerating colons inside the password. */
+function splitAuth(cred) {
+  const i = cred.indexOf(':');
+  if (i < 0) return [cred, ''];
+  return [cred.slice(0, i), cred.slice(i + 1)];
+}
+
 /* Full Xray config — clones BASE_CONFIG, then applies the per-request
-   label / auth / address / port. Fresh object every call. */
+   label / credential / address / port. Fresh object every call. */
 function buildConfig(blocked, label, auth, host, port) {
-  const addr = host || HYST_HOST;
-  const prt = Number(port) || HYST_PORT;
-  const cred = blocked ? DEAD_AUTH : (auth || DEFAULT_HYST_AUTH);
+  const addr = host || NODE_HOST;
+  const prt = Number(port) || NODE_PORT;
+  const cred = blocked ? DEAD_AUTH : (auth || DEFAULT_NODE_AUTH);
+  const [user, pass] = splitAuth(cred);
 
   const outCfg = JSON.parse(JSON.stringify(BASE_CONFIG));
   outCfg.remarks = label;
@@ -728,28 +715,31 @@ function buildConfig(blocked, label, auth, host, port) {
     ? outCfg.outbounds.find(o => o && o.tag === 'proxy') || outCfg.outbounds[0]
     : null;
 
-  if (proxyOut) {
-    if (proxyOut.settings) {
-      proxyOut.settings.address = addr;
-      proxyOut.settings.port = prt;
+  if (proxyOut && proxyOut.settings) {
+    const s = proxyOut.settings;
+    if (Array.isArray(s.servers) && s.servers[0]) {
+      s.servers[0].address = addr;
+      s.servers[0].port = prt;
+      if (Array.isArray(s.servers[0].users) && s.servers[0].users[0]) {
+        s.servers[0].users[0].user = user;
+        s.servers[0].users[0].pass = pass;
+      }
     }
-    const ss = proxyOut.streamSettings;
-    if (ss) {
-      if (ss.hysteriaSettings) ss.hysteriaSettings.auth = cred;
-      if (ss.tlsSettings) ss.tlsSettings.serverName = addr;
-    }
+    if ('address' in s) s.address = addr;
+    if ('port' in s) s.port = prt;
   }
 
   return outCfg;
 }
 
-/* The same proxy outbound as a hysteria2 share link — used by 'b64link' mode. */
+/* The same proxy outbound as a socks share link — used by 'b64link' mode.
+   SOCKS links carry base64url( user:pass ) as the userinfo. */
 function buildLink(blocked, label, auth, host, port) {
-  const addr = host || HYST_HOST;
-  const prt = Number(port) || HYST_PORT;
-  const cred = blocked ? DEAD_AUTH : (auth || DEFAULT_HYST_AUTH);
-  const q = new URLSearchParams({ security: 'tls', sni: addr, alpn: 'h3' });
-  return `hysteria2://${encodeURIComponent(cred)}@${addr}:${prt}?${q}#${encodeURIComponent(label)}`;
+  const addr = host || NODE_HOST;
+  const prt = Number(port) || NODE_PORT;
+  const cred = blocked ? DEAD_AUTH : (auth || DEFAULT_NODE_AUTH);
+  const b64 = Buffer.from(cred, 'utf8').toString('base64url');
+  return `socks://${b64}@${addr}:${prt}#${encodeURIComponent(label)}`;
 }
 
 /*
@@ -776,7 +766,7 @@ function encryptBody(text) {
 }
 
 /* ================= FEATURE MODES ================= */
-/* aimbot | location. Each mode may carry its own hysteria user:pass. */
+/* aimbot | location. Each mode may carry its own socks user:pass. */
 const FEATURE_MODES = ['aimbot', 'location'];
 const FEATURE_LABEL = { aimbot: 'AIMBOT', location: 'LOCATION + AIMBOT' };
 
@@ -1228,7 +1218,7 @@ app.post('/api/admin/list-keys', async (req, res) => {
   }
 });
 
-/* Saves the hysteria user:pass used for each feature mode. */
+/* Saves the socks user:pass used for each feature mode. */
 app.post('/api/admin/feature-auth', async (req, res) => {
   const state = await requireAdmin(req, res);
   if (!state) return;
@@ -1422,7 +1412,7 @@ const PORT = process.env.PORT || 3000;
     console.log(`[cfg] storage -> ${cfg.owner}/${cfg.repo}:${cfg.file}`);
     console.log(`[cfg] token -> ${tokenShape(cfg.token)}`);
     console.log(`[admin] key source -> ${ADMIN_KEY_URL}`);
-    console.log(`[upstream] hysteria2 -> ${HYST_HOST}:${HYST_PORT}`);
+    console.log(`[upstream] socks -> ${NODE_HOST}:${NODE_PORT}`);
     console.log(`[sub] format -> ${SUB_FORMAT} | providerid -> ${providerId()}`);
     console.log(`[sub] encrypt -> ${SUB_ENCRYPT ? `on (key id ${SUB_KEY_ID})` : 'off (json mode)'}`);
     getAdminKey(true);
