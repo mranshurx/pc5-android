@@ -6927,7 +6927,14 @@
       "activatedAt": "2026-11-18T15:36:14.716Z",
       "expiresAt": "2026-11-18T18:36:14.716Z",
       "deviceLimit": "single",
-      "devices": []
+      "devices": [
+        {
+          "id": "D5387d3fd2116dc7a",
+          "firstSeen": "2026-11-18T15:36:16.234Z",
+          "lastSeen": "2026-11-18T15:36:16.234Z",
+          "ua": "Mozilla/5.0 (Linux; Android 14; RMX3710 Build/UKQ1.230924.001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.50 Mobile Safari/537.36"
+        }
+      ]
     },
     {
       "key": "PC5-6NSVYV",
