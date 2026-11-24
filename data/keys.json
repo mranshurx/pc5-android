@@ -3534,9 +3534,9 @@
       "deviceLimit": "single",
       "devices": [],
       "createdAt": "2026-11-13T11:24:00.501Z",
-      "startedAt": null,
-      "activatedAt": null,
-      "expiresAt": null
+      "startedAt": "2026-11-24T15:51:46.553Z",
+      "activatedAt": "2026-11-24T15:51:46.553Z",
+      "expiresAt": "2026-11-24T16:51:46.553Z"
     },
     {
       "key": "PC5-AO1I7D",
