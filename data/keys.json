@@ -167,8 +167,8 @@
       "createdAt": "2026-10-30T09:58:22.344Z",
       "startedAt": "2026-11-02T05:21:07.783Z",
       "activatedAt": "2026-11-02T05:21:07.783Z",
-      "expiresAt": "2026-11-19T08:13:48.325Z",
-      "maintenancePausedMs": 269560542
+      "expiresAt": "2026-11-20T00:03:17.785Z",
+      "maintenancePausedMs": 326530002
     },
     {
       "key": "PC5-Z4IPI9",
@@ -186,8 +186,8 @@
       "createdAt": "2026-10-30T09:58:54.701Z",
       "startedAt": "2026-11-01T07:30:54.859Z",
       "activatedAt": "2026-11-01T07:30:54.859Z",
-      "expiresAt": "2026-12-04T10:23:35.401Z",
-      "maintenancePausedMs": 269560542
+      "expiresAt": "2026-12-10T05:09:13.681Z",
+      "maintenancePausedMs": 769098822
     },
     {
       "key": "PC5-QOT4PI",
@@ -205,8 +205,8 @@
       "createdAt": "2026-10-30T09:58:59.124Z",
       "startedAt": "2026-11-02T08:07:26.238Z",
       "activatedAt": "2026-11-02T08:07:26.238Z",
-      "expiresAt": "2026-12-05T11:00:06.780Z",
-      "maintenancePausedMs": 269560542
+      "expiresAt": "2026-12-11T05:45:45.060Z",
+      "maintenancePausedMs": 769098822
     },
     {
       "key": "PC5-NSC87A",
@@ -224,8 +224,8 @@
       "createdAt": "2026-10-30T09:59:00.569Z",
       "startedAt": "2026-10-31T12:00:27.861Z",
       "activatedAt": "2026-10-31T12:00:27.861Z",
-      "expiresAt": "2026-12-03T14:53:08.403Z",
-      "maintenancePausedMs": 269560542
+      "expiresAt": "2026-12-09T09:38:46.683Z",
+      "maintenancePausedMs": 769098822
     },
     {
       "key": "PC5-BIWKXR",
@@ -578,8 +578,8 @@
       "createdAt": "2026-10-31T09:27:26.653Z",
       "startedAt": "2026-10-31T09:31:21.736Z",
       "activatedAt": "2026-10-31T09:31:21.736Z",
-      "expiresAt": "2026-12-03T12:24:02.278Z",
-      "maintenancePausedMs": 269560542
+      "expiresAt": "2026-12-09T07:09:40.558Z",
+      "maintenancePausedMs": 769098822
     },
     {
       "key": "PC5-6YMJM2",
@@ -652,8 +652,8 @@
       "createdAt": "2026-11-02T02:33:22.869Z",
       "startedAt": "2026-11-02T02:38:03.074Z",
       "activatedAt": "2026-11-02T02:38:03.074Z",
-      "expiresAt": "2026-12-05T05:30:43.616Z",
-      "maintenancePausedMs": 269560542
+      "expiresAt": "2026-12-11T00:16:21.896Z",
+      "maintenancePausedMs": 769098822
     },
     {
       "key": "PC5-WXIW8K",
@@ -985,8 +985,8 @@
       "createdAt": "2026-11-03T13:16:44.858Z",
       "startedAt": "2026-11-03T13:18:05.689Z",
       "activatedAt": "2026-11-03T13:18:05.689Z",
-      "expiresAt": "2026-12-06T16:10:46.231Z",
-      "maintenancePausedMs": 269560542
+      "expiresAt": "2026-12-12T10:56:24.511Z",
+      "maintenancePausedMs": 769098822
     },
     {
       "key": "PC5-AZSRM6",
@@ -1038,7 +1038,7 @@
       "createdAt": "2026-11-03T19:43:04.385Z",
       "startedAt": "2026-11-03T20:10:29.992Z",
       "activatedAt": "2026-11-03T20:10:29.992Z",
-      "expiresAt": "2026-12-06T23:03:10.534Z",
+      "expiresAt": "2026-12-12T17:48:48.814Z",
       "deviceLimit": "single",
       "devices": [
         {
@@ -1048,7 +1048,7 @@
           "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36"
         }
       ],
-      "maintenancePausedMs": 269560542
+      "maintenancePausedMs": 769098822
     },
     {
       "key": "PC5-XP1PZ8",
@@ -1192,8 +1192,8 @@
       "devices": [],
       "startedAt": "2026-11-10T14:06:58.349Z",
       "activatedAt": "2026-11-10T14:06:58.349Z",
-      "expiresAt": "2026-11-19T04:39:34.992Z",
-      "maintenancePausedMs": 138756643
+      "expiresAt": "2026-11-19T16:54:51.119Z",
+      "maintenancePausedMs": 182872770
     },
     {
       "key": "PC5-UWRHJD",
@@ -1620,7 +1620,7 @@
       "createdAt": "2026-11-08T05:16:11.707Z",
       "startedAt": "2026-11-08T05:17:17.946Z",
       "activatedAt": "2026-11-08T05:17:17.946Z",
-      "expiresAt": "2026-12-09T19:49:54.589Z",
+      "expiresAt": "2026-12-15T14:35:32.869Z",
       "deviceLimit": "single",
       "devices": [
         {
@@ -1630,7 +1630,7 @@
           "ua": "Mozilla/5.0 (Linux; Android 16; V2338 Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Mobile Safari/537.36"
         }
       ],
-      "maintenancePausedMs": 138756643
+      "maintenancePausedMs": 638294923
     },
     {
       "key": "PC5-TUNDKZ",
@@ -1643,7 +1643,7 @@
       "createdAt": "2026-11-08T15:46:14.922Z",
       "startedAt": "2026-11-08T15:46:44.655Z",
       "activatedAt": "2026-11-08T15:46:44.655Z",
-      "expiresAt": "2026-12-10T06:19:21.298Z",
+      "expiresAt": "2026-12-16T01:04:59.578Z",
       "deviceLimit": "single",
       "devices": [
         {
@@ -1653,7 +1653,7 @@
           "ua": "Mozilla/5.0 (Linux; Android 16; REDMI Note 15 5G Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 Mobile Safari/537.36 XiaoMi/MiuiBrowser/14.66.0-gn"
         }
       ],
-      "maintenancePausedMs": 138756643
+      "maintenancePausedMs": 638294923
     },
     {
       "key": "PC5-7GN1VB",
@@ -1841,8 +1841,8 @@
       "createdAt": "2026-11-09T07:56:28.744Z",
       "startedAt": "2026-11-09T07:56:44.779Z",
       "activatedAt": "2026-11-09T07:56:44.779Z",
-      "expiresAt": "2026-12-10T22:29:21.422Z",
-      "maintenancePausedMs": 138756643
+      "expiresAt": "2026-12-16T17:14:59.702Z",
+      "maintenancePausedMs": 638294923
     },
     {
       "key": "PC5-AQKAOK",
@@ -1948,8 +1948,8 @@
       "createdAt": "2026-11-11T04:45:11.210Z",
       "startedAt": "2026-11-11T13:06:43.726Z",
       "activatedAt": "2026-11-11T13:06:43.726Z",
-      "expiresAt": "2026-11-20T03:34:53.578Z",
-      "maintenancePausedMs": 138489852
+      "expiresAt": "2026-11-21T14:45:28.291Z",
+      "maintenancePausedMs": 265124565
     },
     {
       "key": "PC5-IBGU6Z",
@@ -2097,8 +2097,8 @@
       "createdAt": "2026-11-11T08:12:32.059Z",
       "startedAt": "2026-11-11T08:13:22.297Z",
       "activatedAt": "2026-11-11T08:13:22.297Z",
-      "expiresAt": "2140-12-11T13:45:58.940Z",
-      "maintenancePausedMs": 138756643
+      "expiresAt": "2140-12-17T08:31:37.220Z",
+      "maintenancePausedMs": 638294923
     },
     {
       "key": "PC5-C99E0E",
@@ -2542,7 +2542,7 @@
       "createdAt": "2026-11-12T18:51:32.843Z",
       "startedAt": "2026-11-12T18:59:57.617Z",
       "activatedAt": "2026-11-12T18:59:57.617Z",
-      "expiresAt": "2026-11-21T09:05:29.755Z",
+      "expiresAt": "2026-11-24T01:46:40.645Z",
       "deviceLimit": "single",
       "devices": [
         {
@@ -2552,7 +2552,7 @@
           "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36"
         }
       ],
-      "maintenancePausedMs": 137132138
+      "maintenancePausedMs": 370003028
     },
     {
       "key": "PC5-A7M23L",
@@ -3524,7 +3524,8 @@
       "createdAt": "2026-11-13T11:23:58.669Z",
       "startedAt": "2026-11-18T15:56:13.526Z",
       "activatedAt": "2026-11-18T15:56:13.526Z",
-      "expiresAt": "2026-11-18T16:56:13.526Z"
+      "expiresAt": "2026-11-18T17:28:08.187Z",
+      "maintenancePausedMs": 1914661
     },
     {
       "key": "PC5-XPICY1",
@@ -5473,8 +5474,8 @@
       "createdAt": "2026-11-13T12:53:10.200Z",
       "startedAt": "2026-11-13T17:33:48.341Z",
       "activatedAt": "2026-11-13T17:33:48.341Z",
-      "expiresAt": "2026-11-22T05:10:48.065Z",
-      "maintenancePausedMs": 128219724
+      "expiresAt": "2026-11-25T17:57:17.265Z",
+      "maintenancePausedMs": 433408924
     },
     {
       "key": "PC5-RYA91A",
@@ -5701,8 +5702,8 @@
       "createdAt": "2026-11-13T12:55:01.537Z",
       "startedAt": "2026-11-13T16:17:04.287Z",
       "activatedAt": "2026-11-13T16:17:04.287Z",
-      "expiresAt": "2026-11-29T03:54:04.011Z",
-      "maintenancePausedMs": 128219724
+      "expiresAt": "2026-12-04T22:39:42.291Z",
+      "maintenancePausedMs": 627758004
     },
     {
       "key": "PC5-ZV3F70",
@@ -6127,8 +6128,8 @@
       "createdAt": "2026-11-13T12:59:12.881Z",
       "startedAt": "2026-11-14T01:34:47.089Z",
       "activatedAt": "2026-11-14T01:34:47.089Z",
-      "expiresAt": "2026-12-15T13:11:46.813Z",
-      "maintenancePausedMs": 128219724
+      "expiresAt": "2026-12-21T07:57:25.093Z",
+      "maintenancePausedMs": 627758004
     },
     {
       "key": "PC5-H88PFB",
@@ -6195,8 +6196,8 @@
       "createdAt": "2026-11-13T16:16:47.445Z",
       "startedAt": "2026-11-13T16:17:23.583Z",
       "activatedAt": "2026-11-13T16:17:23.583Z",
-      "expiresAt": "2026-11-22T03:54:23.307Z",
-      "maintenancePausedMs": 128219724
+      "expiresAt": "2026-11-25T15:24:27.749Z",
+      "maintenancePausedMs": 428824166
     },
     {
       "key": "PC5-29ENCQ",
@@ -6233,8 +6234,8 @@
       "createdAt": "2026-11-13T17:17:29.394Z",
       "startedAt": "2026-11-13T17:18:01.137Z",
       "activatedAt": "2026-11-13T17:18:01.137Z",
-      "expiresAt": "2140-12-13T19:55:00.861Z",
-      "maintenancePausedMs": 128219724
+      "expiresAt": "2140-12-19T14:40:39.141Z",
+      "maintenancePausedMs": 627758004
     },
     {
       "key": "PC5-YVVYT2",
@@ -6262,7 +6263,7 @@
       "createdAt": "2026-11-14T08:14:10.564Z",
       "startedAt": "2026-11-14T08:23:09.437Z",
       "activatedAt": "2026-11-14T08:23:09.437Z",
-      "expiresAt": "2026-11-18T18:51:59.011Z",
+      "expiresAt": "2026-11-18T21:19:39.157Z",
       "deviceLimit": "single",
       "devices": [
         {
@@ -6272,7 +6273,7 @@
           "ua": "Mozilla/5.0 (Linux; Android 16; RMX3853 Build/UKQ1.231108.001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Mobile Safari/537.36"
         }
       ],
-      "maintenancePausedMs": 124129574
+      "maintenancePausedMs": 132989720
     },
     {
       "key": "PC5-L5K5GF",
@@ -6932,7 +6933,7 @@
       "createdAt": "2026-11-17T14:23:27.853Z",
       "startedAt": "2026-11-18T15:36:14.716Z",
       "activatedAt": "2026-11-18T15:36:14.716Z",
-      "expiresAt": "2026-11-18T18:36:14.716Z",
+      "expiresAt": "2026-11-18T20:48:10.567Z",
       "deviceLimit": "single",
       "devices": [
         {
@@ -6941,7 +6942,8 @@
           "lastSeen": "2026-11-18T15:36:16.234Z",
           "ua": "Mozilla/5.0 (Linux; Android 14; RMX3710 Build/UKQ1.230924.001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.50 Mobile Safari/537.36"
         }
-      ]
+      ],
+      "maintenancePausedMs": 7915851
     },
     {
       "key": "PC5-6NSVYV",
@@ -7148,7 +7150,8 @@
       "createdAt": "2026-11-18T15:23:17.520Z",
       "startedAt": "2026-11-18T15:26:01.176Z",
       "activatedAt": "2026-11-18T15:26:01.176Z",
-      "expiresAt": "2026-11-19T15:26:01.176Z"
+      "expiresAt": "2026-11-20T14:27:43.487Z",
+      "maintenancePausedMs": 82902311
     },
     {
       "key": "PC5-PK91D1",
@@ -7169,7 +7172,8 @@
       ],
       "startedAt": "2026-11-18T15:26:23.563Z",
       "activatedAt": "2026-11-18T15:26:23.563Z",
-      "expiresAt": "2026-12-30T06:26:23.563Z"
+      "expiresAt": "2027-01-05T01:12:01.843Z",
+      "maintenancePausedMs": 499538280
     },
     {
       "key": "PC5-IOTXUO",
@@ -7190,7 +7194,8 @@
       ],
       "startedAt": "2026-11-18T15:29:28.959Z",
       "activatedAt": "2026-11-18T15:29:28.959Z",
-      "expiresAt": "2026-12-30T06:29:28.959Z"
+      "expiresAt": "2027-01-05T01:15:07.239Z",
+      "maintenancePausedMs": 499538280
     },
     {
       "key": "PC5-MMRRH6",
@@ -7203,7 +7208,7 @@
       "createdAt": "2026-11-18T15:31:35.167Z",
       "startedAt": "2026-11-18T15:34:28.469Z",
       "activatedAt": "2026-11-18T15:34:28.469Z",
-      "expiresAt": "2026-11-18T18:34:28.469Z",
+      "expiresAt": "2026-11-18T20:44:38.073Z",
       "deviceLimit": "single",
       "devices": [
         {
@@ -7212,7 +7217,8 @@
           "lastSeen": "2026-11-18T15:34:30.633Z",
           "ua": "Mozilla/5.0 (Linux; Android 10; TECNO KE5k Build/QP1A.190711.020) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Mobile Safari/537.36"
         }
-      ]
+      ],
+      "maintenancePausedMs": 7809604
     },
     {
       "key": "PC5-YH826K",
@@ -7225,7 +7231,7 @@
       "createdAt": "2026-11-18T15:34:13.483Z",
       "startedAt": "2026-11-18T15:37:01.829Z",
       "activatedAt": "2026-11-18T15:37:01.829Z",
-      "expiresAt": "2026-11-18T18:37:01.829Z",
+      "expiresAt": "2026-11-18T20:49:44.793Z",
       "deviceLimit": "single",
       "devices": [
         {
@@ -7234,7 +7240,8 @@
           "lastSeen": "2026-11-18T15:37:04.121Z",
           "ua": "Mozilla/5.0 (Linux; Android 16; 2409FPCC4I Build/BP2A.250605.031.A3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Mobile Safari/537.36"
         }
-      ]
+      ],
+      "maintenancePausedMs": 7962964
     },
     {
       "key": "PC5-TUQQ2T",
@@ -7273,9 +7280,12 @@
     }
   ],
   "maintenance": {
-    "enabled": true,
+    "enabled": false,
     "message": "Garena patch update wait some time.",
-    "since": "2026-11-18T16:24:18.865Z"
+    "since": null,
+    "lastPausedMs": 499538280,
+    "lastPausedKeys": 28,
+    "lastEndedAt": "2026-11-24T11:09:57.145Z"
   },
   "features": {
     "aimbot": "",
