@@ -7309,7 +7309,14 @@
       "createdAt": "2026-11-03T00:00:00Z",
       "revoked": false,
       "deviceId": null,
-      "devices": [],
+      "devices": [
+        {
+          "id": "Ddb023bc37ce49fce",
+          "firstSeen": "2026-11-24T11:44:46.332Z",
+          "lastSeen": "2026-11-24T11:44:46.332Z",
+          "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36"
+        }
+      ],
       "startedAt": "2026-11-24T11:44:44.851Z",
       "activatedAt": "2026-11-24T11:44:44.851Z",
       "expiresAt": "2026-11-24T12:44:44.851Z"
