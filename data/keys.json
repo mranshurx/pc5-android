@@ -7369,6 +7369,17 @@
       "startedAt": "2026-11-24T15:08:25.743Z",
       "activatedAt": "2026-11-24T15:08:25.743Z",
       "expiresAt": "2026-11-24T16:08:25.743Z"
+    },
+    {
+      "key": "PC5-TKLX5V",
+      "durationHours": 24,
+      "maxDevices": 0,
+      "deviceLimit": "unlimited",
+      "devices": [],
+      "createdAt": "2026-11-28T14:18:15.050Z",
+      "startedAt": null,
+      "activatedAt": null,
+      "expiresAt": null
     }
   ],
   "maintenance": {
