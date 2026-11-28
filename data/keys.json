@@ -7394,7 +7394,9 @@
       "revoked": false,
       "deviceId": null,
       "devices": [],
-      "startedAt": null
+      "startedAt": "2026-11-28T14:41:20.038Z",
+      "activatedAt": "2026-11-28T14:41:20.038Z",
+      "expiresAt": "2026-11-28T15:41:20.038Z"
     }
   ],
   "maintenance": {
